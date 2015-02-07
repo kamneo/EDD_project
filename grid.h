@@ -16,12 +16,12 @@
  * \brief Contain game's status: tiles and current score.
  *
  *		        X
- *               0  1    ... GRID_SIDE-1
+ *       0  1    ... GRID_SIDE-1
  *		+--+--+- ... -+--+
  *		|  |  |  ...  +  | 0
  *		+--+--+- ... -+--+
  *		|  |  |  ...  |  | 1
- *      	+--+--+- ... -+--+         Y
+ *      +--+--+- ... -+--+         Y
  *		...      ...       ...
  *		+--+--+- ... -+--+
  *		|  |  |  ...  |  | GRID_SIDE-1
@@ -119,7 +119,7 @@ void do_move (grid g, dir d);
 void add_tile (grid g);
 
 /**
- * \brief Play a direction in the grid. 
+ * \brief Play a direction in the grid.
  * \param g the grid
  * \param d the direction
  * \pre the movement d must be possible (i.e. can_move(g,d) == true).
