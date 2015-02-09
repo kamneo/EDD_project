@@ -99,4 +99,5 @@ void add_tile (grid g);
  * \param d the direction
  * \pre the movement d must be possible (i.e. can_move(g,d) == true).
  */
+ 
 void play (grid g, dir d);
