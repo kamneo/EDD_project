@@ -1,13 +1,8 @@
-/**
- * \file grid.c
- * \brief Contains structures and functions needed to play 2048 game.
- **/
+#include "grid.h"
 
-typedef struct grid_s* grid;
-typedef unsigned int tile;
-typedef enum dir_e {UP,LEFT,DOWN,RIGHT} dir;
-
-
+struct grid_s{
+    tile** tiles;
+};
 
 /**
  * \brief Initialize grid structure
@@ -16,7 +11,15 @@ typedef enum dir_e {UP,LEFT,DOWN,RIGHT} dir;
 grid new_grid ()
 {
 	grid g;
-	g = malloc(sizeof(struct grid_s))
+	g = malloc(sizeof(struct grid_s));
+	g->tiles = malloc(sizeof(tile) * GRID_SIDE);
+	for(int i = 0; i < GRID_SIDE; i++)
+            g->tiles[i] = malloc(sizeof(tile) * GRID_SIDE);
+
+
+	for(int i = 0; i < GRID_SIDE; i++)
+        for(int j = 0; j < GRID_SIDE; j++)
+            g->tiles[i][j] = 0;
 	return g;
 }
 
@@ -52,7 +55,10 @@ unsigned long int grid_score (grid g);
  * \return the tile
  * \pre 0 <= x < GRID_SIDE and 0 <= y < GRID_SIDE
  */
-tile get_tile (grid g, int x, int y);
+tile get_tile (grid g, int x, int y)
+{
+    return g->tiles[x][y];
+}
 
 /**
  * \brief Change tile's value
@@ -99,5 +105,5 @@ void add_tile (grid g);
  * \param d the direction
  * \pre the movement d must be possible (i.e. can_move(g,d) == true).
  */
- 
+
 void play (grid g, dir d);
