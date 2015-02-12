@@ -4,6 +4,10 @@ struct grid_s{
     tile** tiles;
 };
 
+struct tile{
+	int val;
+};
+
 /**
  * \brief Initialize grid structure
  * \return created an empty grid with score equal to 0
@@ -29,6 +33,9 @@ grid new_grid ()
  */
 void delete_grid (grid g)
 {
+	for(int i = 0; i < GRID_SIDE; i++)
+		free (g->tiles[i]);
+	free (g->tiles);
 	free(g);
 }
 
@@ -38,7 +45,11 @@ void delete_grid (grid g)
  * \param dst the copied grid
  */
 void copy_grid (grid src, grid dst);
-
+{
+	for(int i = 0; i < GRID_SIDE; i++)
+        for(int j = 0; j < GRID_SIDE; j++)
+            dst->tiles[i][j] = src->tiles[i][j];
+}
 
 /**
  * \brief Get game's score
