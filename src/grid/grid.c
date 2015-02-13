@@ -11,10 +11,8 @@ struct grid_s{
 
 static unsigned long int puissanceDe2(tile t)
 {
-	if (t == 0)
-	{	
+	if (t == 0)	
 		return t;
-	}
 	return pow(2, t);
 }
 
