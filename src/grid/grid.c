@@ -5,6 +5,7 @@
 
 struct grid_s{
     tile** tiles;
+    unsigned long int score;
 };
 
 
@@ -17,22 +18,145 @@ static unsigned long int puissanceDe2(tile t)
 	return pow(2, t);
 }
 
-static bool lign_can_move(grid g,int  i,dir d){
-/*	switch(d)
+static bool lign_can_move(grid g, int i, dir d){
+	tile pre = 0;
+	bool tile_free = false;
+	switch(d)
 	{
 		case LEFT:
+			for (int j =  0; j < GRID_SIDE; j++) {
+				// Si on est pas sur la premiere tile et que le precedant == le tile courant
+				// on retourne vrai
+				// exemple :|2	|3	|1	|1	| est vrai
+				if(pre != 0 && pre == g->tiles[i][j])
+					return true;
+				//si le tile courant et vide on met tile free a vrai
+				if(g->tiles[i][j] == 0)
+					tile_free = true;
+
+				// si il y a un tile free avant et que le tile courant n'est pas null
+				// exemple :|0	|1	|0	|0	| est vrai
+				if(tile_free && g->tiles[i][j] != 0)
+					return true;
+
+				pre = g->tiles[i][j];
+			}
 			break;
 		case RIGHT:
 			for (int j = GRID_SIDE - 1; j >= 0; j--) {
-				if(g->tiles[i][j] == 0 && j != 0)
+				// Si on est pas sur la premiere tile et que le precedant == le tile courant
+				// on retourne vrai
+				// exemple :|2	|3	|1	|1	| est vrai
+				if(pre != 0 && pre == g->tiles[i][j])
 					return true;
+				//si le tile courant et vide on met tile free a vrai
+				if(g->tiles[i][j] == 0)
+					tile_free = true;
+
+				// si il y a un tile free avant et que le tile courant n'est pas null
+				// exemple :|1	|0	|0	|0	| est vrai
+				if(tile_free && g->tiles[i][j] != 0)
+					return true;
+
+				pre = g->tiles[i][j];
 			}
 			break;
 		default:
 			return false;
-	}*/
+	}
 	return false;
 }
+
+static bool colon_can_move(grid g, int j, dir d){
+	tile pre = 0;
+	bool tile_free = false;
+	switch(d)
+	{
+		case UP:
+			for (int i =  0; i < GRID_SIDE; i++) {
+				// Si on est pas sur la premiere tile et que le precedant == le tile courant
+				// on retourne vrai
+				// exemple :|2	|3	|1	|1	| est vrai
+				if(pre != 0 && pre == g->tiles[i][j])
+					return true;
+				//si le tile courant et vide on met tile free a vrai
+				if(g->tiles[i][j] == 0)
+					tile_free = true;
+
+				// si il y a un tile free avant et que le tile courant n'est pas null
+				// exemple :|0	|1	|0	|0	| est vrai
+				if(tile_free && g->tiles[i][j] != 0)
+					return true;
+
+				pre = g->tiles[i][j];
+			}
+			break;
+		case DOWN:
+			for (int i = GRID_SIDE - 1; i >= 0; i--) {
+				// Si on est pas sur la premiere tile et que le precedant == le tile courant
+				// on retourne vrai
+				// exemple :|2	|3	|1	|1	| est vrai
+				if(pre != 0 && pre == g->tiles[i][j])
+					return true;
+				//si le tile courant et vide on met tile free a vrai
+				if(g->tiles[i][j] == 0)
+					tile_free = true;
+
+				// si il y a un tile free avant et que le tile courant n'est pas null
+				// exemple :|1	|0	|0	|0	| est vrai
+				if(tile_free && g->tiles[i][j] != 0)
+					return true;
+
+				pre = g->tiles[i][j];
+			}
+			break;
+		default:
+			return false;
+	}
+	return false;
+}
+
+static void lign_do_move(grid g, int i, dir d)
+{
+	tile empty_tile = 0;
+	bool tile_free = false;
+	tile pre = 0;
+	int j2;
+				printf("\n");
+
+	switch(d)
+	{
+		case LEFT:
+			j2 = 0;
+			for (int j = 0; j < GRID_SIDE; j++)
+			{
+				printf("%d", j2);
+				if(g->tiles[i][j] != 0 ){
+					if(g->tiles[i][j] == pre){
+						set_tile(g, i, j2, g->tiles[i][j] + pre);
+						set_tile(g, i, j, empty_tile);
+						pre = g->tiles[i][j];
+					}else{
+						set_tile(g, i, j2 + 1, g->tiles[i][j]);
+						set_tile(g, i, j, empty_tile);
+					}
+				}else{
+					tile_free = true;
+				}
+			}
+			break;
+		case RIGHT:
+			break;
+		default:
+			break;
+	}
+}
+
+static void colon_do_move(grid g, int i, dir d)
+{
+	
+}
+
 /**
  * \brief Initialize grid structure
  * \return created an empty grid with score equal to 0
@@ -74,6 +198,8 @@ void copy_grid (grid src, grid dst)
 	for(int i = 0; i < GRID_SIDE; i++)
         for(int j = 0; j < GRID_SIDE; j++)
             dst->tiles[i][j] = src->tiles[i][j];
+
+    dst->score = src->score;
 }
 
 /**
@@ -83,13 +209,7 @@ void copy_grid (grid src, grid dst)
  */
 unsigned long int grid_score (grid g)
 {
-	unsigned long int resultat = 0;
-
-	for(int i = 0; i < GRID_SIDE; i++)
-        for(int j = 0; j < GRID_SIDE; j++)
-        	resultat += puissanceDe2(get_tile(g, i, j));
-
-    return resultat;
+	return g->score;
 }
 
 
@@ -124,24 +244,22 @@ void set_tile (grid g, int x, int y, tile t)
  */
 bool can_move (grid g, dir d)
 {
-	switch (d)
+	if( d == LEFT || d == RIGHT)
 	{
-		case UP:
-			break;
-		case LEFT:
-			for (int i = 0; i < GRID_SIDE; i++)
-			{
-				if(lign_can_move(g, i, d))
-					return true;
-			}
-			break;
-		case DOWN:
-			break;
-		case RIGHT:
-			break;
-		default:
-			return false;
-			break;
+		for (int i = 0; i < GRID_SIDE; i++)
+		{
+			if(lign_can_move(g, i, d))
+				return true;
+		}
+	}
+
+	if( d == UP || d == DOWN)
+	{
+		for (int j = 0; j < GRID_SIDE; j++)
+		{
+			if(colon_can_move(g, j, d))
+				return true;
+		}
 	}
 
 	return false;
@@ -160,7 +278,31 @@ bool game_over (grid g);
  * \param d the chosen direction
  * \pre the movement d must be possible (i.e. can_move(g,d) == true).
  */
-void do_move (grid g, dir d);
+void do_move (grid g, dir d)
+{
+	if(!can_move(g, d))
+	{
+		printf("Erreur: movement impossible !\n");
+		return;
+	}
+
+	if( d == LEFT || d == RIGHT)
+	{
+		for (int i = 0; i < GRID_SIDE; i++)
+		{
+			lign_do_move(g, i, d);
+		}
+	}
+
+	if( d == UP || d == DOWN)
+	{
+		for (int j = 0; j < GRID_SIDE; j++)
+		{
+			colon_do_move(g, j, d);
+		}
+	}
+
+}
 
 /**
  * \brief Randomly add a tile in the grid in a free space when a movement is finished.

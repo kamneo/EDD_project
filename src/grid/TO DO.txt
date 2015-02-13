@@ -1,4 +1,5 @@
 TO DO :
 
-finir et bien reflechir et comprendre la methode can_move(...) de grid.c
+finir et bien reflechir et comprendre la methode can_move(...) de grid.c -> ok !
+
 revoir grid score !

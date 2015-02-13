@@ -42,12 +42,21 @@ int main (int arc, char** argv)
 	printf("le résultat de la grille est : %lu\n", grid_score(g));
 	
 	printf("modification de la grille \n");
-	set_tile (g, 0, 0, 1);
+	set_tile (g, 0, 0, 2);
+	set_tile (g, 0, 2, 2);
+	set_tile (g, 0, 3, 4);
 	display_grid(g);
 	printf("le résultat de la grille est : %lu\n", grid_score(g));
 
-	printf("la grille peut %s bouger !\n", can_move(g, UP)? "" : "pas");
+	printf("la grille peut %s bouger vers le haut !\n", can_move(g, UP)? "" : "pas");
 
+	printf("la grille peut %s bouger vers le bas !\n", can_move(g, DOWN)? "" : "pas");
+
+	printf("la grille peut %s bouger vers la droite!\n", can_move(g, RIGHT)? "" : "pas");
+
+	printf("la grille peut %s bouger vers la gauche!\n", can_move(g, LEFT)? "" : "pas");
+	do_move(g, LEFT);
+	display_grid(g);
 
 	return EXIT_SUCCESS;
 }
