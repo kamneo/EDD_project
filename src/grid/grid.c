@@ -1,12 +1,21 @@
 #include "grid.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
 
 struct grid_s{
     tile** tiles;
 };
 
-struct tile{
-	int val;
-};
+
+static unsigned long int puissanceDe2(tile t)
+{
+	if (t == 0)
+	{	
+		return t;
+	}
+	return pow(2, t);
+}
 
 /**
  * \brief Initialize grid structure
@@ -44,7 +53,7 @@ void delete_grid (grid g)
  * \param src the grid to copy
  * \param dst the copied grid
  */
-void copy_grid (grid src, grid dst);
+void copy_grid (grid src, grid dst)
 {
 	for(int i = 0; i < GRID_SIDE; i++)
         for(int j = 0; j < GRID_SIDE; j++)
@@ -56,7 +65,16 @@ void copy_grid (grid src, grid dst);
  * \param g the grid
  * \return the computed score during the game
  */
-unsigned long int grid_score (grid g);
+unsigned long int grid_score (grid g)
+{
+	unsigned long int resultat = 0;
+
+	for(int i = 0; i < GRID_SIDE; i++)
+        for(int j = 0; j < GRID_SIDE; j++)
+        	resultat += puissanceDe2(get_tile(g, i, j));
+
+    return resultat;
+}
 
 
 /**
@@ -77,7 +95,10 @@ tile get_tile (grid g, int x, int y)
  * \param x and y tile's coordinates
  * \param t new tile's value
  */
-void set_tile (grid g, int x, int y, tile t);
+void set_tile (grid g, int x, int y, tile t)
+{
+	g->tiles[x][y] = t;
+}
 
 /**
  * \brief Verify if a given movement is possible
@@ -85,7 +106,20 @@ void set_tile (grid g, int x, int y, tile t);
  * \param d movement's direction
  * \return true if the movement is possible, false else
  */
-bool can_move (grid g, dir d);
+bool can_move (grid g, dir d)
+{
+	switch (d)
+	{
+		case UP:
+			break;
+		case LEFT:;
+		case DOWN:;
+		case RIGHT:;
+		default:;
+	}
+
+	return false;
+}
 
 /**
  * \brief Verify game's status, if no more movement is possible the game is over
