@@ -17,6 +17,22 @@ static unsigned long int puissanceDe2(tile t)
 	return pow(2, t);
 }
 
+static bool lign_can_move(grid g,int  i,dir d){
+/*	switch(d)
+	{
+		case LEFT:
+			break;
+		case RIGHT:
+			for (int j = GRID_SIDE - 1; j >= 0; j--) {
+				if(g->tiles[i][j] == 0 && j != 0)
+					return true;
+			}
+			break;
+		default:
+			return false;
+	}*/
+	return false;
+}
 /**
  * \brief Initialize grid structure
  * \return created an empty grid with score equal to 0
@@ -112,10 +128,20 @@ bool can_move (grid g, dir d)
 	{
 		case UP:
 			break;
-		case LEFT:;
-		case DOWN:;
-		case RIGHT:;
-		default:;
+		case LEFT:
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
+				if(lign_can_move(g, i, d))
+					return true;
+			}
+			break;
+		case DOWN:
+			break;
+		case RIGHT:
+			break;
+		default:
+			return false;
+			break;
 	}
 
 	return false;
