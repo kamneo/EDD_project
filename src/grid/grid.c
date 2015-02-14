@@ -17,7 +17,8 @@ static unsigned long int puissanceDe2(tile t)
 {
 	if (t == 0)	
 		return t;
-	return pow(2, t);
+	unsigned long int x = pow(2, t);
+	return x;
 }
 
 static bool lign_can_move(grid g, int i, dir d){
@@ -118,34 +119,199 @@ static bool colon_can_move(grid g, int j, dir d){
 	return false;
 }
 
-static void lign_do_move(grid g, int i, dir d)
+static void add_ligne(grid g, int i,dir d) 
 {
+	int pos = -1;
 	tile empty_tile = 0;
-	bool tile_free = false;
-	tile pre = 0;
-	int j2;
-				printf("\n");
+	tile val = -1;
 	switch(d)
 	{
 		case LEFT:
 			for (int j = 0; j < GRID_SIDE; j++)
 			{
-				printf("%d", j2);
-				if(g->tiles[i][j] != 0 ){
-					if(g->tiles[i][j] == pre){
-						set_tile(g, i, j2, g->tiles[i][j] + pre);
-						set_tile(g, i, j, empty_tile);
-						pre = g->tiles[i][j];
-					}else{
-						set_tile(g, i, j2 + 1, g->tiles[i][j]);
-						set_tile(g, i, j, empty_tile);
+				if (g->tiles[i][j]!=0)
+				{
+					if(val == g->tiles[i][j])
+					{
+						g->tiles[i][pos]=g->tiles[i][pos]+1;
+						g->tiles[i][j]=empty_tile;
+						pos=-1;
+						val=-1;
 					}
-				}else{
-					tile_free = true;
+					if (val != g->tiles[i][j])
+					{
+						val=g->tiles[i][j];
+						pos=j;
+					}
 				}
 			}
 			break;
 		case RIGHT:
+			for (int j = GRID_SIDE-1; j >= 0; j--)
+			{
+				if (g->tiles[i][j]!=0)
+				{
+					if(val == g->tiles[i][j])
+					{
+						g->tiles[i][pos]=g->tiles[i][pos]+1;
+						g->tiles[i][j]=empty_tile;
+						pos=-1;
+						val=-1;
+					}
+					if (val != g->tiles[i][j])
+					{
+						val=g->tiles[i][j];
+						pos=j;
+					}
+				}
+			}
+			break;
+		default:
+			break;
+	}
+	return;
+}
+
+
+static void add_colon(grid g, int j,dir d) 
+{
+	int pos = -1;
+	tile empty_tile = 0;
+	tile val = -1;
+	switch(d)
+	{
+		case UP:
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
+				if (g->tiles[i][j]!=0)
+				{
+					if( val == g->tiles[i][j])
+					{
+						g->tiles[pos][j]=g->tiles[pos][j]+1;
+						g->tiles[i][j]=empty_tile;
+						pos=-1;
+						val=-1;
+					}
+					if ( val != g->tiles[i][j])
+					{
+						val=g->tiles[i][j];
+						pos=i;
+					}
+				}
+			}
+			break;
+		case DOWN:
+			for (int i = GRID_SIDE-1; i >= 0; i--)
+			{
+				if (g->tiles[i][j]!=0)
+				{
+					if(val == g->tiles[i][j])
+					{
+						g->tiles[pos][j]=g->tiles[pos][j]+1;
+						g->tiles[i][j]=empty_tile;
+						pos=-1;
+						val=-1;
+					}
+					if (val != g->tiles[i][j])
+					{
+						val=g->tiles[i][j];
+						pos=i;
+					}
+				}
+			}
+			break;
+		default:
+			break;
+	}
+	return;
+}
+
+
+static void concat_ligne(grid g, int i,dir d)
+{
+	tile empty_tile = 0;
+	int nbVide=0;
+	switch(d)
+	{
+		case LEFT:
+			for (int j = 0; j < GRID_SIDE; j++)
+			{
+				if (g->tiles[i][j]==0)
+					nbVide=nbVide+1;
+				if (g->tiles[i][j]!=0 && nbVide!=0)
+				{
+					g->tiles[i][j-nbVide]=g->tiles[i][j];
+					g->tiles[i][j]=empty_tile;
+				}
+			}
+			break;
+		case RIGHT:
+			for (int j = GRID_SIDE-1; j >= 0; j--)
+			{
+				if (g->tiles[i][j]==0)
+					nbVide=nbVide+1;
+				if (g->tiles[i][j]!=0 && nbVide!=0)
+				{
+					g->tiles[i][j+nbVide]=g->tiles[i][j];
+					g->tiles[i][j]=empty_tile;
+				}
+			}
+			break;
+		default:
+			break;
+	}
+	return;
+}
+
+static void concat_colon(grid g, int j ,dir d)
+{
+	tile empty_tile = 0;
+	int nbVide=0;
+	switch(d)
+	{
+		case UP:
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
+				if (g->tiles[i][j]==0)
+					nbVide=nbVide+1;
+				if (g->tiles[i][j]!=0 && nbVide!=0)
+				{
+					g->tiles[i-nbVide][j]=g->tiles[i][j];
+					g->tiles[i][j]=empty_tile;
+				}
+			}
+			break;
+		case DOWN:
+			for (int i = GRID_SIDE-1; i >= 0; i--)
+			{
+				if (g->tiles[i][j]==0)
+					nbVide=nbVide+1;
+				if (g->tiles[i][j]!=0 && nbVide!=0)
+				{
+					g->tiles[i+nbVide][j]=g->tiles[i][j];
+					g->tiles[i][j]=empty_tile;
+				}
+			}
+			break;
+		default:
+			break;
+	}
+	return;
+}
+
+
+static void lign_do_move(grid g, int i, dir d)
+{
+	switch(d)
+	{
+		case LEFT:
+			add_ligne( g, i, d);
+			concat_ligne( g,i,d);
+			break;
+
+		case RIGHT:
+			add_ligne( g, i, d);
+			concat_ligne( g,i,d);
 			break;
 		default:
 			break;
@@ -154,8 +320,22 @@ static void lign_do_move(grid g, int i, dir d)
 
 static void colon_do_move(grid g, int i, dir d)
 {
-	
+	switch(d)
+	{
+		case UP:
+			add_colon( g, i, d);
+			concat_colon( g,i,d);
+			break;
+
+		case DOWN:
+			add_colon( g, i, d);
+			concat_colon( g,i,d);
+			break;
+		default:
+			break;
+	}
 }
+
 
 /**
  * \brief Initialize grid structure
@@ -222,7 +402,7 @@ unsigned long int grid_score (grid g)
  */
 tile get_tile (grid g, int x, int y)
 {
-    return g->tiles[x][y];
+    return puissanceDe2(g->tiles[x][y]);
 }
 
 /**
