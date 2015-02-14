@@ -9,7 +9,7 @@ struct grid_s{
 };
 
 
-static void addToScore(grid g, unsigned long int x){
+static void add_score(grid g, unsigned long int x){
 	g->score+=x;
 }
 
@@ -17,9 +17,9 @@ static unsigned long int puissanceDe2(tile t)
 {
 	if (t == 0)	
 		return t;
-	unsigned long int x = pow(2, t);
-	return x;
+	return pow(2, t);
 }
+
 
 static bool lign_can_move(grid g, int i, dir d){
 	tile pre = 0;
@@ -123,6 +123,7 @@ static void add_ligne(grid g, int i,dir d)
 {
 	int pos = -1;
 	tile empty_tile = 0;
+	unsigned long int s=0;
 	tile val = -1;
 	switch(d)
 	{
@@ -135,6 +136,8 @@ static void add_ligne(grid g, int i,dir d)
 					{
 						g->tiles[i][pos]=g->tiles[i][pos]+1;
 						g->tiles[i][j]=empty_tile;
+						s=puissanceDe2(g->tiles[i][pos]);
+						add_score(g,s);
 						pos=-1;
 						val=-1;
 					}
@@ -155,6 +158,8 @@ static void add_ligne(grid g, int i,dir d)
 					{
 						g->tiles[i][pos]=g->tiles[i][pos]+1;
 						g->tiles[i][j]=empty_tile;
+						s=puissanceDe2(g->tiles[i][pos]);
+						add_score(g,s);
 						pos=-1;
 						val=-1;
 					}
@@ -175,6 +180,7 @@ static void add_ligne(grid g, int i,dir d)
 
 static void add_colon(grid g, int j,dir d) 
 {
+	unsigned long int s=0;
 	int pos = -1;
 	tile empty_tile = 0;
 	tile val = -1;
@@ -189,6 +195,8 @@ static void add_colon(grid g, int j,dir d)
 					{
 						g->tiles[pos][j]=g->tiles[pos][j]+1;
 						g->tiles[i][j]=empty_tile;
+						s=puissanceDe2(g->tiles[pos][j]);
+						add_score(g,s);
 						pos=-1;
 						val=-1;
 					}
@@ -209,6 +217,8 @@ static void add_colon(grid g, int j,dir d)
 					{
 						g->tiles[pos][j]=g->tiles[pos][j]+1;
 						g->tiles[i][j]=empty_tile;
+						s=puissanceDe2(g->tiles[pos][j]);
+						add_score(g,s);
 						pos=-1;
 						val=-1;
 					}
@@ -400,14 +410,12 @@ unsigned long int grid_score (grid g)
  * \return the tile
  * \pre 0 <= x < GRID_SIDE and 0 <= y < GRID_SIDE
  */
-static tile get_tile_puissance (grid g, int x, int y)
-{
-    return puissanceDe2(g->tiles[x][y]);
-}
 
-tile get_tile (grid g, int x, int y){}
+tile get_tile (grid g, int x, int y){
 return (g->tiles[x][y]);
 }
+
+
 /**
  * \brief Change tile's value
  * \param g the grid
