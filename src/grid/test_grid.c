@@ -21,7 +21,9 @@ static void display_grid(grid g)
 
 	    for(int j = 0; j < GRID_SIDE; j++)
 	    	if(i % 2 != 0)
+	    	{
 	        	printf("| %d \t", get_tile(g, i/2, j));
+	        }
 	        else {
 	        	printf("-------+");
 	        }
@@ -43,8 +45,9 @@ int main (int arc, char** argv)
 	
 	printf("modification de la grille \n");
 	set_tile (g, 0, 0, 2);
-	set_tile (g, 0, 2, 2);
+	set_tile (g, 0, 2, 4);
 	set_tile (g, 0, 3, 4);
+	set_tile (g, 0, 1, 2);
 	display_grid(g);
 	printf("le résultat de la grille est : %lu\n", grid_score(g));
 
@@ -55,9 +58,12 @@ int main (int arc, char** argv)
 	printf("la grille peut %s bouger vers la droite!\n", can_move(g, RIGHT)? "" : "pas");
 
 	printf("la grille peut %s bouger vers la gauche!\n", can_move(g, LEFT)? "" : "pas");
+	do_move(g, RIGHT);
+	display_grid(g);
+	do_move(g, RIGHT);
+	display_grid(g);
 	do_move(g, LEFT);
 	display_grid(g);
-
 	return EXIT_SUCCESS;
 }
 

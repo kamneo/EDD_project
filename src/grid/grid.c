@@ -128,7 +128,6 @@ static void lign_do_move(grid g, int i, dir d)
 	switch(d)
 	{
 		case LEFT:
-			j2 = 0;
 			for (int j = 0; j < GRID_SIDE; j++)
 			{
 				printf("%d", j2);
