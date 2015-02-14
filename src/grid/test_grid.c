@@ -71,6 +71,9 @@ int main (int arc, char** argv)
 	display_grid(g);
 	do_move(g, LEFT);
 	display_grid(g);
+
+	add_tile(g);
+	display_grid(g);
 	return EXIT_SUCCESS;
 }
 
