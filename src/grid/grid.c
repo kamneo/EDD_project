@@ -400,11 +400,14 @@ unsigned long int grid_score (grid g)
  * \return the tile
  * \pre 0 <= x < GRID_SIDE and 0 <= y < GRID_SIDE
  */
-tile get_tile (grid g, int x, int y)
+static tile get_tile_puissance (grid g, int x, int y)
 {
     return puissanceDe2(g->tiles[x][y]);
 }
 
+tile get_tile (grid g, int x, int y){}
+return (g->tiles[x][y]);
+}
 /**
  * \brief Change tile's value
  * \param g the grid
