@@ -2,12 +2,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 struct grid_s{
     tile** tiles;
     unsigned long int score;
 };
 
+static int random(int a, int b){
+	if (a<b)
+	{
+		return rand()%(b+1-a)+a;
+	}
+	else
+		return rand()%(a+1-b)+b;
+}
 
 static void add_score(grid g, unsigned long int x){
 	g->score+=x;
@@ -504,7 +513,49 @@ void do_move (grid g, dir d)
  * \param g the grid
  * \pre grid g must contain  at least one empty tile.
  */
-void add_tile (grid g);
+void add_tile (grid g){
+	int **tab;
+	int nbFree = 0;
+
+
+	for(int i = 0;i<GRID_SIDE;i++){
+		for(int j = 0;j<GRID_SIDE;j++){
+			if(g->tiles[i][j] == 0)
+				nbFree+=1;
+		}
+	}
+
+	tab = malloc(sizeof(int)*nbFree);
+	
+	for(int k=0; k < nbFree; k++)
+		tab[k] = malloc(sizeof(int)*2);
+
+	int tata = nbFree - 1;
+	for(int i = 0;i<GRID_SIDE;i++){
+		for(int j = 0;j<GRID_SIDE;j++){
+			if(g->tiles[i][j] == 0){
+				tab[tata][0] = i;
+				tab[tata][1] = j;
+				printf("%d, %d, %d\n", tab[tata][0], tab[tata][1], tata);
+				tata-=1;
+			}
+		}
+	}
+	
+	srand(time(NULL));
+	int nbRand = random(0, nbFree-1);
+
+printf("je bug apres 2 %d %d\n", nbRand, nbFree);
+	int i = tab[nbRand][0];
+	int j = tab[nbRand][1];
+
+	int nbRand2 = random(1, 10);
+
+	if(nbRand2 == 10)
+		g->tiles[i][j] = 2;
+	if(nbRand2>-1 && nbRand2<10)
+		g->tiles[i][j] = 1; 
+}
 
 /**
  * \brief Play a direction in the grid.
