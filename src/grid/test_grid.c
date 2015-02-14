@@ -4,7 +4,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "grid.h"
+#include <math.h>
 
+static unsigned long int puissanceDe2(tile t)
+{
+	if (t == 0)	
+		return t;
+	return pow(2, t);
+}
 
 static void display_grid(grid g)
 {
@@ -22,16 +29,16 @@ static void display_grid(grid g)
 	    for(int j = 0; j < GRID_SIDE; j++)
 	    	if(i % 2 != 0)
 	    	{
-	        	printf("| %d \t", get_tile(g, i/2, j));
+	    		unsigned long int s = puissanceDe2(get_tile(g, i/2, j));
+	        	printf("| %lu \t", s);
 	        }
 	        else {
 	        	printf("-------+");
 	        }
     }
 
-	printf("\n");
+	printf("\n le score est de : %lu \n\n",grid_score(g));
 }
-
 
 int main (int arc, char** argv)
 {
