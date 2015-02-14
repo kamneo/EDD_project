@@ -9,6 +9,10 @@ struct grid_s{
 };
 
 
+static void addToScore(grid g, unsigned long int x){
+	g->score+=x;
+}
+
 static unsigned long int puissanceDe2(tile t)
 {
 	if (t == 0)	
@@ -121,7 +125,6 @@ static void lign_do_move(grid g, int i, dir d)
 	tile pre = 0;
 	int j2;
 				printf("\n");
-
 	switch(d)
 	{
 		case LEFT:
@@ -268,7 +271,10 @@ bool can_move (grid g, dir d)
  * \param g the grid
  * \return true if there is no more possible movements, false else
  */
-bool game_over (grid g);
+bool game_over (grid g)
+{
+	return can_move(g, LEFT) && can_move(g, RIGHT) && can_move(g, UP) && can_move(g, DOWN);
+}
 
 /**
  * \brief Move every tiles of the grid in the direction specified by the user
