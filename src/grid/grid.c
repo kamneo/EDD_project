@@ -132,7 +132,7 @@ void set_tile (grid g, int x, int y, tile t)
  */
 bool can_move (grid g, dir d)
 {
-	if( d  ==  LEFT || d  ==  RIGHT)
+	if( d == LEFT || d == RIGHT)
 	{
 		for (int i = 0; i < GRID_SIDE; i++)
 		{
@@ -141,7 +141,7 @@ bool can_move (grid g, dir d)
 		}
 	}
 
-	if( d  ==  UP || d  ==  DOWN)
+	if( d == UP || d == DOWN)
 	{
 		for (int j = 0; j < GRID_SIDE; j++)
 		{
@@ -167,7 +167,7 @@ bool game_over (grid g)
  * \brief Move every tiles of the grid in the direction specified by the user
  * \param g the grid
  * \param d the chosen direction
- * \pre the movement d must be possible (i.e. can_move(g,d)  ==  true).
+ * \pre the movement d must be possible (i.e. can_move(g,d) == true).
  */
 void do_move (grid g, dir d)
 {
@@ -177,7 +177,7 @@ void do_move (grid g, dir d)
 		return;
 	}
 
-	if( d  ==  LEFT || d  ==  RIGHT)
+	if( d == LEFT || d == RIGHT)
 	{
 		for (int i = 0; i < GRID_SIDE; i++)
 		{
@@ -185,7 +185,7 @@ void do_move (grid g, dir d)
 		}
 	}
 
-	if( d  ==  UP || d  ==  DOWN)
+	if( d == UP || d == DOWN)
 	{
 		for (int j = 0; j < GRID_SIDE; j++)
 		{
@@ -211,7 +211,7 @@ void add_tile (grid g){
 	for (int i = 0; i < GRID_SIDE; i++){
 		for (int j = 0; j < GRID_SIDE; j++)
 		{
-			if (g->tiles[i][j]  ==  0)
+			if (g->tiles[i][j] == 0)
 			{
 				tab[nbFree*2] = i;
 				tab[nbFree*2+1] = j;
@@ -219,8 +219,10 @@ void add_tile (grid g){
 			}		
 		}
 	}
-	if (nbFree  ==  0)
+
+	if (nbFree == 0)
 		return;
+
 	nombreAleatoire = rang_aleatoire(nbFree)*2;
 	g->tiles[tab[nombreAleatoire]][tab[nombreAleatoire+1]] = valeur_aleatoire();
 	free(tab);
@@ -230,6 +232,6 @@ void add_tile (grid g){
  * \brief Play a direction in the grid.
  * \param g the grid
  * \param d the direction
- * \pre the movement d must be possible (i.e. can_move(g,d)  ==  true).
+ * \pre the movement d must be possible (i.e. can_move(g,d) == true).
  */
 void play (grid g, dir d);
