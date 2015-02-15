@@ -3,42 +3,10 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "grid.h"
-#include <math.h>
-
-static unsigned long int puissanceDe2(tile t)
-{
-	if (t == 0)	
-		return t;
-	return pow(2, t);
-}
-
-static void display_grid(grid g)
-{
-
-	for(int i = 0; i < GRID_SIDE * 2 +1; i++)
-    {
-	    if(i % 2 == 0)
-	    	if (i != 0)
-	    		printf("|\n+");
-	    	else
-	    		printf("+");
-	    else
-	    	printf("\n");
-
-	    for(int j = 0; j < GRID_SIDE; j++)
-	    	if(i % 2 != 0)
-	    	{
-	    		unsigned long int s = puissanceDe2(get_tile(g, i/2, j));
-	        	printf("| %lu \t", s);
-	        }
-	        else {
-	        	printf("-------+");
-	        }
-    }
-
-	printf("\n le score est de : %lu \n\n",grid_score(g));
-}
+#include "affichage.h"
+#include "utilities.h"
 
 int main (int arc, char** argv)
 {

@@ -69,6 +69,11 @@ void copy_grid (grid src, grid dst);
  */
 unsigned long int grid_score (grid g);
 
+/**
+ * \brief Set game's score
+ * \param x the new score
+ */
+void set_score(grid g, unsigned long int x);
 
 /**
  * \brief Get tile  (log_2-encoded) from the grid by specifying his coordinates
