@@ -546,6 +546,7 @@ void add_tile (grid g){
 		return;
 	nombreAleatoire=rang_aleatoire(nbFree)*2;
 	g->tiles[tab[nombreAleatoire]][tab[nombreAleatoire+1]]=valeur_aleatoire();
+	free(tab);
 }
 /**
  * \brief Play a direction in the grid.
