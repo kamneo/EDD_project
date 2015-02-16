@@ -5,11 +5,11 @@
 
 #include "utilities.h"
 
-void add_score(grid g, unsigned long int x){
+static void add_score(grid g, unsigned long int x){
 	set_score(g, grid_score (g) + x);
 }
 
-unsigned long int puissanceDe2(tile t)
+static unsigned long int puissanceDe2(tile t)
 {
 	if (t == 0)	
 		return t;

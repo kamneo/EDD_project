@@ -17,7 +17,6 @@ struct grid_s{
  * \return a random int beetween 0 and n
  */
 static int rang_aleatoire (int n){
-	srand(time(NULL));
 	return rand()%n;
 }
 
@@ -38,6 +37,8 @@ static int valeur_aleatoire (){
  */
 grid new_grid ()
 {
+	// initialisation de la srand() qui gère la génération des nombres aléatoires
+	srand(time(NULL));
 	grid g;
 	g = malloc(sizeof(struct grid_s));
 	g->tiles = malloc(sizeof(tile) * GRID_SIDE);
@@ -48,6 +49,9 @@ grid new_grid ()
         for(int j = 0; j < GRID_SIDE; j++)
             g->tiles[i][j] = 0;
 
+    add_tile(g);
+    add_tile(g);
+    
 	return g;
 }
 
@@ -220,6 +224,7 @@ void add_tile (grid g){
 	int nbFree = 0;
 	int* tab;
 	int nombreAleatoire;
+
 	tab = malloc(sizeof(int)*taille);
 	for (int i = 0; i < GRID_SIDE; i++){
 		for (int j = 0; j < GRID_SIDE; j++)
@@ -233,8 +238,10 @@ void add_tile (grid g){
 		}
 	}
 
-	if (nbFree == 0)
+	if (nbFree == 0){
+		printf("Erreur il n'y a plus de case libre !\n");
 		return;
+	}
 
 	nombreAleatoire = rang_aleatoire(nbFree)*2;
 	g->tiles[tab[nombreAleatoire]][tab[nombreAleatoire+1]] = valeur_aleatoire();
@@ -247,4 +254,17 @@ void add_tile (grid g){
  * \param d the direction
  * \pre the movement d must be possible (i.e. can_move(g,d) == true).
  */
-void play (grid g, dir d);
+void play (grid g, dir d)
+{	
+	if(!can_move(g, d))
+	{
+		printf("Erreur: movement impossible !\n");
+		return;
+	}
+
+	do_move(g, d);
+	add_tile(g);
+
+	if(game_over(g))
+		printf("Game over, votre score est : %lu\n bien joué !\n", g->score);
+}

@@ -55,6 +55,8 @@ int main (int arc, char** argv)
 	add_tile(g);
 	display_grid(g);
 	delete_grid (g);
+
+	g = new_grid ();
 	return EXIT_SUCCESS;
 }
 
