@@ -16,9 +16,12 @@ unsigned long int puissanceDe2(tile t)
 	return pow(2, t);
 }
 
-bool lign_can_move(grid g, int i, dir d, int debut, int fin, int facteur){
+bool lign_can_move(grid g, int i, int debut, int fin, int facteur){
 	tile pre = 0;
 	bool tile_free = false;
+
+	if(facteur == -1)
+		fin += 1;
 
 	for (int j =  debut; j * facteur < fin; j += 1 * facteur) {
 		// Si on est pas sur la premiere tile et que le precedant == le tile courant
@@ -40,9 +43,13 @@ bool lign_can_move(grid g, int i, dir d, int debut, int fin, int facteur){
 	return false;
 }
 
-bool colon_can_move(grid g, int j, dir d, int debut, int fin, int facteur){
+bool colon_can_move(grid g, int j, int debut, int fin, int facteur){
 	tile pre = 0;
 	bool tile_free = false;
+
+	if(facteur == -1)
+		fin += 1;
+
 	for (int i =  debut; i * facteur < fin; i += 1 * facteur) {
 		// Si on est pas sur la premiere tile et que le precedant == le tile courant
 		// on retourne vrai
@@ -64,194 +71,107 @@ bool colon_can_move(grid g, int j, dir d, int debut, int fin, int facteur){
 	return false;
 }
 
-void add_ligne(grid g, int i,dir d) 
+static void add_ligne(grid g, int i, int debut, int fin, int facteur) 
 {
 	int pos = -1;
 	tile empty_tile = 0;
 	unsigned long int s=0;
 	tile val = -1;
-	switch(d)
+
+	if(facteur == -1)
+		fin += 1;
+
+	for (int j =  debut; j * facteur < fin; j += 1 * facteur) 
 	{
-		case LEFT:
-			for (int j = 0; j < GRID_SIDE; j++)
+		if (get_tile (g, i, j)!=0)
+		{
+			if(val == get_tile (g, i, j))
 			{
-				if (get_tile (g, i, j)!=0)
-				{
-					if(val == get_tile (g, i, j))
-					{
-						set_tile (g, i, pos, get_tile (g, i, pos)+1);
-						set_tile (g, i, j, empty_tile);
-						s=puissanceDe2(get_tile (g, i, pos));
-						add_score(g,s);
-						pos=-1;
-						val=-1;
-					}
-					if (val != get_tile (g, i, j))
-					{
-						val=get_tile (g, i, j);
-						pos=j;
-					}
-				}
+				set_tile (g, i, pos, get_tile (g, i, pos)+1);
+				set_tile (g, i, j, empty_tile);
+				s=puissanceDe2(get_tile (g, i, pos));
+				add_score(g,s);
+				pos=-1;
+				val=-1;
 			}
-			break;
-		case RIGHT:
-			for (int j = GRID_SIDE-1; j >= 0; j--)
+			if (val != get_tile (g, i, j))
 			{
-				if (get_tile (g, i, j)!=0)
-				{
-					if(val == get_tile (g, i, j))
-					{
-						set_tile (g, i, pos, get_tile (g, i, pos)+1);
-						set_tile (g, i, j, empty_tile);
-						s=puissanceDe2(get_tile (g, i, pos));
-						add_score(g,s);
-						pos=-1;
-						val=-1;
-					}
-					if (val != get_tile (g, i, j))
-					{
-						val=get_tile (g, i, j);
-						pos=j;
-					}
-				}
+				val=get_tile (g, i, j);
+				pos=j;
 			}
-			break;
-		default:
-			break;
+		}
 	}
-	return;
 }
 
-
-void add_colon(grid g, int j,dir d) 
-{
+static void add_colon(grid g, int j, int debut, int fin, int facteur){
 	unsigned long int s=0;
 	int pos = -1;
 	tile empty_tile = 0;
 	tile val = -1;
-	switch(d)
+
+	if(facteur == -1)
+		fin += 1;
+
+	for (int i =  debut; i * facteur < fin; i += 1 * facteur) 
 	{
-		case UP:
-			for (int i = 0; i < GRID_SIDE; i++)
+		if (get_tile (g, i, j)!=0)
+		{
+			if(val == get_tile (g, i, j))
 			{
-				if (get_tile (g, i, j)!=0)
-				{
-					if( val == get_tile (g, i, j))
-					{
-						set_tile (g, pos, j, get_tile (g, pos, j)+1);
-						set_tile (g, i, j, empty_tile);
-						s=puissanceDe2(get_tile (g, pos, j));
-						add_score(g,s);
-						pos=-1;
-						val=-1;
-					}
-					if ( val != get_tile (g, i, j))
-					{
-						val= get_tile (g, i, j);
-						pos=i;
-					}
-				}
+				set_tile (g, pos, j, get_tile (g, pos, j)+1);
+				set_tile (g, i, j, empty_tile);
+				s=puissanceDe2(get_tile (g, pos, j));
+				add_score(g,s);
+				pos=-1;
+				val=-1;
 			}
-			break;
-		case DOWN:
-			for (int i = GRID_SIDE-1; i >= 0; i--)
+			if (val != get_tile (g, i, j))
 			{
-				if (get_tile (g, i, j)!=0)
-				{
-					if(val == get_tile (g, i, j))
-					{
-						set_tile (g, pos, j, get_tile (g, pos, j)+1);
-						set_tile (g, i, j, empty_tile);
-						s=puissanceDe2(get_tile (g, pos, j));
-						add_score(g,s);
-						pos=-1;
-						val=-1;
-					}
-					if (val != get_tile (g, i, j))
-					{
-						val= get_tile (g, i, j);
-						pos=i;
-					}
-				}
+				val= get_tile (g, i, j);
+				pos=i;
 			}
-			break;
-		default:
-			break;
+		}
 	}
-	return;
 }
 
-
-void concat_ligne(grid g, int i,dir d)
+static void concat_ligne(grid g, int i, int debut, int fin, int facteur)
 {
 	tile empty_tile = 0;
 	int nbVide=0;
-	switch(d)
+
+	if(facteur == -1)
+		fin += 1;
+
+	for (int j =  debut; j * facteur < fin; j += 1 * facteur) 
 	{
-		case LEFT:
-			for (int j = 0; j < GRID_SIDE; j++)
-			{
-				if (get_tile (g, i, j)==0)
-					nbVide=nbVide+1;
-				if (get_tile (g, i, j)!=0 && nbVide!=0)
-				{
-					set_tile(g, i, j - nbVide, get_tile (g, i, j));
-					set_tile (g, i, j, empty_tile);
-				}
-			}
-			break;
-		case RIGHT:
-			for (int j = GRID_SIDE-1; j >= 0; j--)
-			{
-				if (get_tile (g, i, j)==0)
-					nbVide=nbVide+1;
-				if (get_tile (g, i, j)!=0 && nbVide!=0)
-				{
-					set_tile(g, i, j + nbVide, get_tile (g, i, j));
-					set_tile (g, i, j, empty_tile);
-				}
-			}
-			break;
-		default:
-			break;
+		if (get_tile (g, i, j)==0)
+			nbVide=nbVide+1;
+		if (get_tile (g, i, j)!=0 && nbVide!=0)
+		{
+			set_tile(g, i, j - (nbVide * facteur), get_tile (g, i, j));
+			set_tile (g, i, j, empty_tile);
+		}
 	}
-	return;
 }
 
-void concat_colon(grid g, int j ,dir d)
+void concat_colon(grid g, int j, int debut, int fin, int facteur)
 {
 	tile empty_tile = 0;
 	int nbVide=0;
-	switch(d)
+
+	if(facteur == -1)
+		fin += 1;
+
+	for (int i =  debut; i * facteur < fin; i += 1 * facteur) 
 	{
-		case UP:
-			for (int i = 0; i < GRID_SIDE; i++)
-			{
-				if (get_tile (g, i, j)==0)
-					nbVide=nbVide+1;
-				if (get_tile (g, i, j)!=0 && nbVide!=0)
-				{
-					set_tile(g, i - nbVide, j, get_tile (g, i, j));
-					set_tile (g, i, j, empty_tile);
-				}
-			}
-			break;
-		case DOWN:
-			for (int i = GRID_SIDE-1; i >= 0; i--)
-			{
-				if (get_tile (g, i, j)==0)
-					nbVide=nbVide+1;
-				if (get_tile (g, i, j)!=0 && nbVide!=0)
-				{
-					set_tile(g, i + nbVide, j, get_tile (g, i, j));
-					set_tile (g, i, j, empty_tile);
-				}
-			}
-			break;
-		default:
-			break;
+		if (get_tile (g, i, j)==0)
+			nbVide=nbVide+1;
+		if (get_tile (g, i, j)!=0 && nbVide!=0)
+		{
+			set_tile(g, i - (nbVide * facteur), j, get_tile (g, i, j));
+			set_tile (g, i, j, empty_tile);
+		}
 	}
-	return;
 }
 
 
@@ -260,31 +180,29 @@ void lign_do_move(grid g, int i, dir d)
 	switch(d)
 	{
 		case LEFT:
-			add_ligne( g, i, d);
-			concat_ligne( g,i,d);
+			add_ligne( g, i, 0, GRID_SIDE, 1);
+			concat_ligne( g, i, 0, GRID_SIDE, 1);
 			break;
-
 		case RIGHT:
-			add_ligne( g, i, d);
-			concat_ligne( g,i,d);
+			add_ligne( g, i, GRID_SIDE -1, 0, -1);
+			concat_ligne( g, i, GRID_SIDE -1, 0, -1);
 			break;
 		default:
 			break;
 	}
 }
 
-void colon_do_move(grid g, int i, dir d)
+void colon_do_move(grid g, int j, dir d)
 {
 	switch(d)
 	{
 		case UP:
-			add_colon( g, i, d);
-			concat_colon( g,i,d);
+			add_colon( g, j, 0, GRID_SIDE, 1);
+			concat_colon( g,j, 0, GRID_SIDE, 1);
 			break;
-
 		case DOWN:
-			add_colon( g, i, d);
-			concat_colon( g,i,d);
+			add_colon( g, j, GRID_SIDE -1, 0, -1);
+			concat_colon( g, j, GRID_SIDE -1, 0, -1);
 			break;
 		default:
 			break;

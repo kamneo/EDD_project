@@ -134,28 +134,28 @@ bool can_move (grid g, dir d)
 		case LEFT:
 			for (int i = 0; i < GRID_SIDE; i++)
 			{
-				if(lign_can_move(g, i, d, 0, GRID_SIDE, 1))
+				if(lign_can_move(g, i, 0, GRID_SIDE, 1))
 					return true;
 			}
 			break;
 		case RIGHT:
 			for (int i = 0; i < GRID_SIDE; i++)
 			{
-				if(lign_can_move(g, i, d, GRID_SIDE -1 , 0, -1))
+				if(lign_can_move(g, i, GRID_SIDE -1 , 0, -1))
 					return true;
 			}
 			break;
 		case UP:
 			for (int i = 0; i < GRID_SIDE; i++)
 			{
-				if(colon_can_move(g, i, d, GRID_SIDE -1 , 0, -1))
+				if(colon_can_move(g, i, 0, GRID_SIDE, 1))
 					return true;
 			}
 			break;
 		case DOWN:
 			for (int i = 0; i < GRID_SIDE; i++)
 			{
-				if(colon_can_move(g, i, d, 0, GRID_SIDE, 1))
+				if(colon_can_move(g, i, GRID_SIDE -1 , 0, -1))
 					return true;
 			}
 			break;
