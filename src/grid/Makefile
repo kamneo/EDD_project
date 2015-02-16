@@ -1,9 +1,9 @@
 CC= gcc
 
 CFLAGS= -g -Wall -std=c99
-LDFLAGS= -lm
 INCLUDEDIR = ../../include
 LIBDIR = ../../lib
+LDFLAGS= -lm
 
 test_grid : test_grid.o grid.o utilities.o affichage.o
 	$(CC) test_grid.o grid.o utilities.o affichage.o $(LDFLAGS) -o $@
