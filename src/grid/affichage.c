@@ -27,7 +27,10 @@ void display_grid(grid g)
 	    	if(i % 2 != 0)
 	    	{
 	    		unsigned long int s = puissanceDe2(get_tile(g, i/2, j));
-	        	printf("| %lu \t", s);
+	    		if(s == 0)
+	    			printf("| \t");
+	    		else
+	        		printf("|\x1B[48;5;%lum%lu\t\033[0m", s%255, s);
 	        }
 	        else {
 	        	printf("-------+");

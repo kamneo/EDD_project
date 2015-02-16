@@ -7,9 +7,9 @@ extern void add_score(grid g, unsigned long int x);
 
 extern unsigned long int puissanceDe2(tile t);
 
-extern bool lign_can_move(grid g, int i, dir d);
+extern bool lign_can_move(grid g, int i, dir d, int debut, int fin, int facteur);
 
-extern bool colon_can_move(grid g, int j, dir d);
+extern bool colon_can_move(grid g, int j, dir d, int debut, int fin, int facteur);
 
 extern void add_ligne(grid g, int i,dir d);
 
@@ -18,7 +18,6 @@ extern void add_colon(grid g, int j,dir d);
 extern void concat_ligne(grid g, int i,dir d);
 
 extern void concat_colon(grid g, int j ,dir d);
-
 
 extern void lign_do_move(grid g, int i, dir d);
 

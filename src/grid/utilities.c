@@ -16,103 +16,50 @@ unsigned long int puissanceDe2(tile t)
 	return pow(2, t);
 }
 
-
-bool lign_can_move(grid g, int i, dir d){
+bool lign_can_move(grid g, int i, dir d, int debut, int fin, int facteur){
 	tile pre = 0;
 	bool tile_free = false;
-	switch(d)
-	{
-		case LEFT:
-			for (int j =  0; j < GRID_SIDE; j++) {
-				// Si on est pas sur la premiere tile et que le precedant == le tile courant
-				// on retourne vrai
-				// exemple :|2	|3	|1	|1	| est vrai
-				if(pre != 0 && pre == get_tile (g, i, j))
-					return true;
-				//si le tile courant et vide on met tile free a vrai
-				if(get_tile (g, i, j) == 0)
-					tile_free = true;
 
-				// si il y a un tile free avant et que le tile courant n'est pas null
-				// exemple :|0	|1	|0	|0	| est vrai
-				if(tile_free && get_tile (g, i, j) != 0)
-					return true;
+	for (int j =  debut; j * facteur < fin; j += 1 * facteur) {
+		// Si on est pas sur la premiere tile et que le precedant == le tile courant
+		// on retourne vrai
+		// exemple :|2	|3	|1	|1	| est vrai
+		if(pre != 0 && pre == get_tile (g, i, j))
+			return true;
+		//si le tile courant et vide on met tile free a vrai
+		if(get_tile (g, i, j) == 0)
+			tile_free = true;
 
-				pre = get_tile (g, i, j);
-			}
-			break;
-		case RIGHT:
-			for (int j = GRID_SIDE - 1; j >= 0; j--) {
-				// Si on est pas sur la premiere tile et que le precedant == le tile courant
-				// on retourne vrai
-				// exemple :|2	|3	|1	|1	| est vrai
-				if(pre != 0 && pre == get_tile (g, i, j))
-					return true;
-				//si le tile courant et vide on met tile free a vrai
-				if(get_tile (g, i, j) == 0)
-					tile_free = true;
+		// si il y a un tile free avant et que le tile courant n'est pas null
+		// exemple :|0	|1	|0	|0	| est vrai
+		if(tile_free && get_tile (g, i, j) != 0)
+			return true;
 
-				// si il y a un tile free avant et que le tile courant n'est pas null
-				// exemple :|1	|0	|0	|0	| est vrai
-				if(tile_free && get_tile (g, i, j) != 0)
-					return true;
-
-				pre = get_tile (g, i, j);
-			}
-			break;
-		default:
-			return false;
+		pre = get_tile (g, i, j);
 	}
 	return false;
 }
 
-bool colon_can_move(grid g, int j, dir d){
+bool colon_can_move(grid g, int j, dir d, int debut, int fin, int facteur){
 	tile pre = 0;
 	bool tile_free = false;
-	switch(d)
-	{
-		case UP:
-			for (int i =  0; i < GRID_SIDE; i++) {
-				// Si on est pas sur la premiere tile et que le precedant == le tile courant
-				// on retourne vrai
-				// exemple :|2	|3	|1	|1	| est vrai
-				if(pre != 0 && pre == get_tile (g, i, j))
-					return true;
-				//si le tile courant et vide on met tile free a vrai
-				if(get_tile (g, i, j) == 0)
-					tile_free = true;
+	for (int i =  debut; i * facteur < fin; i += 1 * facteur) {
+		// Si on est pas sur la premiere tile et que le precedant == le tile courant
+		// on retourne vrai
+		// exemple :|2	|3	|1	|1	| est vrai
+		if(pre != 0 && pre == get_tile (g, i, j))
+			return true;
+		//si le tile courant et vide on met tile free a vrai
+		if(get_tile (g, i, j) == 0)
+			tile_free = true;
 
-				// si il y a un tile free avant et que le tile courant n'est pas null
-				// exemple :|0	|1	|0	|0	| est vrai
-				if(tile_free && get_tile (g, i, j) != 0)
-					return true;
+		// si il y a un tile free avant et que le tile courant n'est pas null
+		// exemple :|0	|1	|0	|0	| est vrai
+		if(tile_free && get_tile (g, i, j) != 0)
+			return true;
 
-				pre = get_tile (g, i, j);
-			}
-			break;
-		case DOWN:
-			for (int i = GRID_SIDE - 1; i >= 0; i--) {
-				// Si on est pas sur la premiere tile et que le precedant == le tile courant
-				// on retourne vrai
-				// exemple :|2	|3	|1	|1	| est vrai
-				if(pre != 0 && pre == get_tile (g, i, j))
-					return true;
-				//si le tile courant et vide on met tile free a vrai
-				if(get_tile (g, i, j) == 0)
-					tile_free = true;
-
-				// si il y a un tile free avant et que le tile courant n'est pas null
-				// exemple :|1	|0	|0	|0	| est vrai
-				if(tile_free && get_tile (g, i, j) != 0)
-					return true;
-
-				pre = get_tile (g, i, j);
-			}
-			break;
-		default:
-			return false;
+		pre = get_tile (g, i, j);
 	}
-	return false;
 }
 
 void add_ligne(grid g, int i,dir d) 

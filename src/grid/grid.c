@@ -26,8 +26,6 @@ static int rang_aleatoire (int n){
  * \return an int between 1 and 2
  */
 static int valeur_aleatoire (){
-	srand(time(NULL));
-
 	if (rand()%10 < 9)
 		return 1;
 	else
@@ -45,7 +43,6 @@ grid new_grid ()
 	g->tiles = malloc(sizeof(tile) * GRID_SIDE);
 	for(int i = 0; i < GRID_SIDE; i++)
             g->tiles[i] = malloc(sizeof(tile) * GRID_SIDE);
-
 
 	for(int i = 0; i < GRID_SIDE; i++)
         for(int j = 0; j < GRID_SIDE; j++)
@@ -132,22 +129,38 @@ void set_tile (grid g, int x, int y, tile t)
  */
 bool can_move (grid g, dir d)
 {
-	if( d == LEFT || d == RIGHT)
+	switch(d)
 	{
-		for (int i = 0; i < GRID_SIDE; i++)
-		{
-			if(lign_can_move(g, i, d))
-				return true;
-		}
-	}
-
-	if( d == UP || d == DOWN)
-	{
-		for (int j = 0; j < GRID_SIDE; j++)
-		{
-			if(colon_can_move(g, j, d))
-				return true;
-		}
+		case LEFT:
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
+				if(lign_can_move(g, i, d, 0, GRID_SIDE, 1))
+					return true;
+			}
+			break;
+		case RIGHT:
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
+				if(lign_can_move(g, i, d, GRID_SIDE -1 , 0, -1))
+					return true;
+			}
+			break;
+		case UP:
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
+				if(colon_can_move(g, i, d, GRID_SIDE -1 , 0, -1))
+					return true;
+			}
+			break;
+		case DOWN:
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
+				if(colon_can_move(g, i, d, 0, GRID_SIDE, 1))
+					return true;
+			}
+			break;
+		default:
+			return false;
 	}
 
 	return false;

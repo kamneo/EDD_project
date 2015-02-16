@@ -20,24 +20,36 @@ int main (int arc, char** argv)
 	
 	printf("modification de la grille \n");
 	set_tile (g, 0, 0, 2);
+	set_tile (g, 0, 1, 2);
 	set_tile (g, 0, 2, 4);
 	set_tile (g, 0, 3, 4);
-	set_tile (g, 0, 1, 2);
+
+	set_tile (g, 1, 1, 2);
+	set_tile (g, 1, 2, 2);
+
+	set_tile (g, 2, 3, 2);
+	set_tile (g, 2, 0, 2);
+
+	set_tile (g, 3, 3, 4);
+	set_tile (g, 3, 1, 2);
 	display_grid(g);
-	printf("le résultat de la grille est : %lu\n", grid_score(g));
 
-	printf("la grille peut %s bouger vers le haut !\n", can_move(g, UP)? "" : "pas");
+	printf("la grille %s bouger vers le haut !\n", can_move(g, UP)? "peut" : "ne peut pas");
 
-	printf("la grille peut %s bouger vers le bas !\n", can_move(g, DOWN)? "" : "pas");
+	printf("la grille %s bouger vers le bas !\n", can_move(g, DOWN)? "peut" : "ne peut pas");
 
-	printf("la grille peut %s bouger vers la droite!\n", can_move(g, RIGHT)? "" : "pas");
+	printf("la grille %s bouger vers la droite!\n", can_move(g, RIGHT)? "peut" : "ne peut pas");
 
-	printf("la grille peut %s bouger vers la gauche!\n", can_move(g, LEFT)? "" : "pas");
+	printf("la grille %s bouger vers la gauche!\n", can_move(g, LEFT)? "peut" : "ne peut pas");
 	do_move(g, RIGHT);
 	display_grid(g);
 	do_move(g, RIGHT);
 	display_grid(g);
 	do_move(g, LEFT);
+	display_grid(g);
+	do_move(g, UP);
+	display_grid(g);
+	do_move(g, DOWN);
 	display_grid(g);
 
 	add_tile(g);
