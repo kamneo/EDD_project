@@ -60,6 +60,8 @@ bool colon_can_move(grid g, int j, dir d, int debut, int fin, int facteur){
 
 		pre = get_tile (g, i, j);
 	}
+
+	return false;
 }
 
 void add_ligne(grid g, int i,dir d) 

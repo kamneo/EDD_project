@@ -30,7 +30,7 @@ void display_grid(grid g)
 	    		if(s == 0)
 	    			printf("| \t");
 	    		else
-	        		printf("|\x1B[48;5;%lum%lu\t\033[0m", s%255, s);
+	        		printf("|\x1B[48;5;%dm%lu\t\033[0m", get_tile(g, i/2, j)%11, s);
 	        }
 	        else {
 	        	printf("-------+");
