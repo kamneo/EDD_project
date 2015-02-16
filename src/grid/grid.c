@@ -177,7 +177,7 @@ bool can_move (grid g, dir d)
  */
 bool game_over (grid g)
 {
-	return can_move(g, LEFT) && can_move(g, RIGHT) && can_move(g, UP) && can_move(g, DOWN);
+	return !can_move(g, LEFT) && !can_move(g, RIGHT) && !can_move(g, UP) && !can_move(g, DOWN);
 }
 
 /**
@@ -266,5 +266,5 @@ void play (grid g, dir d)
 	add_tile(g);
 
 	if(game_over(g))
-		printf("Game over, votre score est : %lu\n bien joué !\n", g->score);
+		printf("Game over, votre score est : %lu\nBien joué !\n", g->score);
 }

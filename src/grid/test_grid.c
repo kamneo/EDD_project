@@ -13,7 +13,7 @@ int main (int arc, char** argv)
 	grid g;
 	g = new_grid ();
 
-	printf("affichage de la grille lors de la création ! \n");
+	/*printf("affichage de la grille lors de la création ! \n");
 	display_grid(g);
 
 	printf("le résultat de la grille est : %lu\n", grid_score(g));
@@ -56,7 +56,16 @@ int main (int arc, char** argv)
 	display_grid(g);
 	delete_grid (g);
 
-	g = new_grid ();
+	g = new_grid ();*/
+	display_grid(g);
+	play(g, LEFT);
+	display_grid(g);
+	play(g, RIGHT);
+	display_grid(g);
+	play(g, UP);
+	display_grid(g);
+	play(g, DOWN);
+	display_grid(g);
 	return EXIT_SUCCESS;
 }
 
