@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -g -Wall
 CPPFLAGS = 
-SUBDIR = grid
+SUBDIR = src
 
 
 install: 
