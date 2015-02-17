@@ -18,4 +18,4 @@ dep :
 	$(CC) -MM *.c
 
 clean :
-	rm -f *.o 2048
+	rm -f *.o ../../2048_executable
