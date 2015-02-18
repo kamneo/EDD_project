@@ -122,9 +122,6 @@ bool lign_can_move(grid g, int i, int debut, int fin, int facteur){
 	tile pre = 0;
 	bool tile_free = false;
 
-	if(facteur == -1)
-		fin += 1;
-
 	for (int j =  debut; j * facteur < fin; j += 1 * facteur) {
 		// Si on est pas sur la premiere tile et que le precedant == le tile courant
 		// on retourne vrai
@@ -157,9 +154,6 @@ bool lign_can_move(grid g, int i, int debut, int fin, int facteur){
 bool colon_can_move(grid g, int j, int debut, int fin, int facteur){
 	tile pre = 0;
 	bool tile_free = false;
-
-	if(facteur == -1)
-		fin += 1;
 
 	for (int i =  debut; i * facteur < fin; i += 1 * facteur) {
 		// Si on est pas sur la premiere tile et que le precedant == le tile courant

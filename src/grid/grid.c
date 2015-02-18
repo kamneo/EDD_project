@@ -113,7 +113,7 @@ void set_score(grid g, unsigned long int x)
  */
 
 tile get_tile (grid g, int x, int y){
-return (g->tiles[x][y]);
+	return (g->tiles[x][y]);
 }
 
 
