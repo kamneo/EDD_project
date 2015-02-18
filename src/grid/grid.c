@@ -6,6 +6,9 @@
 #include "grid.h"
 #include "utilities.h"
 
+#define SENS_NEGATIF -1
+#define SENS_POSITIF 1
+
 struct grid_s{
     tile** tiles;
     unsigned long int score;
@@ -138,28 +141,32 @@ bool can_move (grid g, dir d)
 		case LEFT:
 			for (int i = 0; i < GRID_SIDE; i++)
 			{
-				if(lign_can_move(g, i, 0, GRID_SIDE, 1))
+				// ici on parcourt la grille de l'indice 0 à la taille du tableau pour chaque ligne
+				if(lign_can_move(g, i, 0, GRID_SIDE, SENS_POSITIF))
 					return true;
 			}
 			break;
 		case RIGHT:
 			for (int i = 0; i < GRID_SIDE; i++)
 			{
-				if(lign_can_move(g, i, GRID_SIDE -1 , 0, -1))
+				// ici on parcourt la grille de l'indice la taille du tableau - 1 à 1 pour chaque ligne
+				if(lign_can_move(g, i, GRID_SIDE -1 , 1, SENS_NEGATIF))
 					return true;
 			}
 			break;
 		case UP:
 			for (int i = 0; i < GRID_SIDE; i++)
 			{
-				if(colon_can_move(g, i, 0, GRID_SIDE, 1))
+				// ici on parcourt la grille de l'indice 0 à la taille du tableau pour chaque colonne
+				if(colon_can_move(g, i, 0, GRID_SIDE, SENS_POSITIF))
 					return true;
 			}
 			break;
 		case DOWN:
 			for (int i = 0; i < GRID_SIDE; i++)
 			{
-				if(colon_can_move(g, i, GRID_SIDE -1 , 0, -1))
+				// ici on parcourt la grille de l'indice la taille du tableau - 1 à 1 pour chaque colonne
+				if(colon_can_move(g, i, GRID_SIDE -1 , 1, SENS_NEGATIF))
 					return true;
 			}
 			break;
@@ -194,6 +201,7 @@ void do_move (grid g, dir d)
 		return;
 	}
 
+	// en fonction de la direction passée en parametre, on fait un movement ligne à ligne ou colonne à colonne.
 	if( d == LEFT || d == RIGHT)
 	{
 		for (int i = 0; i < GRID_SIDE; i++)
@@ -218,17 +226,18 @@ void do_move (grid g, dir d)
  * \param g the grid
  * \pre grid g must contain  at least one empty tile.
  */
-
 void add_tile (grid g){
-	int taille = (GRID_SIDE*GRID_SIDE)*2;
-	int nbFree = 0;
-	int* tab;
+	int taille = (GRID_SIDE*GRID_SIDE)*2; // taille maximale de notre tableau
+	int nbFree = 0; // nombre de tile libre
+	int* tab; // le tableau de coordonée
 	int nombreAleatoire;
 
 	tab = malloc(sizeof(int)*taille);
+	// on parcourt la grille
 	for (int i = 0; i < GRID_SIDE; i++){
 		for (int j = 0; j < GRID_SIDE; j++)
 		{
+			// si la tile à la position i et j est vide on ajoute au tableau tab les valeurs de i et j
 			if (g->tiles[i][j] == 0)
 			{
 				tab[nbFree*2] = i;
@@ -243,7 +252,9 @@ void add_tile (grid g){
 		return;
 	}
 
+	// on génére un nombre aléatoire pour obtenir les coordonées dans le tableau tab d'une tile vide
 	nombreAleatoire = rang_aleatoire(nbFree)*2;
+	// au tile obtenue on change sa valeur entre 1 et 2 (9/10 chance d'avoir 1 et 1/10 chance d'avoir 2)
 	g->tiles[tab[nombreAleatoire]][tab[nombreAleatoire+1]] = valeur_aleatoire();
 	free(tab);
 }
@@ -262,6 +273,9 @@ void play (grid g, dir d)
 		return;
 	}
 
+	// on fait le movement sur la grille
 	do_move(g, d);
+
+	// on ajoute une tile à une position aléatoire
 	add_tile(g);
 }

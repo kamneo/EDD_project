@@ -34,11 +34,11 @@ void display_grid(grid g)
 	    for(int j = 0; j < GRID_SIDE; j++)
 	    	if(i % 2 != 0)
 	    	{
-	    		unsigned long int s = puissanceDe2(get_tile(g, i/2, j));
-	    		if(s == 0)
+	    		if(get_tile(g, i/2, j) == 0)
 	    			printf("| \t");
 	    		else
-	        		printf("|\x1B[48;5;%dm%lu\t\033[0m", get_tile(g, i/2, j)%10 + 1, s);
+	    			// affiche les puissances de 2 avec les couleurs
+	        		printf("|\x1B[48;5;%dm%lu\t\033[0m", get_tile(g, i/2, j)%10 + 1, puissanceDe2(get_tile(g, i/2, j));
 	        }
 	        else {
 	        	printf("-------+");
