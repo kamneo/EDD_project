@@ -1,8 +1,7 @@
 CC = gcc
 CFLAGS = -g -Wall
 CPPFLAGS = 
-SUBDIR = grid 2048
-
+SUBDIR = grid 
 
 install: 
 	for i in ${SUBDIR} ; do\

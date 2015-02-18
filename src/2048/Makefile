@@ -4,10 +4,10 @@ INCLUDEDIR = ../../include
 LIBDIR = ../../lib
 CFLAGS= -g -Wall -std=c99
 CPPFLAGS= -I $(INCLUDEDIR)
-LDFLAGS= -lm  -L $(LIBDIR) -lgrid
+LDFLAGS= -L $(LIBDIR) -lgrid -lm
 
 2048 : 2048.o
-	$(CC) test_grid.o $(LDFLAGS) -o $@
+	$(CC) 2048.o $(LDFLAGS) -o $@
 
 2048.o: 2048.c
 

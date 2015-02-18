@@ -9,6 +9,11 @@ static void add_score(grid g, unsigned long int x){
 	set_score(g, grid_score (g) + x);
 }
 
+/*
+ * \brief Calculate the pow of the tile
+ * \param t the tile to be calculate
+ * \return the pow of the tile if t > 0 or return 0
+ */
 static unsigned long int puissanceDe2(tile t)
 {
 	if (t == 0)	
@@ -16,60 +21,6 @@ static unsigned long int puissanceDe2(tile t)
 	return pow(2, t);
 }
 
-bool lign_can_move(grid g, int i, int debut, int fin, int facteur){
-	tile pre = 0;
-	bool tile_free = false;
-
-	if(facteur == -1)
-		fin += 1;
-
-	for (int j =  debut; j * facteur < fin; j += 1 * facteur) {
-		// Si on est pas sur la premiere tile et que le precedant == le tile courant
-		// on retourne vrai
-		// exemple :|2	|3	|1	|1	| est vrai
-		if(pre != 0 && pre == get_tile (g, i, j))
-			return true;
-		//si le tile courant et vide on met tile free a vrai
-		if(get_tile (g, i, j) == 0)
-			tile_free = true;
-
-		// si il y a un tile free avant et que le tile courant n'est pas null
-		// exemple :|0	|1	|0	|0	| est vrai
-		if(tile_free && get_tile (g, i, j) != 0)
-			return true;
-
-		pre = get_tile (g, i, j);
-	}
-	return false;
-}
-
-bool colon_can_move(grid g, int j, int debut, int fin, int facteur){
-	tile pre = 0;
-	bool tile_free = false;
-
-	if(facteur == -1)
-		fin += 1;
-
-	for (int i =  debut; i * facteur < fin; i += 1 * facteur) {
-		// Si on est pas sur la premiere tile et que le precedant == le tile courant
-		// on retourne vrai
-		// exemple :|2	|3	|1	|1	| est vrai
-		if(pre != 0 && pre == get_tile (g, i, j))
-			return true;
-		//si le tile courant et vide on met tile free a vrai
-		if(get_tile (g, i, j) == 0)
-			tile_free = true;
-
-		// si il y a un tile free avant et que le tile courant n'est pas null
-		// exemple :|0	|1	|0	|0	| est vrai
-		if(tile_free && get_tile (g, i, j) != 0)
-			return true;
-
-		pre = get_tile (g, i, j);
-	}
-
-	return false;
-}
 
 static void add_ligne(grid g, int i, int debut, int fin, int facteur) 
 {
@@ -174,7 +125,85 @@ void concat_colon(grid g, int j, int debut, int fin, int facteur)
 	}
 }
 
+/**
+ * \brief verify if the lign can move in the direction
+ * \param g the grid
+ * \param i the curent lign
+ * \param debut the first indice worked 0 if the direction is LEFT and GRID_SIZE - 1 if the direction is RIGHT
+ * \param fin the last indice worked 0 if the direction is RIGHT and GRID_SIZE - 1 if the direction is LEFT
+ * \param facteur it's the variable needed for increment if the direction is RIGHT or increment
+ * \return if the lign can move or not
+ */
+bool lign_can_move(grid g, int i, int debut, int fin, int facteur){
+	tile pre = 0;
+	bool tile_free = false;
 
+	if(facteur == -1)
+		fin += 1;
+
+	for (int j =  debut; j * facteur < fin; j += 1 * facteur) {
+		// Si on est pas sur la premiere tile et que le precedant == le tile courant
+		// on retourne vrai
+		// exemple :|2	|3	|1	|1	| est vrai
+		if(pre != 0 && pre == get_tile (g, i, j))
+			return true;
+		//si le tile courant et vide on met tile free a vrai
+		if(get_tile (g, i, j) == 0)
+			tile_free = true;
+
+		// si il y a un tile free avant et que le tile courant n'est pas null
+		// exemple :|0	|1	|0	|0	| est vrai
+		if(tile_free && get_tile (g, i, j) != 0)
+			return true;
+
+		pre = get_tile (g, i, j);
+	}
+	return false;
+}
+
+/**
+ * \brief verify if the colone can move in the direction
+ * \param g the grid
+ * \param j the curent colone
+ * \param debut the first indice worked 0 if the direction is LEFT and GRID_SIZE - 1 if the direction is DOWN
+ * \param fin the last indice worked 0 if the direction is RIGHT and GRID_SIZE - 1 if the direction is LEFT
+ * \param facteur it's the variable needed for increment if the direction is RIGHT or increment
+ * \return if the colone can move or not
+ */
+bool colon_can_move(grid g, int j, int debut, int fin, int facteur){
+	tile pre = 0;
+	bool tile_free = false;
+
+	if(facteur == -1)
+		fin += 1;
+
+	for (int i =  debut; i * facteur < fin; i += 1 * facteur) {
+		// Si on est pas sur la premiere tile et que le precedant == le tile courant
+		// on retourne vrai
+		// exemple :|2	|3	|1	|1	| est vrai
+		if(pre != 0 && pre == get_tile (g, i, j))
+			return true;
+		//si le tile courant et vide on met tile free a vrai
+		if(get_tile (g, i, j) == 0)
+			tile_free = true;
+
+		// si il y a un tile free avant et que le tile courant n'est pas null
+		// exemple :|0	|1	|0	|0	| est vrai
+		if(tile_free && get_tile (g, i, j) != 0)
+			return true;
+
+		pre = get_tile (g, i, j);
+	}
+
+	return false;
+}
+
+/**
+ * \brief do the move on a line in the grid 
+ * \param g the grid
+ * \param i the curent line
+ * \param d the direction on the line (LEFT or RIGHt)
+ */
 void lign_do_move(grid g, int i, dir d)
 {
 	switch(d)
@@ -192,6 +221,12 @@ void lign_do_move(grid g, int i, dir d)
 	}
 }
 
+/**
+ * \brief do the move on a line in the grid 
+ * \param g the grid
+ * \param i the curent colone
+ * \param d the direction on the colone (UP or DOWN)
+ */
 void colon_do_move(grid g, int j, dir d)
 {
 	switch(d)

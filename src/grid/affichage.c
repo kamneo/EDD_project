@@ -3,6 +3,11 @@
 #include <stdio.h>
 #include "affichage.h"
 
+/*
+ * \brief Calculate the pow of the tile
+ * \param t the tile to be calculate
+ * \return the pow of the tile if t > 0 or return 0
+ */
 static unsigned long int puissanceDe2(tile t)
 {
 	if (t == 0)	
@@ -10,6 +15,9 @@ static unsigned long int puissanceDe2(tile t)
 	return pow(2, t);
 }
 
+/**
+ * \brief Display in console the grid with color and the pow of value contained in tile
+ */
 void display_grid(grid g)
 {
 
@@ -40,6 +48,9 @@ void display_grid(grid g)
 	printf("\n le score est de : %lu \n\n",grid_score(g));
 }
 
+/**
+ * \brief Display in console the grid with color and the value contained in tile
+ */
 void display_normal_grid(grid g)
 {
 
@@ -56,7 +67,7 @@ void display_normal_grid(grid g)
 	    for(int j = 0; j < GRID_SIDE; j++)
 	    	if(i % 2 != 0)
 	    	{
-	        	printf("| %lu \t", (long unsigned int)(get_tile(g, i/2, j)));
+	        	printf("|\x1B[48;5;%dm%lu\t\033[0m", get_tile(g, i/2, j)%10 + 1, (long unsigned int)(get_tile(g, i/2, j)));
 	        }
 	        else {
 	        	printf("-------+");
