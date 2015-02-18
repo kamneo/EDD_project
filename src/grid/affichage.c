@@ -38,7 +38,7 @@ void display_grid(grid g)
 	    			printf("| \t");
 	    		else
 	    			// affiche les puissances de 2 avec les couleurs
-	        		printf("|\x1B[48;5;%dm%lu\t\033[0m", get_tile(g, i/2, j)%10 + 1, puissanceDe2(get_tile(g, i/2, j));
+	        		printf("|\x1B[48;5;%dm%lu\t\033[0m", get_tile(g, i/2, j)%10 + 1, puissanceDe2(get_tile(g, i/2, j)));
 	        }
 	        else {
 	        	printf("-------+");
