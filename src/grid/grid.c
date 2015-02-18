@@ -41,7 +41,7 @@ grid new_grid ()
 	srand(time(NULL));
 	grid g;
 	g = malloc(sizeof(struct grid_s));
-	g->tiles = malloc(sizeof(tile) * GRID_SIDE);
+	g->tiles = malloc(sizeof(void *) * GRID_SIDE);
 	for(int i = 0; i < GRID_SIDE; i++)
             g->tiles[i] = malloc(sizeof(tile) * GRID_SIDE);
 
