@@ -51,9 +51,6 @@ grid new_grid ()
 	for(int i = 0; i < GRID_SIDE; i++)
         for(int j = 0; j < GRID_SIDE; j++)
             g->tiles[i][j] = 0;
-
-    add_tile(g);
-    add_tile(g);
     
 	return g;
 }

@@ -8,6 +8,8 @@ int main(void){
 	bool boucle;
 	while(1){
 		grid g=new_grid();
+		add_tile(g);
+		add_tile(g);
 		display_grid(g);
 		boucle=true;
 		while(boucle){
