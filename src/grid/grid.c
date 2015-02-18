@@ -264,7 +264,4 @@ void play (grid g, dir d)
 
 	do_move(g, d);
 	add_tile(g);
-
-	if(game_over(g))
-		printf("Game over, votre score est : %lu\nBien joué !\n", g->score);
 }
