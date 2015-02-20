@@ -1,7 +1,0 @@
-il y a une grille (grid), jusque la je vous apprend rien.
-
-Dans cette grille qui est de taille GRID_SIDE, allant de 0 à GRID_SIDE-1 e longueur et largeur.
-
-chaque casse de la grille (qui est donc un tableau à deux dimension), est un "tile" qui n'est qu'un int qui vaut la puissance
-de 2 du nombre de la case (oula c'est pas clair, vite un exemple, si la case à la valeur 1024, le tile à la valeur 10)
-
