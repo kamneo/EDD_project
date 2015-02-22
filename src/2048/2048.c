@@ -3,45 +3,47 @@
 #include <grid.h>
 #include <affichage.h>
 
+#define NOUVELLE_PARTIE 1
 int main(void){
 	char c;
-	bool boucle;
-	while(1){
+	bool tour_suivant;
+
+	while(NOUVELLE_PARTIE){
+
 		grid g=new_grid();
 		add_tile(g);
 		add_tile(g);
 		display_grid(g);
-		boucle=true;
-		while(boucle){
-			//if(scanf("direction ? %c",&c)!=1)
+		tour_suivant=true;
+
+		while(tour_suivant){
 			c=getchar();
 
 			switch(c){
 				case 'z':
-					play(g,UP);
-					display_grid(g);
+					play(g, UP);
 					break;
 				case 'q':
-					play(g,LEFT);
-					display_grid(g);
+					play(g, LEFT);
 					break;
 				case 's':
-					play(g,DOWN);
-					display_grid(g);
+					play(g, DOWN);
 					break;
 				case 'd':
-					play(g,RIGHT);
-					display_grid(g);
+					play(g, RIGHT);
 					break;
 				default:
+					continue;
 					break;
-
 			}
+			
+			display_grid(g);
+
 			if (game_over(g)){
-				printf("voulez vous rejouer : y , n ");
+				printf("voulez vous rejouer : y , n\n");
 				c=getchar();
 				if (c=='y')
-					boucle=false;
+					tour_suivant=false;
 				
 				if (c=='n')
 					return EXIT_SUCCESS;

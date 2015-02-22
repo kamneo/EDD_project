@@ -17,4 +17,9 @@ extern void display_grid (grid g);
  */
 extern void display_normal_grid (grid g);
 
+/**
+ * \brief Display in console the grid without form just numbres in only one line
+ */
+extern void light_display_grid (grid g);
+
 #endif

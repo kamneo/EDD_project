@@ -5,16 +5,12 @@
 
 #include "utilities.h"
 
-static void add_score(grid g, unsigned long int x){
-	set_score(g, grid_score (g) + x);
-}
-
 /*
  * \brief Calculate the pow of the tile
  * \param t the tile to be calculate
  * \return the pow of the tile if t > 0 or return 0
  */
-static unsigned long int puissanceDe2(tile t)
+static unsigned long int pow_of_2(tile t)
 {
 	if (t == 0)	
 		return t;
@@ -22,11 +18,12 @@ static unsigned long int puissanceDe2(tile t)
 }
 
 
-static void add_ligne(grid g, int i, int debut, int fin, int facteur) 
+static unsigned long int add_ligne(grid g, int i, int debut, int fin, int facteur) 
 {
 	int pos = -1;
 	tile empty_tile = 0;
 	tile val = -1;
+	unsigned long int to_add = 0;
 
 	for (int j =  debut; j * facteur < fin; j += 1 * facteur) 
 	{
@@ -36,7 +33,7 @@ static void add_ligne(grid g, int i, int debut, int fin, int facteur)
 			{
 				set_tile (g, i, pos, get_tile (g, i, pos)+1);
 				set_tile (g, i, j, empty_tile);
-				add_score(g, puissanceDe2(get_tile (g, i, pos)));
+				to_add += pow_of_2(get_tile (g, i, pos));
 				pos=-1;
 				val=-1;
 			}
@@ -47,12 +44,15 @@ static void add_ligne(grid g, int i, int debut, int fin, int facteur)
 			}
 		}
 	}
+
+	return to_add;
 }
 
-static void add_colon(grid g, int j, int debut, int fin, int facteur){
+static unsigned long int add_column(grid g, int j, int debut, int fin, int facteur){
 	int pos = -1;
 	tile empty_tile = 0;
 	tile val = -1;
+	unsigned long int to_add = 0;
 
 	for (int i =  debut; i * facteur < fin; i += 1 * facteur) 
 	{
@@ -62,7 +62,7 @@ static void add_colon(grid g, int j, int debut, int fin, int facteur){
 			{
 				set_tile (g, pos, j, get_tile (g, pos, j)+1);
 				set_tile (g, i, j, empty_tile);
-				add_score(g, puissanceDe2(get_tile (g, pos, j)));
+				to_add += pow_of_2(get_tile (g, pos, j));
 				pos=-1;
 				val=-1;
 			}
@@ -73,6 +73,8 @@ static void add_colon(grid g, int j, int debut, int fin, int facteur){
 			}
 		}
 	}
+
+	return to_add;
 }
 
 static void concat_ligne(grid g, int i, int debut, int fin, int facteur)
@@ -92,7 +94,7 @@ static void concat_ligne(grid g, int i, int debut, int fin, int facteur)
 	}
 }
 
-void concat_colon(grid g, int j, int debut, int fin, int facteur)
+void concat_column(grid g, int j, int debut, int fin, int facteur)
 {
 	tile empty_tile = 0;
 	int nbVide=0;
@@ -143,15 +145,15 @@ bool lign_can_move(grid g, int i, int debut, int fin, int facteur){
 }
 
 /**
- * \brief verify if the colone can move in the direction
+ * \brief verify if the column can move in the direction
  * \param g the grid
- * \param j the curent colone
+ * \param j the curent column
  * \param debut the first indice worked 0 if the direction is LEFT and GRID_SIZE - 1 if the direction is DOWN
  * \param fin the last indice worked 0 if the direction is RIGHT and GRID_SIZE - 1 if the direction is LEFT
  * \param facteur it's the variable needed for increment if the direction is RIGHT or increment
- * \return if the colone can move or not
+ * \return if the column can move or not
  */
-bool colon_can_move(grid g, int j, int debut, int fin, int facteur){
+bool column_can_move(grid g, int j, int debut, int fin, int facteur){
 	tile pre = 0;
 	bool tile_free = false;
 
@@ -180,44 +182,52 @@ bool colon_can_move(grid g, int j, int debut, int fin, int facteur){
  * \brief do the move on a line in the grid 
  * \param g the grid
  * \param i the curent line
- * \param d the direction on the line (LEFT or RIGHt)
+ * \param d the direction on the line (LEFT or RIGHt any else do nothing)
  */
-void lign_do_move(grid g, int i, dir d)
+unsigned long int lign_do_move(grid g, int i, dir d)
 {
+	unsigned long int to_add = 0;
+
 	switch(d)
 	{
 		case LEFT:
-			add_ligne( g, i, 0, GRID_SIDE, 1);
+			to_add = add_ligne( g, i, 0, GRID_SIDE, 1);
 			concat_ligne( g, i, 0, GRID_SIDE, 1);
 			break;
 		case RIGHT:
-			add_ligne( g, i, GRID_SIDE -1, 1, -1);
+			to_add = add_ligne( g, i, GRID_SIDE -1, 1, -1);
 			concat_ligne( g, i, GRID_SIDE -1, 1, -1);
 			break;
 		default:
 			break;
 	}
+
+	return to_add;
 }
 
 /**
- * \brief do the move on a line in the grid 
+ * \brief do the move on a column in the grid 
  * \param g the grid
- * \param i the curent colone
- * \param d the direction on the colone (UP or DOWN)
+ * \param i the curent column
+ * \param d the direction on the column (UP or DOWN any else do nothing)
  */
-void colon_do_move(grid g, int j, dir d)
+unsigned long int column_do_move(grid g, int j, dir d)
 {
+	unsigned long int to_add = 0;
+
 	switch(d)
 	{
 		case UP:
-			add_colon( g, j, 0, GRID_SIDE, 1);
-			concat_colon( g,j, 0, GRID_SIDE, 1);
+			to_add = add_column( g, j, 0, GRID_SIDE, 1);
+			concat_column( g,j, 0, GRID_SIDE, 1);
 			break;
 		case DOWN:
-			add_colon( g, j, GRID_SIDE -1, 1, -1);
-			concat_colon( g, j, GRID_SIDE -1, 1, -1);
+			to_add = add_column( g, j, GRID_SIDE -1, 1, -1);
+			concat_column( g, j, GRID_SIDE -1, 1, -1);
 			break;
 		default:
 			break;
 	}
+
+	return to_add;
 }

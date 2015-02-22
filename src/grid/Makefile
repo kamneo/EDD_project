@@ -17,7 +17,6 @@ install: libgrid.a
 	cp affichage.h grid.h $(INCLUDEDIR)
 	cp libgrid.a $(LIBDIR)
 	rm -f libgrid.a
-	rm *.o test_grid
 
 libgrid.a:
 	ar -cr libgrid.a grid.o affichage.o utilities.o
