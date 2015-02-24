@@ -7,7 +7,6 @@
 
 #include "grid.h"
 #include "affichage.h"
-#include "utilities.h"
 
  int main (int arc, char** argv){
  	grid g;

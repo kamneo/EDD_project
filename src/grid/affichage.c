@@ -83,7 +83,7 @@
  */
  void light_display_grid (grid g)
  {
- 	for(int i = 0; i < GRID_SIDE * 2 +1; i++)
+ 	for(int i = 0; i < GRID_SIDE; i++)
  	{
  		for(int j = 0; j < GRID_SIDE; j++)
  			printf("%lu", (long unsigned int)(get_tile(g, i/2, j)));

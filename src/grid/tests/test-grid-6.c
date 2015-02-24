@@ -13,19 +13,26 @@ int main (int arc, char** argv)
 	grid g;
 	g = new_grid ();
 
-	for(int i = 0; i < GRID_SIDE; i++){
-		for (int j = 0; j < GRID_SIDE; j++)
-		{
-			if((i+j)%2 == 0)
-				set_tile(g, i, j, i+j);
-		}
-	}
-	
-	printf("%s\n", game_over(g)? "1" : "0");
+	set_tile (g, 0, 0, 2);
+	set_tile (g, 0, 1, 2);
+	set_tile (g, 0, 2, 4);
+	set_tile (g, 0, 3, 4);
 
-	set_tile(g, 0, 0, 10)
+	set_tile (g, 1, 1, 2);
+	set_tile (g, 1, 2, 2);
+
+	set_tile (g, 2, 3, 2);
+	set_tile (g, 2, 0, 2);
+
+	set_tile (g, 3, 3, 4);
+	set_tile (g, 3, 1, 2);
+
+	do_move(g, RIGHT);
+	do_move(g, LEFT);
+	do_move(g, UP);
+	do_move(g, DOWN);
 	
-	printf("%s\n", game_over(g)? "1" : "0");
+	light_display_grid(g);
 
 	return EXIT_SUCCESS;
 }

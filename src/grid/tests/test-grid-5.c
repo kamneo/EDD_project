@@ -20,9 +20,9 @@ int main (int arc, char** argv)
 		}
 	}
 	
-	printf("%s\n", game_over(g)? "1" : "0");
+	printf("%s", game_over(g)? "1" : "0");
 
-	set_tile(g, 0, 0, 10)
+	set_tile(g, 0, 0, 10);
 	
 	printf("%s\n", game_over(g)? "1" : "0");
 

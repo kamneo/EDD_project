@@ -27,10 +27,10 @@ int main (int arc, char** argv)
 	set_tile (g, 3, 3, 4);
 	set_tile (g, 3, 1, 2);
 
-	printf("%s", can_move(g, UP)? "1" : "0");
-	printf("%s", can_move(g, DOWN)? "1" : "0");
-	printf("%s", can_move(g, RIGHT)? "1" : "0");
-	printf("%s\n", can_move(g, LEFT)? "1" : "0");
+	printf("%s", can_move(g, UP)? "0" : "1");
+	printf("%s", can_move(g, DOWN)? "0" : "1");
+	printf("%s", can_move(g, RIGHT)? "0" : "1");
+	printf("%s\n", can_move(g, LEFT)? "0" : "1");
 
 	return EXIT_SUCCESS;
 }

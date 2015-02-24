@@ -1,5 +1,26 @@
 add_executable(test-grid-1 test-grid-1.c)
+add_executable(test-grid-2 test-grid-2.c)
+add_executable(test-grid-3 test-grid-3.c)
+add_executable(test-grid-4 test-grid-4.c)
+add_executable(test-grid-5 test-grid-5.c)
+add_executable(test-grid-6 test-grid-6.c)
 
 target_link_libraries(test-grid-1 grid m)
+target_link_libraries(test-grid-2 grid m)
+target_link_libraries(test-grid-3 grid m)
+target_link_libraries(test-grid-4 grid m)
+target_link_libraries(test-grid-5 grid m)
+target_link_libraries(test-grid-6 grid m)
 
-add_test (test1 test-vext-1)
+add_test (test1 test-grid-1)
+add_test (test2 test-grid-2)
+add_test (test3 test-grid-3)
+add_test (test4 test-grid-4)
+add_test (test5 test-grid-5)
+add_test (test6 test-grid-6)
+
+set_tests_properties(test1 test3 test4 PROPERTIES PASS_REGULAR_EXPRESSION "[0]+" TIMEOUT 1)
+set_tests_properties(test2 PROPERTIES PASS_REGULAR_EXPRESSION "[0-2]+" TIMEOUT 1)
+set_tests_properties(test5 PROPERTIES PASS_REGULAR_EXPRESSION "01" TIMEOUT 1)
+set_tests_properties(test6 PROPERTIES PASS_REGULAR_EXPRESSION "0000000040004000" TIMEOUT 1)
+

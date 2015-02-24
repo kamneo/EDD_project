@@ -12,6 +12,7 @@
  int main (int arc, char** argv){
  	grid g1, g2;
 	g1 = new_grid ();
+	g2 = new_grid ();
 
 	add_tile (g1);
 	add_tile (g1);
@@ -24,9 +25,9 @@
 		for (int j = 0; j < GRID_SIDE; j++)
 		{
 			if(get_tile(g1, i, j) != get_tile(g2, i, j))
-				printf("%d\n", 0);
-			else
 				printf("%d\n", 1);
+			else
+				printf("%d\n", 0);
 		}
 	}
 
