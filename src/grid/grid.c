@@ -52,8 +52,9 @@ struct grid_s{
  		for(int j = 0; j < GRID_SIDE; j++)
  			g->tiles[i][j] = 0;
 
- 		return g;
- 	}
+ 	g->score = 0;
+ 	return g;
+ }
 
 /**
  * \brief Destroy the grid and free allocated memory
@@ -187,7 +188,6 @@ struct grid_s{
 
  	if(!can_move(g, d))
  	{
- 		printf("Erreur: movement impossible !\n");
  		return;
  	}
 
@@ -241,7 +241,6 @@ struct grid_s{
 	}
 
 	if (nbFree == 0){
-		printf("Erreur il n'y a plus de case libre !\n");
 		return;
 	}
 
@@ -260,11 +259,10 @@ struct grid_s{
  */
  void play (grid g, dir d)
  {	
- 	if(!can_move(g, d))
+ 	/*if(!can_move(g, d))
  	{
- 		printf("Erreur: movement impossible !\n");
  		return;
- 	}
+ 	}*/
 
 	// on fait le movement sur la grille
  	do_move(g, d);
