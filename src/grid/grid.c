@@ -41,7 +41,6 @@ struct grid_s{
  grid new_grid ()
  {
 	// initialisation de la srand() qui gère la génération des nombres aléatoires
- 	srand(time(NULL));
  	grid g;
  	g = malloc(sizeof(struct grid_s));
  	g->tiles = malloc(sizeof(void *) * GRID_SIDE);
