@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <math.h>
 #include <stdlib.h>
+#include <time.h>
 #include "grid.h"
 
 #define NOUVELLE_PARTIE 1
@@ -29,6 +30,7 @@ unsigned long int pow_of_2(tile t);
 
 int main(int argc, char *argv[])
 {	
+	srand(time(NULL));
 	BOX box;
 	int ch, key;
 	bool tour_suivant;
