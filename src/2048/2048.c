@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 			update_boxes(&box, g);
 
 			while (game_over(g) && tour_suivant){
-				mvprintw(box.height * GRID_SIDE + 3, 0, "voulez vous rejouer : y , n");
+				mvprintw(box.height * GRID_SIDE + 3, 0, "voulez-vous rejouer ? : y , n");
 				key = getch();
 				mvprintw(box.height * GRID_SIDE + 4, 0, "%c", key);
 				if (key=='y')
