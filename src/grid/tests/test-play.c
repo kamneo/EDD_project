@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "grid.h"
+#include <grid.h>
 
 
 
