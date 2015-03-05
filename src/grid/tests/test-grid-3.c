@@ -5,11 +5,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "grid.h"
-#include "affichage.h"
-#include "utilities.h"
+#include <grid.h>
+#include <affichage.h>
 
- int main (int arc, char** argv){
+ int main (int argc, char** argv){
  	grid g1, g2;
 	g1 = new_grid ();
 	g2 = new_grid ();
