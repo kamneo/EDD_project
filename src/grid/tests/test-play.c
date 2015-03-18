@@ -7,7 +7,7 @@
 #include <time.h>
 
 #include <grid.h>
-#define PARTIE 100000
+#define PARTIE 10000
 
 int main (int argc, char** argv){
 	srand(time(NULL));
