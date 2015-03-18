@@ -3,10 +3,13 @@ projet d'environement de développement. Faculté de Bordeaux promotion 2015
 
 pour compiler maintenant il faut ce placer dans le dossier "EDD_project/build".
 Et faire :
+
 	- cmake ..
 	- make
 	- make install
+
 les fichiers suivant seront alors générés:
+	
 	- EDD_project/bin/play_ncurses
 	- EDD_project/lib/libgrid.a
 	- EDD_project/include/affichage.h
