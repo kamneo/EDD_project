@@ -100,7 +100,7 @@ struct grid_s{
  */
 
  tile get_tile (grid g, int x, int y){
- 	return (g->tiles[y][x]);
+ 	return (g->tiles[x][y]);
  }
 
 
@@ -112,7 +112,7 @@ struct grid_s{
  */
  void set_tile (grid g, int x, int y, tile t)
  {
- 	g->tiles[y][x] = t;
+ 	g->tiles[x][y] = t;
  }
 
 /**
