@@ -1,7 +1,7 @@
 # EDD_project
 projet d'environement de développement. Faculté de Bordeaux promotion 2015
 
-pour compiler maintenant il faut ce placer dans le dossier "EDD_project/build".
+pour compiler maintenant il faut ce placer dans le dossier "EDD_project/build" où on considerera EDD_project comme la racine du projet.
 Et faire :
 
 	- cmake ..
