@@ -2,7 +2,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#include "grid.h"
+
+#include <grid.h>
 
 #define NOUVELLE_PARTIE 1
 #define TO_CLEAR 10
@@ -30,19 +31,20 @@ unsigned long int pow_of_2(tile t);
 
 int main(int argc, char *argv[])
 {	
+	// initialisation de time pour la génération aléatoire de tile
 	srand(time(NULL));
-	BOX box;
-	int ch, key;
-	bool tour_suivant;
-	dir direction;
-	grid g;
+	
+	BOX box;				// parametre de la console
+	int key;				// caractere saisi au clavier
+	bool tour_suivant;	// valeur boolean est a vrai quand on veut recommencer une partie
+	dir direction;			// contient la direction décrite dans grid.h
+	grid g;					// instance de la grid
 
 	init_win();
 	init_box_params(&box);
 	create_boxes(&box);
 
 	while(NOUVELLE_PARTIE){
-
 		g=new_grid();
 		add_tile(g);
 		add_tile(g);
@@ -74,15 +76,19 @@ int main(int argc, char *argv[])
 					continue;
 			}
 
+			// Vérification de la possibilité du mouvement
 			if(!can_move(g, direction))
 		 	{
 		 		mvprintw(box.height * GRID_SIDE + 3, 0, "Erreur: mouvement impossible");
 		 		continue;
 		 	}
 
+		 	// Réalisation du coup dans la direction voulu
 		 	play(g, direction);
+		 	// Rafraichissement de l'affichage
 			update_boxes(&box, g);
 
+			// dans le cas ou la partie est terminée
 			while (game_over(g) && tour_suivant){
 				mvprintw(box.height * GRID_SIDE + 3, 0, "voulez-vous rejouer ? : y , n");
 				key = getch();
@@ -168,7 +174,7 @@ void create_boxes(BOX *p_box)
 	}
 
 	mvprintw(h * GRID_SIDE + 1, 0, "score: ");
-	mvprintw(h * GRID_SIDE + 2, 0, "Direction : fleches    Restart : r    Undo : u    Quit : q");
+	mvprintw(h * GRID_SIDE + 2, 0, "Direction : fleches    Restart : r    Quit : q");
 
 	refresh();
 }
@@ -198,6 +204,8 @@ void update_boxes(BOX *p_box, grid g)
 			if(get_tile(g, j, i) != 0)
 				mvprintw(y + h * j + 1, x + w * i + 1, "%lu", pow_of_2(get_tile(g, j, i)));
 
+			if(get_tile(g, j, i) >= 11)
+				mvprintw(h * GRID_SIDE / 2, w * GRID_SIDE + 3,  "Bravo ! vous avez atteint 2048");
 		}
 	}
 

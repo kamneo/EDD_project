@@ -17,18 +17,27 @@ static unsigned long int pow_of_2(tile t)
 	return pow(2, t);
 }
 
-
+/*
+ * \brief Do the additions between tiles on one ligne
+ * \param g grid
+ * \param i the line where the operations will makes
+ * \param debut 0 if is a left movement GRID_SIDE - 1 if is a RIGHT movement (do anithing else)
+ * \param fin GRID_SIDE - 1 if is a left movement 0 if is a RIGHT movement (do anithing else)
+ * \param facteur -1 if is a left movement and 1 if is a right movment
+ * \return value to add at the score
+ */
 static unsigned long int add_ligne(grid g, int i, int debut, int fin, int facteur) 
 {
-	int pos = -1;
-	tile empty_tile = 0;
-	tile val = -1;
-	unsigned long int to_add = 0;
+	int pos = -1;					// position de le dernier tile non nulle
+	tile empty_tile = 0; 			// default tile
+	tile val = -1;					// valeur de la tile précedente
+	unsigned long int to_add = 0;	// valeur a ajouter au score
 
 	for (int j =  debut; j * facteur < fin; j += 1 * facteur) 
 	{
 		if (get_tile (g, i, j)!=0)
 		{
+			//fait l'addition des deux tiles et remplace la seconde par la tile par défaut
 			if(val == get_tile (g, i, j))
 			{
 				set_tile (g, i, pos, get_tile (g, i, pos)+1);
@@ -37,6 +46,7 @@ static unsigned long int add_ligne(grid g, int i, int debut, int fin, int facteu
 				pos=-1;
 				val=-1;
 			}
+			// sauvegarde la tile précedente
 			if (val != get_tile (g, i, j))
 			{
 				val=get_tile (g, i, j);
@@ -44,20 +54,30 @@ static unsigned long int add_ligne(grid g, int i, int debut, int fin, int facteu
 			}
 		}
 	}
-
+	// retourne la valeur a ajouter au score
 	return to_add;
 }
 
+/*
+ * \brief Do the additions between tiles on one column
+ * \param g grid
+ * \param j the column where the operations will makes
+ * \param debut 0 if is a up movement GRID_SIDE - 1 if is a down movement (do anithing else)
+ * \param fin GRID_SIDE - 1 if is a up movement 0 if is a down movement (do anithing else)
+ * \param facteur -1 if is a up movement and 1 if is a down movment
+ * \return value to add at the score
+ */
 static unsigned long int add_column(grid g, int j, int debut, int fin, int facteur){
-	int pos = -1;
-	tile empty_tile = 0;
-	tile val = -1;
-	unsigned long int to_add = 0;
+	int pos = -1;					// position de le dernier tile non nulle
+	tile empty_tile = 0; 			// default tile
+	tile val = -1;					// valeur de la tile précedente
+	unsigned long int to_add = 0;	// valeur a ajouter au score
 
 	for (int i =  debut; i * facteur < fin; i += 1 * facteur) 
 	{
 		if (get_tile (g, i, j)!=0)
 		{
+			// fait l'addition des deux tiles et remplace la seconde par la tile par défaut
 			if(val == get_tile (g, i, j))
 			{
 				set_tile (g, pos, j, get_tile (g, pos, j)+1);
@@ -66,6 +86,7 @@ static unsigned long int add_column(grid g, int j, int debut, int fin, int facte
 				pos=-1;
 				val=-1;
 			}
+			// sauvegarde de la premiere derniere tile non nulle
 			if (val != get_tile (g, i, j))
 			{
 				val= get_tile (g, i, j);
@@ -77,6 +98,15 @@ static unsigned long int add_column(grid g, int j, int debut, int fin, int facte
 	return to_add;
 }
 
+/*
+ * \brief concat each tile not null on the left of the grid for a left mouvement or right for 
+ *        the right mouvement (Do anithing else for a different direction)
+ * \param g grid
+ * \param i the line where the operations will makes
+ * \param debut 0 if is a left movement GRID_SIDE - 1 if is a RIGHT movement (do anithing else)
+ * \param fin GRID_SIDE - 1 if is a left movement 0 if is a RIGHT movement (do anithing else)
+ * \param facteur -1 if is a left movement and 1 if is a right movment
+ */
 static void concat_ligne(grid g, int i, int debut, int fin, int facteur)
 {
 	tile empty_tile = 0;
@@ -94,6 +124,15 @@ static void concat_ligne(grid g, int i, int debut, int fin, int facteur)
 	}
 }
 
+/*
+ * \brief concat each tile not null on the top of the grid for a up mouvement or top for 
+ *        the down mouvement (Do anithing else for a different direction)
+ * \param g grid
+ * \param j the column where the operations will makes
+ * \param debut 0 if is a up movement GRID_SIDE - 1 if is a down movement (do anithing else)
+ * \param fin GRID_SIDE - 1 if is a up movement 0 if is a down movement (do anithing else)
+ * \param facteur -1 if is a up movement and 1 if is a down movment
+ */
 void concat_column(grid g, int j, int debut, int fin, int facteur)
 {
 	tile empty_tile = 0;

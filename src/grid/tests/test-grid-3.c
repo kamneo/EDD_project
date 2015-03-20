@@ -7,7 +7,6 @@
 #include <time.h>
 
 #include <grid.h>
-#include <affichage.h>
 
 int main (int argc, char** argv){
  	srand(time(NULL));

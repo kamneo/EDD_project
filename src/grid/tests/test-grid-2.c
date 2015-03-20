@@ -9,7 +9,6 @@
 #include <time.h>
 
 #include <grid.h>
-#include <affichage.h>
 
 #define ALPHA 0.05
 

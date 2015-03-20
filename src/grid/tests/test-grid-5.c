@@ -6,7 +6,6 @@
 #include <stdio.h>
 
 #include <grid.h>
-#include <affichage.h>
 
 int main (int argc, char** argv)
 {

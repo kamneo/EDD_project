@@ -19,27 +19,28 @@ struct grid_s{
  * \param n Indice max
  * \return a random int beetween 0 and n
  */
- static int rang_aleatoire (int n){
- 	return rand()%n;
- }
+static int rang_aleatoire (int n){
+	return rand()%n;
+}
 
 /*
  * \brief Calculate a value, this value have 9/10 chance to be 1 and 1/10 to be 2
  * \return an int between 1 and 2
  */
- static int valeur_aleatoire (){
+static int valeur_aleatoire ()
+{
  	if (rand()%10 < 9)
  		return 1;
  	else
- 		return 2;
- }
+ 		return 2; 
+}
 
 /*
  * \brief Initialize grid structure
  * \return created an empty grid with score equal to 0
  */
- grid new_grid ()
- {
+grid new_grid ()
+{
 	// initialisation de la srand() qui gère la génération des nombres aléatoires
  	grid g;
  	g = malloc(sizeof(struct grid_s));
@@ -53,43 +54,43 @@ struct grid_s{
 
  	g->score = 0;
  	return g;
- }
+}
 
 /**
  * \brief Destroy the grid and free allocated memory
  * \param g the grid to destroy
  */
- void delete_grid (grid g)
- {
- 	for(int i = 0; i < GRID_SIDE; i++)
- 		free (g->tiles[i]);
- 	free (g->tiles);
- 	free(g);
- }
+void delete_grid (grid g)
+{
+	for(int i = 0; i < GRID_SIDE; i++)
+		free (g->tiles[i]);
+	free (g->tiles);
+	free(g);
+}
 
 /**
  * \brief Clone the grid
  * \param src the grid to copy
  * \param dst the copied grid
  */
- void copy_grid (grid src, grid dst)
- {
+void copy_grid (grid src, grid dst)
+{
  	for(int i = 0; i < GRID_SIDE; i++)
  		for(int j = 0; j < GRID_SIDE; j++)
  			dst->tiles[i][j] = src->tiles[i][j];
 
  	dst->score = src->score;
- }
+}
 
 /**
  * \brief Get game's score
  * \param g the grid
  * \return the computed score during the game
  */
- unsigned long int grid_score (grid g)
- {
+unsigned long int grid_score (grid g)
+{
  	return g->score;
- }
+}
 
 /**
  * \brief Get tile  (log_2-encoded) from the grid by specifying his coordinates
@@ -98,10 +99,9 @@ struct grid_s{
  * \return the tile
  * \pre 0 < = x < GRID_SIDE and 0 < = y < GRID_SIDE
  */
-
- tile get_tile (grid g, int x, int y){
- 	return (g->tiles[x][y]);
- }
+tile get_tile (grid g, int x, int y){
+	return (g->tiles[x][y]);
+}
 
 
 /**
@@ -110,10 +110,10 @@ struct grid_s{
  * \param x and y tile's coordinates
  * \param t new tile's value
  */
- void set_tile (grid g, int x, int y, tile t)
- {
+void set_tile (grid g, int x, int y, tile t)
+{
  	g->tiles[x][y] = t;
- }
+}
 
 /**
  * \brief Verify if a given movement is possible
@@ -121,58 +121,58 @@ struct grid_s{
  * \param d movement's direction
  * \return true if the movement is possible, false else
  */
- bool can_move (grid g, dir d)
- {
+bool can_move (grid g, dir d)
+{
  	switch(d)
  	{
  		case LEFT:
-	 		for (int i = 0; i < GRID_SIDE; i++)
-	 		{
-					// ici on parcourt la grille de l'indice 0 à la taille du tableau pour chaque ligne
-	 			if(lign_can_move(g, i, 0, GRID_SIDE, SENS_POSITIF))
-	 				return true;
-	 		}
-	 		break;
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
+				// ici on parcourt la grille de l'indice 0 à la taille du tableau pour chaque ligne
+				if(lign_can_move(g, i, 0, GRID_SIDE, SENS_POSITIF))
+					return true;
+			}
+			break;
  		case RIGHT:
-	 		for (int i = 0; i < GRID_SIDE; i++)
-	 		{
-					// ici on parcourt la grille de l'indice la taille du tableau - 1 à 1 pour chaque ligne
-	 			if(lign_can_move(g, i, GRID_SIDE -1 , 1, SENS_NEGATIF))
-	 				return true;
-	 		}
-	 		break;
- 		case UP:
-	 		for (int i = 0; i < GRID_SIDE; i++)
-	 		{
-					// ici on parcourt la grille de l'indice 0 à la taille du tableau pour chaque colonne
-	 			if(column_can_move(g, i, 0, GRID_SIDE, SENS_POSITIF))
-	 				return true;
-	 		}
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
+				// ici on parcourt la grille de l'indice la taille du tableau - 1 à 1 pour chaque ligne
+				if(lign_can_move(g, i, GRID_SIDE -1 , 1, SENS_NEGATIF))
+					return true;
+			}
+			break;
+		case UP:
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
+				// ici on parcourt la grille de l'indice 0 à la taille du tableau pour chaque colonne
+				if(column_can_move(g, i, 0, GRID_SIDE, SENS_POSITIF))
+					return true;
+			}
  		break;
  		case DOWN:
-	 		for (int i = 0; i < GRID_SIDE; i++)
-	 		{
+			for (int i = 0; i < GRID_SIDE; i++)
+			{
 					// ici on parcourt la grille de l'indice la taille du tableau - 1 à 1 pour chaque colonne
-	 			if(column_can_move(g, i, GRID_SIDE -1 , 1, SENS_NEGATIF))
-	 				return true;
-	 		}
+				if(column_can_move(g, i, GRID_SIDE -1 , 1, SENS_NEGATIF))
+					return true;
+			}
  		break;
  		default:
  			return false;
  	}
 
- 	return false;
- }
+	return false;
+}
 
 /**
  * \brief Verify game's status, if no more movement is possible the game is over
  * \param g the grid
  * \return true if there is no more possible movements, false else
  */
- bool game_over (grid g)
- {
+bool game_over (grid g)
+{
  	return !can_move(g, LEFT) && !can_move(g, RIGHT) && !can_move(g, UP) && !can_move(g, DOWN);
- }
+}
 
 /**
  * \brief Move every tiles of the grid in the direction specified by the user
@@ -180,8 +180,8 @@ struct grid_s{
  * \param d the chosen direction
  * \pre the movement d must be possible (i.e. can_move(g,d) == true).
  */
- void do_move (grid g, dir d)
- {
+void do_move (grid g, dir d)
+{
 
 	unsigned long int to_add = 0;
 
@@ -210,7 +210,7 @@ struct grid_s{
  	// on ajoute au score les resultats de chaque ligne ou colonne.
  	g->score += to_add;
 
- }
+}
 
 /**
  * \brief Randomly add a tile in the grid in a free space when a movement is finished.
@@ -218,7 +218,7 @@ struct grid_s{
  * \param g the grid
  * \pre grid g must contain  at least one empty tile.
  */
- void add_tile (grid g){
+void add_tile (grid g){
 	int taille = (GRID_SIDE*GRID_SIDE)*2; // taille maximale de notre tableau
 	int nbFree = 0; // nombre de tile libre
 	int* tab; // le tableau de coordonée
@@ -256,8 +256,8 @@ struct grid_s{
  * \param d the direction
  * \pre the movement d must be possible (i.e. can_move(g,d) == true).
  */
- void play (grid g, dir d)
- {	
+void play (grid g, dir d)
+{	
  	/*if(!can_move(g, d))
  	{
  		return;
@@ -268,4 +268,4 @@ struct grid_s{
 
 	// on ajoute une tile à une position aléatoire
  	add_tile(g);
- }
+}

@@ -39,16 +39,16 @@ int main (int argc, char** argv)
 
 
 	/*
-	 *      la grille vaut : 
+	 *		la grille vaut : 
 	 *		+--+--+--+--+
 	 *		| 4| 4| 16|16| 
 	 *		+--+--+--+--+
 	 *		| 0| 4| 4| 0| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 *		| 2| 0| 2| 0| 
 	 *		+--+--+--+--+
 	 *		| 0| 2| 0| 4| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 */
 	
 
@@ -73,16 +73,16 @@ int main (int argc, char** argv)
 		printf("erreur lors du do_move(LEFT) ou du grid_score(LEFT) ici le score doit valoir 40.(%lu)\n", grid_score(g));
 	
 	/*
-	 *      la grille vaut : 
+	 *		la grille vaut : 
 	 *		+--+--+--+--+
 	 *		| 4| 8| 0| 0| 
 	 *		+--+--+--+--+
 	 *		| 4| 0| 0| 0| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 *		| 4| 0| 0| 0| 
 	 *		+--+--+--+--+
 	 *		| 2| 4| 0| 0| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 */
 	do_move(g, UP);
 	if(get_tile(g, 0, 0) != 4)
@@ -104,16 +104,16 @@ int main (int argc, char** argv)
 		printf("erreur lors du do_move(UP) ou du grid_score(UP) ici le score doit valoir 72.(%lu)\n", grid_score(g));
 
 	/*
-	 *      la grille vaut : 
+	 *		la grille vaut : 
 	 *		+--+--+--+--+
 	 *		| 8| 8| 0| 0| 
 	 *		+--+--+--+--+
 	 *		| 4| 4| 0| 0| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 *		| 2| 0| 0| 0| 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0| 0| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 */
 	do_move(g, RIGHT);
 	if(get_tile(g, 0, GRID_SIDE - 1) != 5)
@@ -131,31 +131,31 @@ int main (int argc, char** argv)
 		printf("erreur lors du do_move(RIGHT) ou du grid_score(RIGHT) ici le score doit valoir 104.(%lu)\n", grid_score(g));
 	
 	/*
-	 *      la grille vaut : 
+	 *		la grille vaut : 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0|16| 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0| 8| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 *		| 0| 0| 0| 2| 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0| 0| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 */
 	
 	// on triche un peu =)
 	set_tile(g, 2, GRID_SIDE - 1, 4);
 	/*
-	 *      la grille vaut : 
+	 *		la grille vaut : 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0|16| 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0| 8| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 *		| 0| 0| 0| 8| 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0| 0| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 */
 	do_move(g, DOWN);
 	if(get_tile(g, GRID_SIDE - 2, GRID_SIDE - 1) != 5)
@@ -169,16 +169,16 @@ int main (int argc, char** argv)
 	if(!test_DOWN_ok)
 		printf("erreur lors du do_move(DOWN) ou du grid_score(DOWN) ici le score doit valoir 136.(%lu)\n", grid_score(g));
 	/*
-	 *      la grille vaut : 
+	 *		la grille vaut : 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0| 0| 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0| 0| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 *		| 0| 0| 0|16| 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0|16| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 */
 
 	do_move(g, DOWN);
@@ -192,16 +192,16 @@ int main (int argc, char** argv)
 		printf("erreur lors du do_move(DOWN) ou du grid_score(DOWN) ici le score doit valoir 200.(%lu)\n", grid_score(g));
 
 	/*
-	 *      la grille vaut : 
+	 *		la grille vaut : 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0| 0| 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0| 0| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 *		| 0| 0| 0| 0| 
 	 *		+--+--+--+--+
 	 *		| 0| 0| 0|32| 
-	 *      +--+--+--+--+ 
+	 *		+--+--+--+--+ 
 	 */
 	delete_grid(g);
 	if(!test_UP_ok || !test_DOWN_ok || !test_RIGHT_ok || !test_LEFT_ok)
