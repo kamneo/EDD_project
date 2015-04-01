@@ -1,9 +1,11 @@
 #ajout de la librairie "libgrid.a"
 add_library(grid grid/grid.c grid/utilities.c)
+add_library(strategy strategy/strategy.c)
 
 #Ajout des sous-repertoires "grid" et "2048"
 add_subdirectory(grid)
 add_subdirectory(2048)
+add_subdirectory(strategy)
 
 #Lors de la commande make install, le fichier grid.h est copier dans "EDD_project/include"
 install (FILES "${2048_SOURCE_DIR}/src/grid/grid.h" DESTINATION ${2048_SOURCE_DIR}/include)
