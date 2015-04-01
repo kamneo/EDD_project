@@ -34,7 +34,12 @@ int main(int argc, char *argv[])
 {	
 	// initialisation de time pour la génération aléatoire de tile
 	srand(time(NULL));
-	
+	strategy strat = malloc(sizeof(struct strategy_s));
+	strat-> name = "Coins";
+	strat-> play_move = nextDirectionTrivial2;
+	strat->mem = malloc(sizeof(int));
+	*(int*)(strat->mem)=0;
+	strat->free_strategy=NULL;
 	BOX box;				// parametre de la console
 	int key;				// caractere saisi au clavier
 	bool tour_suivant;	// valeur boolean est a vrai quand on veut recommencer une partie
@@ -46,11 +51,6 @@ int main(int argc, char *argv[])
 	create_boxes(&box);
 
 	while(NOUVELLE_PARTIE){
-	strategy strat = malloc(sizeof(strategy));
-	strat-> name = "Coins";
-	strat-> play_move = nextDirection;
-	strat->mem = NULL;
-	strat->free_strategy=free_memless_strat;
 		g=new_grid();
 		add_tile(g);
 		add_tile(g);
@@ -58,8 +58,8 @@ int main(int argc, char *argv[])
 		tour_suivant=true;
 
 		while(tour_suivant){
-			sleep(1);
-			direction= strat-> play_move(NULL,g);
+			usleep(20000);
+			direction= strat-> play_move(strat,g);
 			
 
 		 	// Réalisation du coup dans la direction voulue

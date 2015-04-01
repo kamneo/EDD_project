@@ -8,7 +8,7 @@ add_executable (play_ncursesIA 2048_ncurses_IA.c)
 
 #Ajout des librairies qui sont nécéssaires à "play_ncurses" 
 target_link_libraries(play_ncurses grid ncurses m)
-target_link_libraries(play_ncursesIA grid ncurses m)
+target_link_libraries(play_ncursesIA grid ncurses strategy m)
 
 #Copie de "play_ncurse" dans "EDD_project/bin"
 install (FILES "${2048_BINARY_DIR}/src/2048/play_ncurses" DESTINATION "${2048_SOURCE_DIR}/bin")

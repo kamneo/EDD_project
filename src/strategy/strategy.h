@@ -31,8 +31,8 @@ struct strategy_s
   void (*free_strategy) (strategy); /** Frees any resources allocated during the strategy's creation (<name>, <mem>, ...). */
 };
 
-dir nextDirection(strategy s,grid g);
-
+dir nextDirectionTrivial1(strategy s,grid g);
+dir nextDirectionTrivial2(strategy s,grid g);
 
 /**
  * Naively frees the <strat> pointer.

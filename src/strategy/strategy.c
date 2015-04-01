@@ -1,5 +1,6 @@
 #include "strategy.h"
 #include "stdlib.h"
+#include <assert.h>
 
 void free_memless_strat (strategy strat)
 {
@@ -9,7 +10,45 @@ void free_memless_strat (strategy strat)
 
 
 
-dir nextDirection(strategy s,grid g){
+dir nextDirectionTrivial1(strategy s,grid g){
+	int* val=s->mem;
+	if ((*val)%2==0){
+
+		if (can_move(g,LEFT)){
+			return LEFT;
+		}
+		else if (can_move(g,DOWN)){
+			return DOWN;
+		}
+		else if (can_move(g,RIGHT)){
+			return RIGHT;
+		}
+		else {
+			return UP;
+		}
+	}
+
+
+	else{
+		if (can_move(g,DOWN)){
+			return DOWN;
+		}
+		else if (can_move(g,LEFT)){
+			return LEFT;
+		}
+		else if (can_move(g,RIGHT)){
+			return RIGHT;
+		}
+		else {
+			return UP;
+		}
+	}
+
+	(*val)++;
+}
+
+
+dir nextDirectionTrivial2(strategy s,grid g){
 
 	if (can_move(g,LEFT)){
 		return LEFT;
@@ -17,11 +56,11 @@ dir nextDirection(strategy s,grid g){
 	else if (can_move(g,DOWN)){
 		return DOWN;
 	}
-	else if (can_move(g,UP)){
-		return UP;
+	else if (can_move(g,RIGHT)){
+		return RIGHT;
 	}
 	else {
-		return RIGHT;
+		return UP;
 	}
 }
 
