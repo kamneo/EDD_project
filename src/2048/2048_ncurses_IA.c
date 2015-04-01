@@ -34,11 +34,11 @@ int main(int argc, char *argv[])
 {	
 	// initialisation de time pour la génération aléatoire de tile
 	srand(time(NULL));
-	strategy strat = malloc(sizeof(struct strategy_s));
+	strategy strat = malloc(sizeof(struct strategy_s));  //initialisation de notre structure strategy
 	strat-> name = "Coins";
-	strat-> play_move = nextDirectionTrivial2;
+	strat-> play_move = nextDirectionTrivial2; //cf strategy.c
 	strat->mem = malloc(sizeof(int));
-	*(int*)(strat->mem)=0;
+	*(int*)(strat->mem)=0; // on pointe sur un int qui sera un compteur de tour jouer(pour certaine strat)
 	strat->free_strategy=NULL;
 	BOX box;				// parametre de la console
 	int key;				// caractere saisi au clavier

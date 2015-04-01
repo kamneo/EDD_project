@@ -10,9 +10,9 @@ void free_memless_strat (strategy strat)
 
 
 
-dir nextDirectionTrivial1(strategy s,grid g){
-	int* val=s->mem;
-	if ((*val)%2==0){
+dir nextDirectionTrivial1(strategy s,grid g){//variante de la strategy du point
+	int* nbTour=s->mem; //nombre de tour jouer
+	if ((*nbTour)%2==0){ 
 
 		if (can_move(g,LEFT)){
 			return LEFT;
@@ -44,11 +44,11 @@ dir nextDirectionTrivial1(strategy s,grid g){
 		}
 	}
 
-	(*val)++;
+	(*nbTour)++;
 }
 
 
-dir nextDirectionTrivial2(strategy s,grid g){
+dir nextDirectionTrivial2(strategy s,grid g){ // strategy simple du coin
 
 	if (can_move(g,LEFT)){
 		return LEFT;
