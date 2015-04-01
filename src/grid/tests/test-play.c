@@ -28,10 +28,10 @@ int main (int argc, char** argv){
 			else if (can_move(g,DOWN)){
 				play(g,DOWN);
 			}
-			else if (can_move(g,RIGHT)){
+			else if (can_move(g,UP)){
 				play(g,RIGHT);
 			}
-			else if (can_move(g,UP)){
+			else if (can_move(g,RIGHT)){
 				play(g,UP);
 			}
 			add_tile(g);
