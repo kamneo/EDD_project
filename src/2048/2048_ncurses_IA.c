@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 	// initialisation de time pour la génération aléatoire de tile
 	srand(time(NULL));
 
-	MEMOIRE m = malloc(sizeof(struct _memoire));
+	MEMOIRE m;
 	m.score = 0;
 	m.tab = malloc(sizeof(int) * MAX_VALUE);
 
@@ -174,8 +174,6 @@ void create_boxes(BOX *p_box) {
 	}
 
 	mvprintw(h * GRID_SIDE + 1, 0, "score: ");
-	mvprintw(h * GRID_SIDE + 2, 0,
-			"Direction : fleches    Restart : r    Quit : q");
 
 	refresh();
 }
@@ -247,7 +245,6 @@ int end_game_stat(MEMOIRE m, grid g) {
 	}
 
 	free(m.tab);
-	free(m);
 	return EXIT_SUCCESS;
 }
 
