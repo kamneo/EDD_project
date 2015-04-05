@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 		 		continue;
 		 	}
 
-		 	// Réalisation du coup dans la direction voulu
+		 	// Réalisation du coup dans la direction voulue
 		 	play(g, direction);
 		 	// Rafraichissement de l'affichage
 			update_boxes(&box, g);
@@ -194,7 +194,7 @@ void update_boxes(BOX *p_box, grid g)
 	w = p_box->width;
 	h = p_box->height;
 
-	// Efface le contenu de chaque tile et les remplacent par leur nouvelle valeur
+	// Efface le contenu de chaque tile et les remplace par leur nouvelle valeur
 	for (int j= 0; j< GRID_SIDE;j++)
 	{
 		for (int i = 0; i < GRID_SIDE; i++)
@@ -209,7 +209,7 @@ void update_boxes(BOX *p_box, grid g)
 		}
 	}
 
-	// Efface tout ce qui apparait sous la grille sauf la ligne 2 et le début de la ligne 1
+	// Efface tout ce qui apparait sous la grille sauf la ligne 2 et le debut de la ligne 1
 	for (int i = 1; i < TO_CLEAR; i++)
 	{
 		if(i == 1)
