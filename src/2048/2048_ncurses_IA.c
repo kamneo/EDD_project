@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 	// initialisation de time pour la génération aléatoire de tile
 	srand(time(NULL));
 
-	MEMOIRE m;
+	MEMOIRE m = malloc(sizeof(struct _memoire));
 	m.score = 0;
 	m.tab = malloc(sizeof(int) * MAX_VALUE);
 
