@@ -117,7 +117,7 @@ bool win(grid g) {
  * param : g qui est la grille à évaluer
  * return: double qui est la valeur de la grille
  */
-double eval(grid g) {
+/*double eval(grid g) {
 	// emptyCells qui compte le nombre de tile vide
 	// maxValue qui contient la plus grande valeur de la grille
 	int emptyCells = 0, maxValue = 0;
@@ -132,12 +132,12 @@ double eval(grid g) {
 	}
 
 	// Coeficient d'imporance rapport à la grille.
-	double smoothWeight = 0.1, mono2Weight = 1.0, emptyWeight = 2.7, maxWeight =
+	double smoothWeight = 0.1, monoWeight = 1.0, emptyWeight = 2.7, maxWeight =
 			1.0;
 
-	return smoothness() * smoothWeight + monotonicity2() * mono2Weight +
-	/*Math.log(emptyCells)*/emptyCells * emptyWeight + maxValue() * maxWeight;
-}
+	return smoothness() * smoothWeight + monotonicity() * monoWeight +
+	Math.log(emptyCells)emptyCells * emptyWeight + maxValue() * maxWeight;
+}*/
 
 /*int main(void){
  strategy strat = malloc(sizeof(strategy));
