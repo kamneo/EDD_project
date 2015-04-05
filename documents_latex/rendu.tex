@@ -1,0 +1,41 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+
+
+\title{Rendu EDD strategie}
+\author{Pinero, Borde, Bonnet}
+
+\begin{document}
+\tableofcontents
+\maketitle
+
+\section{Strategie fonctionnelle}
+La strategie fonctionnelle choisie pour le rapport est la stratégie du coin. Pour cela, nous avions fait un premier algorithme qui se contente de jouer vers la gauche tant qu'on le peut, sinon il joue vers le bas encore une fois tant qu'on le peut, de même vers la droite puis vers le haut. Avec cet stratégie, sur 48 parties nous avons un score moyen de 2475, avec 6x64, 20x128, 20x256 et 2x512.
+
+Dans un seconds temps, nous avons fait un second algorithme qui est basé sur le premier mais qui un coups sur deux change les mouvements favoris. Les premiers mouvements favoris sont dans cet ordre, gauche, bas, droite et haut, et les seconds mouvements sont dans cet ordre, bas, gauche, droite et haut. Avec cet stratégie, sur 48 parties nous avons un score moyen de 2259, avec 1x32, 3x64, 21x128 et 23x256.
+
+Les deux stratégies se valent à peu prés, mais c'est bien la première qui est la meilleure.
+
+\section{La libraire dynamique}
+
+
+\section{Evaluation de la grille}
+Pour évaluer la grille, nous avons pris en compte quatre paramèrtres, et à chancun de ces paramètres nous leurs avons donné un coéficient pour leurs donner plus ou moins d'importance. 
+
+
+	\subsection{Le nombre de tile vide}
+	On compte le nombre de tile vide que l'on a après avoir joué et on le mutiplie par
+
+	\subsection{La plus grande tile} 
+
+	\subsection{La grille la plus progressive possible}
+
+	\subsection{La grille la plus régulière possible}
+
+\section{Reflexion sur expected max}
+
+
+\end{document}
