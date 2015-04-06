@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  5 APR 2015 06:22
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  6 APR 2015 06:33
 entering extended mode
  %&-line parsing enabled.
 **rendu.tex
@@ -280,57 +280,100 @@ Package babel Info: Making ? an active character on input line 123.
 (/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks16
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+\Gread@gobject=\count90
+))
+\Gin@req@height=\dimen106
+\Gin@req@width=\dimen107
 ) (./rendu.aux)
 \openout1 = `rendu.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Info: Redefining \degres on input line 11.
-LaTeX Info: Redefining \dots on input line 11.
-LaTeX Info: Redefining \up on input line 11.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Info: Redefining \degres on input line 12.
+LaTeX Info: Redefining \dots on input line 12.
+LaTeX Info: Redefining \up on input line 12.
 
-(./rendu.toc)
-\tf@toc=\write3
-\openout3 = `rendu.toc'.
-
- [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count91
+\scratchdimen=\dimen108
+\scratchbox=\box26
+\nofMPsegments=\count92
+\nofMParguments=\count93
+\everyMPshowfont=\toks17
+\MPscratchCnt=\count94
+\MPscratchDim=\dimen109
+\MPnumerator=\count95
+\everyMPtoPDFconversion=\toks18
+)
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 13.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 13.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 13.
- [2]
-[3] (./rendu.aux) ) 
+ (./rendu.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 5.
+)
+\tf@toc=\write3
+\openout3 = `rendu.toc'.
+
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+<minimax.jpg, id=14, 451.6875pt x 354.57469pt>
+File: minimax.jpg Graphic file (type jpg)
+ <use minimax.jpg> [3
+
+ <./minimax.jpg>] [4] (./rendu.aux) ) 
 Here is how much of TeX's memory you used:
- 1351 strings out of 495061
- 15308 string characters out of 1182622
- 70706 words of memory out of 3000000
- 4555 multiletter control sequences out of 15000+50000
- 11766 words of font info for 30 fonts, out of 3000000 for 9000
+ 2015 strings out of 495061
+ 23908 string characters out of 1182622
+ 78158 words of memory out of 3000000
+ 5195 multiletter control sequences out of 15000+50000
+ 12439 words of font info for 31 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 24i,6n,24p,430b,189s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx12
-00.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> 
-</home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk> </home/deb
-ian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/debian/.texmf
--var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/debian/.texmf-var/fonts
-/pk/ljfour/jknappen/ec/ecbx1440.600pk>
-Output written on rendu.pdf (3 pages, 61189 bytes).
+ 25i,6n,24p,745b,212s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </home/debian/.texmf-var/fonts/pk/ljfour/
+jknappen/ec/eccc1000.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/e
+c/ecbx1200.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000
+.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </
+home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/debia
+n/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/debian/.texmf-v
+ar/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
+Output written on rendu.pdf (4 pages, 129149 bytes).
 PDF statistics:
- 198 PDF objects out of 1000 (max. 8388607)
+ 233 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -3,15 +3,17 @@
 \usepackage[T1]{fontenc} 
 \usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
+\usepackage{graphicx}
 
 
 \title{Rendu EDD strategie}
 \author{Pinero, Borde, Bonnet}
 
 \begin{document}
-\tableofcontents
 \maketitle
+\tableofcontents
 
+\newpage
 \section{Strategie fonctionnelle}
 La strategie fonctionnelle choisie pour le rapport est la stratégie du coin. Pour cela, nous avions fait un premier algorithme qui se contente de jouer vers la gauche tant qu'on le peut, sinon il joue vers le bas encore une fois tant qu'on le peut, de même vers la droite puis vers le haut. Avec cet stratégie, sur 48 parties nous avons un score moyen de 2475, avec 6x64, 20x128, 20x256 et 2x512.
 
@@ -23,6 +25,7 @@ Les deux stratégies se valent à peu prés, mais c'est bien la première qui es
 
 
 \section{Evaluation de la grille}
+\label{eval_grid}
 Pour évaluer la grille, nous avons pris en compte quatre paramèrtres, et à chancun de ces paramètres nous leurs avons donné un coéficient pour leurs donner plus ou moins d'importance. 
 
 
@@ -35,7 +38,17 @@ Pour évaluer la grille, nous avons pris en compte quatre paramèrtres, et à ch
 
 	\subsection{La grille la plus régulière possible}
 
-\section{Reflexion sur expected max}
+\clearpage
+\section{Reflexion avancé sur l'implementation de expected max}
+\og Expected Max \fg{} est un algorithme qui consiste \`a retourner la direction optimale \`a jouer. Elle est bas\'ee sur l'algorithme \og minimax \fg{}. Le principe est de donner une valeure à la grille en fonction de plusieurs critères (cf. \og \ref{eval_grid} Evaluation de la grille \fg{}) ainsi noud jouerons le coups avec le maximum de chance de gagné combiné au coup avec le minimum de chance de perdre. Ici nous avons un exemple avec le morpion :
 
+\begin{figure}[!h]
+   \includegraphics[width=10cm,height=10cm]{minimax.jpg}
+   \caption{\label{minimax} Exemple minimax}
+\end{figure}
+
+Dans la figure 1, on peut voir que le coups le plus interessant à jouer est le troisi\`eme, car si on fait la somme de chaque branche de l'arbre (-2, 1, -2, -1, 0, 2), c'est celle-ci qui offre le plus grand score et la perte la moins importante.
+
+L'une des limites de cette m\'ethode est qu'il faille jouer \`a deux joueurs, or au 2048 on joue tout seul. C'est pour cette raison qu'on utilisera pas le th\'ehor\`eme du \og minimax \fg{} mais celui d'\og Expected Max \fg{}. En effet ici on concid\`erera le second joueur comme l'ordinateur qui remplira de façon aléatoire une des tiles vides. Cela engage de calculer, pour chaque grille et pour toutes les possibilit\'es de remplissage d'une tile vide, la valeur de cette grille. Il faudra ensuite faire une moyenne de toutes les valeurs calculés ... (jocker). Pour un algorithme encore plus performant il serait avantageux de pouvoir \'etendre notre arbre \`a une profondeur N choisi au d\'ebut du programme. 
 
 \end{document}

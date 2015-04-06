@@ -3,7 +3,7 @@
 \contentsline {section}{\numberline {2}La libraire dynamique}{2}
 \contentsline {section}{\numberline {3}Evaluation de la grille}{2}
 \contentsline {subsection}{\numberline {3.1}Le nombre de tile vide}{2}
-\contentsline {subsection}{\numberline {3.2}La plus grande tile}{3}
-\contentsline {subsection}{\numberline {3.3}La grille la plus progressive possible}{3}
-\contentsline {subsection}{\numberline {3.4}La grille la plus r\IeC {\'e}guli\IeC {\`e}re possible}{3}
-\contentsline {section}{\numberline {4}Reflexion sur expected max}{3}
+\contentsline {subsection}{\numberline {3.2}La plus grande tile}{2}
+\contentsline {subsection}{\numberline {3.3}La grille la plus progressive possible}{2}
+\contentsline {subsection}{\numberline {3.4}La grille la plus r\IeC {\'e}guli\IeC {\`e}re possible}{2}
+\contentsline {section}{\numberline {4}Reflexion avanc\IeC {\'e} sur l'implementation de expected max}{3}
