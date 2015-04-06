@@ -33,7 +33,7 @@ struct strategy_s {
  * param : grid la grille
  * return: la direction optimal à jouer qui a été calculé par cette stratégie
  */
-strategy A2_pinero_borde_bonnet(grid g);
+strategy A2_bonnet_borde_pinero_basic(grid g);
 
 /**
  * Naively frees the <strat> pointer.
