@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.6)  6 APR 2015 19:34
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.6)  6 APR 2015 19:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -544,7 +544,7 @@ and I'll forget about whatever was undefined.
 Here is how much of TeX's memory you used:
  2003 strings out of 495028
  25914 string characters out of 6181498
- 77530 words of memory out of 5000000
+ 77531 words of memory out of 5000000
  5188 multiletter control sequences out of 15000+600000
  12452 words of font info for 31 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -556,9 +556,9 @@ c/ecti1000.600pk> </home/chezardy/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm10
 > </home/chezardy/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home
 /chezardy/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/chezard
 y/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
-Output written on rendu.pdf (4 pages, 123814 bytes).
+Output written on rendu.pdf (4 pages, 124214 bytes).
 PDF statistics:
- 251 PDF objects out of 1000 (max. 8388607)
+ 252 PDF objects out of 1000 (max. 8388607)
  38 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)

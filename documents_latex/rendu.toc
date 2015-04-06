@@ -1,8 +1,8 @@
-\contentsline {section}{\numberline {1}Strategie fonctionnelle}{2}
+\contentsline {section}{\numberline {1}Strat\IeC {\'e}gie fonctionnelle}{2}
 \contentsline {section}{\numberline {2}La libraire dynamique}{2}
 \contentsline {section}{\numberline {3}Evaluation de la grille}{3}
 \contentsline {subsection}{\numberline {3.1}Le nombre de tiles vides}{3}
 \contentsline {subsection}{\numberline {3.2}La plus grande tile}{3}
 \contentsline {subsection}{\numberline {3.3}La grille la plus progressive possible}{3}
 \contentsline {subsection}{\numberline {3.4}La grille la plus r\IeC {\'e}guli\`ere possible}{3}
-\contentsline {section}{\numberline {4}R\IeC {\'e}flexion avanc\'e sur l'impl\IeC {\'e}mentation de expected max}{4}
+\contentsline {section}{\numberline {4}R\IeC {\'e}flexion avanc\'ee sur l'impl\IeC {\'e}mentation de expected max}{4}
