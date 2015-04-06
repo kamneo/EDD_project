@@ -7,7 +7,7 @@
 #ifndef STRATEGY_H_
 #define STRATEGY_H_
 
-#include "grid.h"
+#include <grid.h>
 
 /** \b strategy is a pointer to a strategy_s structure */
 typedef struct strategy_s *strategy;
@@ -28,21 +28,12 @@ struct strategy_s {
 };
 
 /*
- * deuwième strategie qui reprend la stratégie du coin mais qui un tour sur deux
- * changera l'ordre des mouvements favori.
+ * strategie capable de jouer au 2048
  * param : strategy s la sutructure stratégie
  * param : grid la grille
  * return: la direction optimal à jouer qui a été calculé par cette stratégie
  */
-dir strategie_coin_2(strategy s, grid g);
-
-/*
- * premiere strategie appeler stratégie du coin
- * param : strategy s la sutructure stratégie
- * param : grid la grille
- * return: la direction optimal à jouer qui a été calculé par cette stratégie
- */
-dir strategie_coin_1(strategy s, grid g);
+strategy A2_pinero_borde_bonnet(grid g);
 
 /**
  * Naively frees the <strat> pointer.

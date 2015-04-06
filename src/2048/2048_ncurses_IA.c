@@ -48,18 +48,12 @@ int main(int argc, char *argv[]) {
 	m.score = 0;
 	m.tab = malloc(sizeof(int) * MAX_VALUE);
 
-	strategy strat = malloc(sizeof(struct strategy_s)); //initialisation de notre structure strategy
-	strat->name = "Coins";						// Nom de la strategie
-	strat->play_move = strategie_coin_1; 		//cf strategy.c
-	strat->mem = malloc(sizeof(int));
-	*(int*) (strat->mem) = 0; // on pointe sur un int qui sera un compteur de tour jouer(pour certaine strat)
-	strat->free_strategy = NULL;
-
 	BOX box;				// parametre de la console
 	int key;				// caractere saisi au clavier
 	bool tour_suivant;// valeur boolean est a vrai quand on veut recommencer une partie
 	dir direction;			// contient la direction décrite dans grid.h
 	grid g;					// instance de la grid
+	strategy strat;
 
 	init_win();
 	init_box_params(&box);
@@ -69,10 +63,19 @@ int main(int argc, char *argv[]) {
 		g = new_grid();
 		add_tile(g);
 		add_tile(g);
+
+		// initialisation de la structure strategy
+		strat = A2_pinero_borde_bonnet(g);
+
+		// affichadge du nom de la strategie
+		mvprintw(box.height * GRID_SIDE + 2, 0, "Vous utilisez la strategie %s",
+				strat->name);
+
 		update_boxes(&box, g);
 		tour_suivant = true;
 
 		while (tour_suivant) {
+			// recherche de la meilleure direction
 			direction = strat->play_move(strat, g);
 
 			// Réalisation du coup dans la direction voulue
@@ -80,8 +83,12 @@ int main(int argc, char *argv[]) {
 			// Rafraichissement de l'affichage
 			update_boxes(&box, g);
 
+			//sleep(1);
 			// dans le cas ou la partie est terminée
 			while (game_over(g) && tour_suivant) {
+				// libération de la structure
+				strat->free_strategy(strat);
+
 				// Ceci ne sert que pour les stats
 				m.score += grid_score(g);
 				int indice = 0;

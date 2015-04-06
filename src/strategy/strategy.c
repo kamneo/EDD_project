@@ -10,10 +10,26 @@ struct s_resultat {
 	dir direction;
 };
 
+dir strategie_coin_2(strategy s, grid g);
+dir strategie_coin_1(strategy s, grid g);
+
+
 void free_memless_strat(strategy strat) {
 	free(strat->mem);
-	free(strat->name);
 	free(strat);
+}
+
+strategy A2_pinero_borde_bonnet(grid g){
+	strategy strat = malloc(sizeof(struct strategy_s)); //initialisation de notre structure strategy
+	strat->name = "Strategie du coin";						// Nom de la strategie
+	strat->play_move = strategie_coin_1; 		//cf strategy.c
+	strat->mem = malloc(sizeof(int));
+
+	*(int*) (strat->mem) = 0; // on pointe sur un int qui sera un compteur de tour jouer(pour certaine strat)
+
+	strat->free_strategy = free_memless_strat;
+
+	return strat;
 }
 
 /*
@@ -138,11 +154,3 @@ bool win(grid g) {
 	return smoothness() * smoothWeight + monotonicity() * monoWeight +
 	Math.log(emptyCells)emptyCells * emptyWeight + maxValue() * maxWeight;
 }*/
-
-/*int main(void){
- strategy strat = malloc(sizeof(strategy));
- strat-> name = "Coins";
- strat-> play_move = nextDirection;
- strat->mem = NULL;
- strat->void free_strategy=free_memless_strat;
- }*/
