@@ -77,12 +77,14 @@ int main(int argc, char *argv[]) {
 			// recherche de la meilleure direction
 			direction = strat->play_move(strat, g);
 
-			// Réalisation du coup dans la direction voulue
-			play(g, direction);
-			// Rafraichissement de l'affichage
-			update_boxes(&box, g);
+			if(direction == -1)
+			{
+				// Réalisation du coup dans la direction voulue
+				play(g, direction);
+				// Rafraichissement de l'affichage
+				update_boxes(&box, g);
+			}
 
-			//sleep(1);
 			// dans le cas ou la partie est terminée
 			while (game_over(g) && tour_suivant) {
 				// libération de la structure

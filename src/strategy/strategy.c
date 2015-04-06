@@ -10,9 +10,8 @@ struct s_resultat {
 	dir direction;
 };
 
-dir strategie_coin_2(strategy s, grid g);
 dir strategie_coin_1(strategy s, grid g);
-
+dir strategie_coin_2(strategy s, grid g);
 
 void free_memless_strat(strategy strat) {
 	free(strat->mem);
@@ -21,8 +20,8 @@ void free_memless_strat(strategy strat) {
 
 strategy A2_bonnet_borde_pinero_basic(){
 	strategy strat = malloc(sizeof(struct strategy_s)); //initialisation de notre structure strategy
-	strat->name = "Strategie du coin";						// Nom de la strategie
-	strat->play_move = strategie_coin_1; 		//cf strategy.c
+	strat->name = "Strategie du coin";					// Nom de la strategie
+	strat->play_move = strategie_coin_1; 				//cf strategy.c
 	strat->mem = malloc(sizeof(int));
 
 	*(int*) (strat->mem) = 0; // on pointe sur un int qui sera un compteur de tour jouer(pour certaine strat)
@@ -46,9 +45,11 @@ dir strategie_coin_1(strategy s, grid g) {
 		return DOWN;
 	} else if (can_move(g, RIGHT)) {
 		return RIGHT;
-	} else {
+	} else if (can_move(g, UP){
 		return UP;
 	}
+
+	return -1;
 }
 
 /*
