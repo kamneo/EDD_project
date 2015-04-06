@@ -23,4 +23,4 @@ Pour lancer les tests, retourner dans "EDD_project/build", et faire "make test".
 L'exécutable "play_ncurses" permet de jouer au jeu en console.
 L'exécutable "play_ncurses_IA" est une IA qui joue à 2048 de façon complètement autonome pour atteindre le meilleur score possible.
 
-/!\ la génération des exécutables génère des problèmes de droit. N'hésitez pas à les modifier avec la commande "chmod 755 <nom_de_l_exécutable>".
+/!\ la génération des exécutables génère des problèmes de droit. N'hésitez pas à les modifier avec la commande "chmod 755 play_ncurses_IA", par exemple.
