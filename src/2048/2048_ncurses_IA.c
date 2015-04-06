@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <strategy.h>
-#include <unistd.h>
 #include <grid.h>
 
 #define NOUVELLE_PARTIE 1
@@ -243,13 +242,17 @@ int end_game(grid g) {
  * \param m Memoire
  */
 int end_game_stat(MEMOIRE m, grid g) {
+	int total = 0;
+
 	endwin();
 	printf("Merci d'avoir joue.\n");
 	delete_grid(g);
-	printf("%lu \n", m.score);
+	printf("score cumule : %lu \n", m.score);
 	for (int i = 0; i < MAX_VALUE; ++i) {
 		printf("%f = %d\n", pow(2, i), m.tab[i]);
+		total += m.tab[i];
 	}
+	printf("score cumule : %lu \n", m.score / total);
 
 	free(m.tab);
 	return EXIT_SUCCESS;
