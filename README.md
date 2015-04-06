@@ -1,5 +1,5 @@
 # EDD_project
-Projet d'Environement de Développement. Faculté de Bordeaux promotion 2015.
+Projet d'Environnement de Développement. Faculté de Bordeaux promotion 2015.
 
 Pour compiler il faut se placer dans le dossier "EDD_project/build" (EDD_project étant la racine du projet) et faire :
 
