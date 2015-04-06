@@ -23,7 +23,7 @@ Les deux stratégies se valent à peu prés, mais c'est bien la première qui es
 
 \section{La libraire dynamique}
 
-
+\clearpage
 \section{Evaluation de la grille}
 \label{eval_grid}
 Pour évaluer la grille, nous avons pris en compte quatre paramèrtres, et à chancun de ces paramètres nous leurs avons donné un coéficient pour leurs donner plus ou moins d'importance. 
@@ -33,17 +33,20 @@ Pour évaluer la grille, nous avons pris en compte quatre paramèrtres, et à ch
 	On compte le nombre de tile vide que l'on a après avoir joué et on le mutiplie par
 
 	\subsection{La plus grande tile} 
+	Est la valeur de la tile avec la plus grande valeur.
 
 	\subsection{La grille la plus progressive possible}
+	Une grille est progressive lorsque la valeur des cases augmente ou descende quelle que soit la direction. Ainsi, 2 - 4 - 8 - 16 est acceptable, tout comme 32 - 8 - 4 - 2. Mais 2 - 8 - 2 - 16 ne l'est pas (\`a cause de la 3eme case). \`A chaque mouvement on doit verifier si  le mouvement d'apr\`es rendra la grille plus progressive. Si c'est le cas, le mouvement doit \^etre effectu\'e. Si non, trouver un autre mouvement.
 
-	\subsection{La grille la plus régulière possible}
+	\subsection{La grille la plus réguli\`ere possible}
+	pour pouvoir fusionner, les cases doivent comporter des valeurs identiques. Ainsi une suite 2 - 16 - 64 - 256 respecte la r\`egle de progressivit\`e) mais aboutira à un \'echec car on ne pourra fusionner aucune case avec sa voisine. Il faut donc respecter un autre crit\`ere : la r\'egularit\'e. Et faire en sorte de ne pas avoir de cassure dans les s\'eries. Entre cr\'eer une série 2 - 4 - 8 - 16 et cr\'eer une s\'erie 16 - 64 - 256 - 1024 on pr\'ef\'erera donc la premi\`ere, m\^eme si la possibilit\'e d'obtenir un nombre fort comme 1024 peut \^etre tentante a priori.
 
 \clearpage
-\section{Reflexion avancé sur l'implementation de expected max}
-\og Expected Max \fg{} est un algorithme qui consiste \`a retourner la direction optimale \`a jouer. Elle est bas\'ee sur l'algorithme \og minimax \fg{}. Le principe est de donner une valeure à la grille en fonction de plusieurs critères (cf. \og \ref{eval_grid} Evaluation de la grille \fg{}) ainsi noud jouerons le coups avec le maximum de chance de gagné combiné au coup avec le minimum de chance de perdre. Ici nous avons un exemple avec le morpion :
+\section{Reflexion avanc\'e sur l'implementation de expected max}
+\og Expected Max \fg{} est un algorithme qui consiste \`a retourner la direction optimale \`a jouer. Elle est bas\'ee sur l'algorithme \og minimax \fg{}. Le principe est de donner une valeure à la grille en fonction de plusieurs critères (cf. \og \ref{eval_grid} Evaluation de la grille \fg{}) ainsi nous jouerons le coups avec le maximum de chance de gagné combiné au coup avec le minimum de chance de perdre. Ici nous avons un exemple avec le morpion :
 
 \begin{figure}[!h]
-   \includegraphics[width=10cm,height=10cm]{minimax.jpg}
+   \includegraphics[width=7cm,height=7cm]{minimax.jpg}
    \caption{\label{minimax} Exemple minimax}
 \end{figure}
 

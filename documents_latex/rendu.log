@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  6 APR 2015 06:33
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  6 APR 2015 07:08
 entering extended mode
  %&-line parsing enabled.
 **rendu.tex
@@ -351,11 +351,13 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-<minimax.jpg, id=14, 451.6875pt x 354.57469pt>
-File: minimax.jpg Graphic file (type jpg)
- <use minimax.jpg> [3
+[3
 
- <./minimax.jpg>] [4] (./rendu.aux) ) 
+] <minimax.jpg, id=17, 451.6875pt x 354.57469pt>
+File: minimax.jpg Graphic file (type jpg)
+ <use minimax.jpg> [4
+
+ <./minimax.jpg>] (./rendu.aux) ) 
 Here is how much of TeX's memory you used:
  2015 strings out of 495061
  23908 string characters out of 1182622
@@ -364,16 +366,16 @@ Here is how much of TeX's memory you used:
  12439 words of font info for 31 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  25i,6n,24p,745b,212s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/debian/.texmf-var/fonts/pk/ljfour/
-jknappen/ec/eccc1000.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/e
-c/ecbx1200.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000
-.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </
-home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/debia
-n/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/debian/.texmf-v
-ar/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
-Output written on rendu.pdf (4 pages, 129149 bytes).
+ </home/debian/.texmf-var/fonts/pk/ljfour/jkna
+ppen/ec/eccc1000.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ec
+bx1200.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600
+pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home
+/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/debian/.t
+exmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/debian/.texmf-var/f
+onts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
+Output written on rendu.pdf (4 pages, 131195 bytes).
 PDF statistics:
- 233 PDF objects out of 1000 (max. 8388607)
+ 236 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
