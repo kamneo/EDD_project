@@ -19,7 +19,7 @@ void free_memless_strat(strategy strat) {
 	free(strat);
 }
 
-strategy A2_bonnet_borde_pinero_basic(grid g){
+strategy A2_bonnet_borde_pinero_basic(){
 	strategy strat = malloc(sizeof(struct strategy_s)); //initialisation de notre structure strategy
 	strat->name = "Strategie du coin";						// Nom de la strategie
 	strat->play_move = strategie_coin_1; 		//cf strategy.c

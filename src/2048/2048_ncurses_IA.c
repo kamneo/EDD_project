@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
 		add_tile(g);
 
 		// initialisation de la structure strategy
-		strat = A2_bonnet_borde_pinero_basic(g);
+		strat = A2_bonnet_borde_pinero_basic();
 
 		// affichadge du nom de la strategie
 		mvprintw(box.height * GRID_SIDE + 2, 0, "Vous utilisez la strategie %s",
