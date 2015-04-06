@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  6 APR 2015 07:08
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2015.4.1)  6 APR 2015 08:50
 entering extended mode
  %&-line parsing enabled.
 **rendu.tex
@@ -350,32 +350,39 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-[3
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (0.23766pt too wide) in paragraph at lines 25--26
+\T1/cmr/m/n/10 con-tient une méth-ode ap-pelée \T1/cmr/m/it/10 A2_bonnet_borde_
+pinero_basic() \T1/cmr/m/n/10 et qui re-tourne
+ []
 
-] <minimax.jpg, id=17, 451.6875pt x 354.57469pt>
+[2] [3
+
+] <minimax.jpg, id=18, 451.6875pt x 354.57469pt>
 File: minimax.jpg Graphic file (type jpg)
- <use minimax.jpg> [4
+ <use minimax.jpg>
+[4
 
  <./minimax.jpg>] (./rendu.aux) ) 
 Here is how much of TeX's memory you used:
- 2015 strings out of 495061
- 23908 string characters out of 1182622
+ 2017 strings out of 495061
+ 23930 string characters out of 1182622
  78158 words of memory out of 3000000
- 5195 multiletter control sequences out of 15000+50000
- 12439 words of font info for 31 fonts, out of 3000000 for 9000
+ 5196 multiletter control sequences out of 15000+50000
+ 13125 words of font info for 32 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  25i,6n,24p,745b,212s stack positions out of 5000i,500n,10000p,200000b,50000s
  </home/debian/.texmf-var/fonts/pk/ljfour/jkna
 ppen/ec/eccc1000.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ec
-bx1200.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600
-pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home
-/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/debian/.t
-exmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/debian/.texmf-var/f
-onts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
-Output written on rendu.pdf (4 pages, 131195 bytes).
+bx1200.600pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600
+pk> </home/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home
+/debian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/debian/.t
+exmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/debian/.texmf-var/f
+onts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/debian/.texmf-var/fonts/pk/lj
+four/jknappen/ec/ecrm1728.600pk>
+Output written on rendu.pdf (4 pages, 138175 bytes).
 PDF statistics:
- 236 PDF objects out of 1000 (max. 8388607)
+ 259 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
