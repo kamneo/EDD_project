@@ -252,7 +252,7 @@ int end_game_stat(MEMOIRE m, grid g) {
 		printf("%f = %d\n", pow(2, i), m.tab[i]);
 		total += m.tab[i];
 	}
-	printf("score cumule : %lu \n", m.score / total);
+	printf("score moyen : %lu \n", m.score / total);
 
 	free(m.tab);
 	return EXIT_SUCCESS;
