@@ -10,13 +10,11 @@
 
 // struct which contains diplay properties of the box
 typedef struct _box_border_struct {
-	chtype ls, rs, ts, bs, 
-		tl, tr, bl, br;
+	chtype ls, rs, ts, bs, tl, tr, bl, br;
 }BOX_BORDER;
 
 // struct which contains all diplay properties of the box
 typedef struct _BOX_struct {
-
 	int startx, starty;
 	int height, width;
 	BOX_BORDER border;
@@ -29,14 +27,13 @@ void update_boxes(BOX *box, grid g);
 int end_game(grid g);
 unsigned long int pow_of_2(tile t);
 
-int main(int argc, char *argv[])
-{	
+int main(int argc, char *argv[]) {	
 	// initialisation de time pour la génération aléatoire de tile
 	srand(time(NULL));
 	
 	BOX box;				// parametre de la console
 	int key;				// caractere saisi au clavier
-	bool tour_suivant;	// valeur boolean est a vrai quand on veut recommencer une partie
+	bool tour_suivant;		// valeur boolean est a vrai quand on veut recommencer une partie
 	dir direction;			// contient la direction décrite dans grid.h
 	grid g;					// instance de la grid
 
@@ -161,15 +158,15 @@ void create_boxes(BOX *p_box)
 	{
 		for (int j = 0; j < GRID_SIDE; j++)
 		{
-			mvaddch(y + h * j, x + w * i, p_box->border.tl);				// draw the left up corner of a box
-			mvaddch(y + h * j, x + w * (i + 1), p_box->border.tr);			// draw the right up corner of a box
-			mvaddch(y + h * (j + 1), x + w * i, p_box->border.bl);			// draw the left down corner of a box
-			mvaddch(y + h * (j + 1), x + w * (i + 1), p_box->border.br);	// draw the right down corner of a box
+			mvaddch(y + h*j, x + w*i, p_box->border.tl);			// draw the left up corner of a box
+			mvaddch(y + h*j, x + w*(i+1), p_box->border.tr);		// draw the right up corner of a box
+			mvaddch(y + h*(j+1), x + w*i, p_box->border.bl);		// draw the left down corner of a box
+			mvaddch(y + h*(j+1), x + w*(i+1), p_box->border.br);	// draw the right down corner of a box
 
-			mvhline(y + h * j, x + 1 + w * i, p_box->border.ts, w - 1);		// draw the up corner of a box
-			mvhline(y + h * (j + 1), x + 1 + w * i, p_box->border.bs, w - 1);// draw the down corner of a box
-			mvvline(y + 1 + h * j, x + w * i, p_box->border.ls, h - 1);		// draw the left corner of a box
-			mvvline(y + 1 + h * j, x + w * (i + 1), p_box->border.rs, h - 1);// draw the right corner of a box
+			mvhline(y + h*j, x+1 + w*i, p_box->border.ts, w-1);		// draw the up corner of a box
+			mvhline(y + h*(j+1), x+1 + w*i, p_box->border.bs, w-1);	// draw the down corner of a box
+			mvvline(y+1 + h*j, x + w*i, p_box->border.ls, h-1);		// draw the left corner of a box
+			mvvline(y+1 + h*j, x + w*(i+1), p_box->border.rs, h-1);	// draw the right corner of a box
 		}
 	}
 
