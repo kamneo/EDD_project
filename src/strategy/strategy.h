@@ -28,10 +28,10 @@ struct strategy_s {
 };
 
 /*
- * strategie capable de jouer au 2048
- * param : strategy s la sutructure stratégie
+ * stratégie capable de jouer au 2048
+ * param : strategy s la structure stratégie
  * param : grid la grille
- * return: la direction optimal à jouer qui a été calculé par cette stratégie
+ * return: la direction optimale à jouer qui a été calculée par cette stratégie
  */
 strategy A2_bonnet_borde_pinero_basic();
 

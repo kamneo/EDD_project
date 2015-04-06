@@ -33,11 +33,30 @@ strategy A2_bonnet_borde_pinero_basic(){
 }
 
 /*
- * deuwième strategie qui reprend la stratégie du coin mais qui un tour sur deux
- * changera l'ordre des mouvements favori.
+ * premiere strategie appelée stratégie du coin
+ * param : strategy s la structure stratégie
+ * param : grid la grille
+ * return: la direction optimale à jouer qui a été calculée par cette stratégie
+ */
+dir strategie_coin_1(strategy s, grid g) {
+
+	if (can_move(g, LEFT)) {
+		return LEFT;
+	} else if (can_move(g, DOWN)) {
+		return DOWN;
+	} else if (can_move(g, RIGHT)) {
+		return RIGHT;
+	} else {
+		return UP;
+	}
+}
+
+/*
+ * deuxième strategie qui reprend la stratégie du coin mais qui un tour sur deux
+ * changera l'ordre des mouvements favoris.
  * param : strategy s la sutructure stratégie
  * param : grid la grille
- * return: la direction optimal à jouer qui a été calculé par cette stratégie
+ * return: la direction optimale à jouer qui a été calculée par cette stratégie
  */
 dir strategie_coin_2(strategy s, grid g) {
 	int* val = s->mem;
@@ -66,24 +85,6 @@ dir strategie_coin_2(strategy s, grid g) {
 	(*val)++;
 }
 
-/*
- * premiere strategie appeler stratégie du coin
- * param : strategy s la sutructure stratégie
- * param : grid la grille
- * return: la direction optimal à jouer qui a été calculé par cette stratégie
- */
-dir strategie_coin_1(strategy s, grid g) {
-
-	if (can_move(g, LEFT)) {
-		return LEFT;
-	} else if (can_move(g, DOWN)) {
-		return DOWN;
-	} else if (can_move(g, UP)) {
-		return UP;
-	} else {
-		return RIGHT;
-	}
-}
 
 /*dir rapide_strategie(grid g,  int profondeur) {
  int nb_directions = 4;
@@ -129,11 +130,12 @@ bool win(grid g) {
 }
 
 /*
- * fonction qui évalue le poid de la grille
+ * fonction qui évalue le poids de la grille
  * param : g qui est la grille à évaluer
  * return: double qui est la valeur de la grille
  */
-/*double eval(grid g) {
+/*
+double eval(grid g) {
 	// emptyCells qui compte le nombre de tile vide
 	// maxValue qui contient la plus grande valeur de la grille
 	int emptyCells = 0, maxValue = 0;
@@ -153,4 +155,5 @@ bool win(grid g) {
 
 	return smoothness() * smoothWeight + monotonicity() * monoWeight +
 	Math.log(emptyCells)emptyCells * emptyWeight + maxValue() * maxWeight;
-}*/
+}
+*/
