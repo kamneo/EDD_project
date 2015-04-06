@@ -1,14 +1,13 @@
 # EDD_project
-projet d'environement de développement. Faculté de Bordeaux promotion 2015
+Projet d'Environement de Développement. Faculté de Bordeaux promotion 2015.
 
-pour compiler maintenant il faut ce placer dans le dossier "EDD_project/build" où on considerera EDD_project comme la racine du projet.
-Et faire :
+Pour compiler il faut se placer dans le dossier "EDD_project/build" (EDD_project étant la racine du projet) et faire :
 
-	- cmake ..
-	- make
-	- make install
+	- $ cmake ..
+	- $ make
+	- $ make install
 
-les fichiers suivant seront alors générés:
+les fichiers suivants seront alors générés:
 	
 	- EDD_project/bin/play_ncurses
 	- EDD_project/bin/play_ncurses_IA
@@ -21,7 +20,7 @@ Pour clean le projet, retourner dans "EDD_project/build", et faire "make clean".
 
 Pour lancer les tests, retourner dans "EDD_project/build", et faire "make test".
 
-play_ncurses permet de jouer au jeu en console.
-play_ncurses_IA est un bot qui joue au 2048 de façon completement autonome pour atteindre le meilleur score possible.
+L'exécutable "play_ncurses" permet de jouer au jeu en console.
+L'exécutable "play_ncurses_IA" est une IA qui joue à 2048 de façon complètement autonome pour atteindre le meilleur score possible.
 
-/!\ la génération des executable génére des problèmes de droit. Nésiter pas les modifier.
+/!\ la génération des exécutables génère des problèmes de droit. N'hésitez pas à les modifier avec la commande "chmod 755 <nom_de_l_exécutable>".
