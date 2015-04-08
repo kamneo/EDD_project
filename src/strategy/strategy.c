@@ -8,15 +8,18 @@
 typedef struct s_resultat resultat;
 
 struct s_resultat {
-	double meilleur_score;
+	double score;
 	dir direction;
 };
 
 dir strategie_coin_1(strategy s, grid g);
 dir strategie_coin_2(strategy s, grid g);
+dir rapide_strategie(strategy s, grid g);
 double eval(grid g);
 double progressive(grid g);
 double reguliere(grid g);
+void do_expected(grid g, resultat* res, dir direction);
+double expected(grid g, dir direction);
 
 void free_memless_strat(strategy strat) {
 	free(strat->mem);
@@ -25,8 +28,8 @@ void free_memless_strat(strategy strat) {
 
 strategy A2_bonnet_borde_pinero_basic() {
 	strategy strat = malloc(sizeof(struct strategy_s)); //initialisation de notre structure strategy
-	strat->name = "Strategie du coin 1";				// Nom de la strategie
-	strat->play_move = strategie_coin_1; 				//cf strategy.c
+	strat->name = "Strategie du fast";				// Nom de la strategie
+	strat->play_move = rapide_strategie; 				//cf strategy.c
 	strat->mem = malloc(sizeof(int));
 
 	*(int*) (strat->mem) = 0; // on pointe sur un int qui sera un compteur de tour jouer(pour certaine strat)
@@ -43,6 +46,7 @@ strategy A2_bonnet_borde_pinero_basic() {
  * return: la direction optimale à jouer qui a été calculée par cette stratégie
  */
 dir strategie_coin_1(strategy s, grid g) {
+
 	if (can_move(g, LEFT)) {
 		return LEFT;
 	} else if (can_move(g, DOWN)) {
@@ -89,47 +93,96 @@ dir strategie_coin_2(strategy s, grid g) {
 		return -1;
 }
 
-/*dir rapide_strategie(grid g,  int profondeur) {
- int nb_directions = 4;
- dir direction = dir[0];
+/*
+ * strategie basée sur expected max qui retourne la direction optimale à jouer
+ * param : strategy s la sutructure stratégie
+ * param : grid la grille
+ * return: la direction optimale à jouer qui a été calculée par cette stratégie
+ */
+dir rapide_strategie(strategy strat, grid g) {
+	// initialisation de la structure resultat
+	resultat res;
+	res.score = 0;
+	res.direction = -1;
 
- for (int iterator = 0; iterator < nb_directions; ++iterator) {
- grid grid_clone = new_grid();
- copy_grid(g, grid_clone);
+	// pour chaque directions possible ont fait le traitement expected();
+	do_expected(g, &res, LEFT);
+	do_expected(g, &res, RIGHT);
+	do_expected(g, &res, DOWN);
+	do_expected(g, &res, UP);
 
- if (can_move(grid_clone, dir[iterator])) {
- play(grid_clone, dir[iterator]);
-
- if (win(grid_clone)){
- delete_grid(grid_clone);
- return dir[iterator];
- }
-
- if (profondeur == 0) {
- meilleur_eval = &eval + eval(grid_clone);
- } else {
- rapide_strategie(grid_clone, profondeur - 1, *eval);
- }
- }
-
- delete_grid(grid_clone);
- }
- return LEFT;
- }*/
+	return res.direction;
+}
 
 /*
- * fonction qui regarde si on a atteint 2048
- * param : grid g la grille courante
- * return: true si on a atteint 2048 sinon false.
+ * fonction qui pour une direction calcule la valeur moyenne de toutes les grilles
+ * possibles et si le resultat est plus grand que celui contenu dans la structure resultat
+ * modifie les champs de la structure avec les nouvelles valeurs (direction, score)
+ * param : grid la grille
+ * param : resultat * res un pointeur sur la structure resultat
+ * param : dir direction la direction choisi
  */
-bool win(grid g) {
-	for (int x = 0; x < GRID_SIDE; ++x) {
-		for (int y = 0; y < GRID_SIDE; ++y) {
-			if (get_tile(g, x, y) == 11)
-				return true;
+void do_expected(grid g, resultat* res, dir direction)
+{
+	double expect;
+	if (can_move(g, direction)) {
+		expect = expected(g, direction);
+		if(expect >= res->score)
+		{
+			res->score = expect;
+			res->direction = direction;
 		}
 	}
-	return false;
+}
+
+/*
+ * fonction qui calcule la valeur de chaque grille qui peuvent etre généré pour une direction
+ * et retourne le score moyen de toute ces grilles
+ * param : grid g la grille
+ * param : dir direction la direction choisi
+ * return: double la valeur moyenne de chaque grille dans une direction
+ */
+double expected(grid g, dir direction)
+{
+	// creation du pointeur de fonction sur la fonction d'evaluation de la grille
+	double (*evaluation)(grid);
+	evaluation = eval;
+
+	// creation d'une nouvelle grille sur laquel on fera les statistiques
+	grid ng = new_grid();
+	copy_grid(g, ng);
+
+	do_move(ng, direction);
+
+	int emptyCells = 0;		// nombre de tile vide
+	double score_2 = 0.;	//somme des score si la tile introduite est un 2
+	double score_4 = 0.;	//somme des score si la tile introduite est un 4
+
+	// pour chaque tile vide on evalue la grille
+	for (int x = 0; x < GRID_SIDE; ++x) {
+		for (int y = 0; y < GRID_SIDE; ++y) {
+			if(get_tile(ng, x, y) == 0){
+				emptyCells++;
+				// si la tile est vide on y met la valeur 1 et on fait éval()
+				set_tile(ng, x, y, 1);
+				score_2 += evaluation(ng);
+				// puis on y met la valeur 2 et on fait éval()
+				set_tile(ng, x, y, 2);
+				score_4 += evaluation(ng);
+
+				// on remet à 0 la tile
+				set_tile(ng, x, y, 0);
+			}
+		}
+	}
+
+	// suppression de la grille de "travail"
+	delete_grid(ng);
+	// on retour le score moyen de la grille pour cette direction.
+	// score_2 * 0.9 car on à 90% de chance d'avoir un 2 et score_4 * 0.1 pour les 10% restant.
+	double score = (score_2 * 0.9 + score_4 * 0.1) / emptyCells;
+	//printf("%d %f ", direction ,score);
+	return score;
 }
 
 /*
@@ -151,12 +204,14 @@ double eval(grid g) {
 		}
 	}
 
-	// Coeficient d'imporance rapport à la grille.
-	double smoothWeight = 0.1, monoWeight = 1.0, emptyWeight = 2.7, maxWeight =
-			1.0;
+	// Coefficient d'importance rapport à la grille.
+	double 	smoothWeight =  1.,
+			monoWeight = .4,
+			emptyWeight = 2.7,
+			maxWeight = 1.5;
 
-	return progressive(g) * smoothWeight + reguliere(g) * monoWeight +
-			log(emptyCells) * emptyWeight + maxValue * maxWeight;
+	return progressive(g) * smoothWeight + reguliere(g) * monoWeight
+			+ emptyCells * emptyWeight + maxValue * maxWeight;
 }
 
 /**
@@ -167,26 +222,26 @@ double eval(grid g) {
  * return : double le score quelle a obtenue.
  */
 double reguliere(grid g) {
-double bareme = 1. / (GRID_SIDE * GRID_SIDE);
-double score = 1.;
+	double bareme = 1. / (GRID_SIDE * GRID_SIDE);
+	double score = 1.;
 
-for (int x = 0; x < GRID_SIDE; ++x) {
-	for (int y = 0; y < GRID_SIDE; ++y) {
-		// on verifie que la tile ne soit pas nulle
-		if (get_tile(g, x, y) != 0) {
-			// la tile sous la tile courante doit etre superieure de 1
-			if (y < GRID_SIDE - 1 && get_tile(g, x, y + 1) != 0
-					&& (get_tile(g, x, y) + 1) != get_tile(g, x, y + 1))
-				score -= bareme / 2.;
-			// la tile à gauche de la tile courante doit etre superieure de 1
-			if (x > 0 && get_tile(g, x - 1, y) != 0
-					&& (get_tile(g, x, y) + 1) != get_tile(g, x - 1, y))
-				score -= bareme / 2.;
+	for (int x = 0; x < GRID_SIDE; ++x) {
+		for (int y = 0; y < GRID_SIDE; ++y) {
+			// on verifie que la tile ne soit pas nulle
+			if (get_tile(g, x, y) != 0) {
+				// la tile sous la tile courante doit etre superieure de 1
+				if (y < GRID_SIDE - 1 && get_tile(g, x, y + 1) != 0
+						&& (get_tile(g, x, y) + 1) != get_tile(g, x, y + 1))
+					score -= bareme / 2.;
+				// la tile à gauche de la tile courante doit etre superieure de 1
+				if (x > 0 && get_tile(g, x - 1, y) != 0
+						&& (get_tile(g, x, y) + 1) != get_tile(g, x - 1, y))
+					score -= bareme / 2.;
+			}
 		}
 	}
-}
 
-return score;
+	return score;
 }
 
 /**
@@ -198,22 +253,23 @@ return score;
  * return : double le score quelle a obtenue.
  */
 double progressive(grid g) {
-double bareme = 1. / (GRID_SIDE * GRID_SIDE);
-double score = 1.;
+	double bareme = 1. / (GRID_SIDE * 2);
+	double score = 1.;
 
-for (int x = 0; x < GRID_SIDE; ++x) {
-	for (int y = 0; y < GRID_SIDE; ++y) {
-		// on verifie que la tile ne soit pas nulle
-		if (get_tile(g, x, y) != 0) {
-			// la tile sous la tile courante doit etre superieure
-			if (y < GRID_SIDE - 1 && get_tile(g, x, y) > get_tile(g, x, y + 1))
-				score -= bareme;
-			// la tile à gauche de la tile courante doit etre superieure
-			if (x > 0 && get_tile(g, x, y) > get_tile(g, x - 1, y))
-				score -= bareme;
+	for (int x = 0; x < GRID_SIDE; ++x) {
+		for (int y = 0; y < GRID_SIDE; ++y) {
+			// on verifie que la tile ne soit pas nulle
+			if (get_tile(g, x, y) != 0) {
+				// la tile sous la tile courante doit etre superieure
+				if (y < GRID_SIDE - 1
+						&& get_tile(g, x, y) > get_tile(g, x, y + 1))
+					score -= bareme;
+				// la tile à gauche de la tile courante doit etre superieure
+				if (x > 0 && get_tile(g, x, y) > get_tile(g, x - 1, y))
+					score -= bareme;
+			}
 		}
 	}
-}
 
-return score;
+	return score;
 }

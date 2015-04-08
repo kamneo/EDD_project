@@ -8,7 +8,8 @@
 #include <unistd.h>
 
 #define NOUVELLE_PARTIE 1
-#define MAX_VALUE 11
+#define MAX_VALUE 12
+#define TOUR 500
 
 /*
  * MEMOIRE qui contient les scores cumulés des grilles jusqu'a ce que
@@ -36,9 +37,10 @@ int main(int argc, char *argv[]) {
 	dir direction;			// contient la direction décrite dans grid.h
 	grid g;					// instance de la grid
 	strategy strat;			// instance de la stratégie
-	int key;
 
-	while (NOUVELLE_PARTIE) {
+	int nb_tour = TOUR;
+
+	while (NOUVELLE_PARTIE   && nb_tour != 0) {
 		g = new_grid();
 		add_tile(g);
 		add_tile(g);
@@ -51,16 +53,17 @@ int main(int argc, char *argv[]) {
 		while (tour_suivant) {
 			// recherche de la meilleure direction
 			direction = strat->play_move(strat, g);
+			//sleep(1);
+
 			if(direction != -1)
 			{
 				// Réalisation du coup dans la direction voulue
 				play(g, direction);
 			}
 
-			display_grid(g);
-
 			// dans le cas ou la partie est terminée
 			while (game_over(g) && tour_suivant) {
+				display_grid(g);
 				// Ceci ne sert que pour les stats
 				m.score += grid_score(g);
 				int indice = 0;
@@ -73,21 +76,12 @@ int main(int argc, char *argv[]) {
 				}
 				m.tab[indice] += 1;
 
-				printf("voulez-vous rejouer ? : y , n \n");
-				key = getchar();
-				if (key == 'y')
-					tour_suivant = false;
-
-				if (key == 'n') {
-					// libération de la structure
-					strat->free_strategy(strat);
-
-					return end_game_stat(m, g);
-				}
-			}					// end game_over
+				tour_suivant = false;
+				nb_tour--;
+			}// end game_over
 		} // end tour_suivant
 	} // end PARTIE_SUIVANTE
-	return end_game(g);
+	return end_game_stat(m, g);
 }
 
 /*
