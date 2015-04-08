@@ -43,7 +43,6 @@ strategy A2_bonnet_borde_pinero_basic() {
  * return: la direction optimale à jouer qui a été calculée par cette stratégie
  */
 dir strategie_coin_1(strategy s, grid g) {
-	printf("%f", eval(g));
 	if (can_move(g, LEFT)) {
 		return LEFT;
 	} else if (can_move(g, DOWN)) {
