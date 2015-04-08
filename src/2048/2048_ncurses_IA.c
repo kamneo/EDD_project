@@ -4,6 +4,7 @@
 #include <time.h>
 #include <strategy.h>
 #include <grid.h>
+#include <unistd.h>
 
 #define NOUVELLE_PARTIE 1
 #define TO_CLEAR 10
@@ -76,8 +77,8 @@ int main(int argc, char *argv[]) {
 		while (tour_suivant) {
 			// recherche de la meilleure direction
 			direction = strat->play_move(strat, g);
-
-			if(direction == -1)
+			//sleep(1);
+			if(direction != -1)
 			{
 				// Réalisation du coup dans la direction voulue
 				play(g, direction);
@@ -87,9 +88,6 @@ int main(int argc, char *argv[]) {
 
 			// dans le cas ou la partie est terminée
 			while (game_over(g) && tour_suivant) {
-				// libération de la structure
-				strat->free_strategy(strat);
-
 				// Ceci ne sert que pour les stats
 				m.score += grid_score(g);
 				int indice = 0;
@@ -110,6 +108,9 @@ int main(int argc, char *argv[]) {
 					tour_suivant = false;
 
 				if (key == 'n') {
+					// libération de la structure
+					strat->free_strategy(strat);
+
 					return end_game_stat(m, g);
 				}
 			}					// end game_over
@@ -224,6 +225,8 @@ void update_boxes(BOX *p_box, grid g) {
 
 	// met a jour le score
 	mvprintw(h * GRID_SIDE + 1, 8, "%lu", grid_score(g));
+	// place le curseur 3 ligne après la grille
+	move(h * GRID_SIDE + 4, 0);
 	refresh();
 }
 
