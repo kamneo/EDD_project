@@ -14,4 +14,7 @@ install (FILES "${2048_BINARY_DIR}/src/libgrid.a" DESTINATION ${2048_SOURCE_DIR}
 install (FILES "${2048_BINARY_DIR}/src/libA2_bonnet_borde_pinero_basic.so" DESTINATION ${2048_SOURCE_DIR}/lib)
 
 #Lors du make clean, les fichiers suivant seront aussi supprimé
-set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${2048_SOURCE_DIR}/include/grid.h;${2048_SOURCE_DIR}/include/strategy.h;${2048_SOURCE_DIR}/lib/libgrid.a;${2048_SOURCE_DIR}/lib/libA2_bonnet_borde_pinero_basic.so")
+set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES 
+    "${2048_SOURCE_DIR}/include/grid.h;${2048_SOURCE_DIR}/include/strategy.h;
+    ${2048_SOURCE_DIR}/lib/libgrid.a;
+    ${2048_SOURCE_DIR}/lib/libA2_bonnet_borde_pinero_basic.so")
