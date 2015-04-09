@@ -9,7 +9,20 @@
 
 #define NOUVELLE_PARTIE 1
 #define MAX_VALUE 12
-#define TOUR 500
+#define TOUR 1
+
+long int top_chrono;
+int verbose = 0; // niveau de debuging
+
+void demarrer_chrono() {
+        top_chrono = clock();
+}
+
+void stop_chrono() {
+        long int arret_chrono = clock();
+        fprintf(stderr, "Le calcul a pris %f secondes.\n",
+                (float)(arret_chrono - top_chrono) / CLOCKS_PER_SEC);
+}
 
 /*
  * MEMOIRE qui contient les scores cumulés des grilles jusqu'a ce que
@@ -28,7 +41,6 @@ unsigned long int pow_of_2(tile t);
 int main(int argc, char *argv[]) {
 	// initialisation de time pour la génération aléatoire de tile
 	srand(time(NULL));
-
 	MEMOIRE m;
 	m.score = 0;
 	m.tab = malloc(sizeof(int) * MAX_VALUE);
@@ -40,6 +52,12 @@ int main(int argc, char *argv[]) {
 
 	int nb_tour = TOUR;
 
+	printf("1 - affiche la grille à chaque coup\n");
+	printf("2 - affiche juste la grille de fin\n");
+	int key = getchar();
+
+		demarrer_chrono();
+
 	while (NOUVELLE_PARTIE   && nb_tour != 0) {
 		g = new_grid();
 		add_tile(g);
@@ -50,9 +68,13 @@ int main(int argc, char *argv[]) {
 
 		tour_suivant = true;
 
+		if(key == '1')
+			display_grid(g);
+
 		while (tour_suivant) {
 			// recherche de la meilleure direction
 			direction = strat->play_move(strat, g);
+
 			//sleep(1);
 
 			if(direction != -1)
@@ -61,9 +83,13 @@ int main(int argc, char *argv[]) {
 				play(g, direction);
 			}
 
+			if(key == '1')
+				display_grid(g);
 			// dans le cas ou la partie est terminée
 			while (game_over(g) && tour_suivant) {
-				display_grid(g);
+				if(key == '2')
+					display_grid(g);
+
 				// Ceci ne sert que pour les stats
 				m.score += grid_score(g);
 				int indice = 0;
@@ -81,6 +107,7 @@ int main(int argc, char *argv[]) {
 			}// end game_over
 		} // end tour_suivant
 	} // end PARTIE_SUIVANTE
+	stop_chrono();
 	return end_game_stat(m, g);
 }
 

@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <math.h>
 
+#define DEPTH 2
+
 typedef struct s_resultat resultat;
 
 struct s_resultat {
@@ -15,11 +17,12 @@ struct s_resultat {
 dir strategie_coin_1(strategy s, grid g);
 dir strategie_coin_2(strategy s, grid g);
 dir rapide_strategie(strategy s, grid g);
+resultat max(grid g, int depth);
 double eval(grid g);
 double progressive(grid g);
 double reguliere(grid g);
-void do_expected(grid g, resultat* res, dir direction);
-double expected(grid g, dir direction);
+void do_expected(grid g, resultat* res, dir direction, int depth);
+double expected(grid g, int depth);
 
 void free_memless_strat(strategy strat) {
 	free(strat->mem);
@@ -105,13 +108,22 @@ dir rapide_strategie(strategy strat, grid g) {
 	res.score = 0;
 	res.direction = -1;
 
-	// pour chaque directions possible ont fait le traitement expected();
-	do_expected(g, &res, LEFT);
-	do_expected(g, &res, RIGHT);
-	do_expected(g, &res, DOWN);
-	do_expected(g, &res, UP);
+	res = max(g, DEPTH);
 
 	return res.direction;
+}
+
+resultat max(grid g, int depth)
+{
+	resultat MeilleurRes;
+
+	// pour chaque directions possible ont fait le traitement expected();
+	do_expected(g, &MeilleurRes, LEFT, depth);
+	do_expected(g, &MeilleurRes, RIGHT, depth);
+	do_expected(g, &MeilleurRes, DOWN, depth);
+	do_expected(g, &MeilleurRes, UP, depth);
+
+	return MeilleurRes;
 }
 
 /*
@@ -122,17 +134,27 @@ dir rapide_strategie(strategy strat, grid g) {
  * param : resultat * res un pointeur sur la structure resultat
  * param : dir direction la direction choisi
  */
-void do_expected(grid g, resultat* res, dir direction)
+void do_expected(grid g, resultat* bestRes, dir direction, int depth)
 {
-	double expect;
-	if (can_move(g, direction)) {
-		expect = expected(g, direction);
-		if(expect >= res->score)
+	double expect = 0;
+
+	// creation d'une nouvelle grille sur laquel on fera les statistiques
+	grid ng = new_grid();
+	copy_grid(g, ng);
+
+	if (can_move(ng, direction)) {
+
+		do_move(ng, direction);
+		expect = expected(ng, depth);
+
+		if(expect >= bestRes->score)
 		{
-			res->score = expect;
-			res->direction = direction;
+			bestRes->score = expect;
+			bestRes->direction = direction;
 		}
 	}
+
+	delete_grid(ng);
 }
 
 /*
@@ -142,45 +164,49 @@ void do_expected(grid g, resultat* res, dir direction)
  * param : dir direction la direction choisi
  * return: double la valeur moyenne de chaque grille dans une direction
  */
-double expected(grid g, dir direction)
+double expected(grid g, int depth)
 {
 	// creation du pointeur de fonction sur la fonction d'evaluation de la grille
 	double (*evaluation)(grid);
 	evaluation = eval;
 
-	// creation d'une nouvelle grille sur laquel on fera les statistiques
-	grid ng = new_grid();
-	copy_grid(g, ng);
-
-	do_move(ng, direction);
-
 	int emptyCells = 0;		// nombre de tile vide
 	double score_2 = 0.;	//somme des score si la tile introduite est un 2
-	double score_4 = 0.;	//somme des score si la tile introduite est un 4
+	//double score_4 = 0.;	//somme des score si la tile introduite est un 4
+	resultat res;
 
 	// pour chaque tile vide on evalue la grille
 	for (int x = 0; x < GRID_SIDE; ++x) {
 		for (int y = 0; y < GRID_SIDE; ++y) {
-			if(get_tile(ng, x, y) == 0){
+			if(get_tile(g, x, y) == 0){
 				emptyCells++;
 				// si la tile est vide on y met la valeur 1 et on fait éval()
-				set_tile(ng, x, y, 1);
-				score_2 += evaluation(ng);
+				set_tile(g, x, y, 1);
+				score_2 += evaluation(g);
+				//
+				if(depth > 0)
+				{
+					res = max(g, depth - 1);
+					score_2 += res.score;
+				}
 				// puis on y met la valeur 2 et on fait éval()
-				set_tile(ng, x, y, 2);
-				score_4 += evaluation(ng);
-
+				/*set_tile(g, x, y, 2);
+				score_4 += evaluation(g);
+				if(depth > 0)
+				{
+					res = max(g, depth - 1);
+					score_4 += res.score;
+				}
+*/
 				// on remet à 0 la tile
-				set_tile(ng, x, y, 0);
+				set_tile(g, x, y, 0);
 			}
 		}
 	}
 
-	// suppression de la grille de "travail"
-	delete_grid(ng);
 	// on retour le score moyen de la grille pour cette direction.
 	// score_2 * 0.9 car on à 90% de chance d'avoir un 2 et score_4 * 0.1 pour les 10% restant.
-	double score = (score_2 * 0.9 + score_4 * 0.1) / emptyCells;
+	double score = (score_2 /* * 0.9 + score_4 * 0.1*/) / emptyCells;
 	//printf("%d %f ", direction ,score);
 	return score;
 }
@@ -206,9 +232,9 @@ double eval(grid g) {
 
 	// Coefficient d'importance rapport à la grille.
 	double 	smoothWeight =  1.,
-			monoWeight = .4,
-			emptyWeight = 2.7,
-			maxWeight = 1.5;
+			monoWeight = 2.,
+			emptyWeight = 1.,
+			maxWeight = 2.;
 
 	return progressive(g) * smoothWeight + reguliere(g) * monoWeight
 			+ emptyCells * emptyWeight + maxValue * maxWeight;
