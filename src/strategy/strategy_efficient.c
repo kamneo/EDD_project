@@ -1,4 +1,4 @@
-#include "strategy.h"
+#include "strategy_efficient.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
@@ -14,8 +14,6 @@ struct s_resultat {
 	dir direction;
 };
 
-dir strategie_coin_1(strategy s, grid g);
-dir strategie_coin_2(strategy s, grid g);
 dir rapide_strategie(strategy s, grid g);
 resultat max(grid g, int depth);
 double eval(grid g);
@@ -29,7 +27,7 @@ void free_memless_strat(strategy strat) {
 	free(strat);
 }
 
-strategy A2_bonnet_borde_pinero_basic() {
+strategy A2_bonnet_borde_pinero_efficient() {
 	strategy strat = malloc(sizeof(struct strategy_s)); //initialisation de notre structure strategy
 	strat->name = "Strategie du fast";				// Nom de la strategie
 	strat->play_move = rapide_strategie; 				//cf strategy.c
@@ -40,60 +38,6 @@ strategy A2_bonnet_borde_pinero_basic() {
 	strat->free_strategy = free_memless_strat;
 
 	return strat;
-}
-
-/*
- * premiere strategie appelée stratégie du coin
- * param : strategy s la structure stratégie
- * param : grid la grille
- * return: la direction optimale à jouer qui a été calculée par cette stratégie
- */
-dir strategie_coin_1(strategy s, grid g) {
-
-	if (can_move(g, LEFT)) {
-		return LEFT;
-	} else if (can_move(g, DOWN)) {
-		return DOWN;
-	} else if (can_move(g, RIGHT)) {
-		return RIGHT;
-	} else if (can_move(g, UP)) {
-		return UP;
-	}
-
-	return -1;
-}
-
-/*
- * deuxième strategie qui reprend la stratégie du coin mais qui un tour sur deux
- * changera l'ordre des mouvements favoris.
- * param : strategy s la sutructure stratégie
- * param : grid la grille
- * return: la direction optimale à jouer qui a été calculée par cette stratégie
- */
-dir strategie_coin_2(strategy s, grid g) {
-	int* val = s->mem;
-
-	(*val)++;
-
-	if ((*val) % 2 == 0) {
-		if (can_move(g, LEFT)) {
-			return LEFT;
-		} else if (can_move(g, DOWN)) {
-			return DOWN;
-		}
-	} else {
-		if (can_move(g, DOWN)) {
-			return DOWN;
-		} else if (can_move(g, LEFT))
-			return LEFT;
-	}
-
-	if (can_move(g, RIGHT)) {
-		return RIGHT;
-	} else if (can_move(g, UP)) {
-		return UP;
-	} else
-		return -1;
 }
 
 /*
@@ -172,7 +116,7 @@ double expected(grid g, int depth)
 
 	int emptyCells = 0;		// nombre de tile vide
 	double score_2 = 0.;	//somme des score si la tile introduite est un 2
-	//double score_4 = 0.;	//somme des score si la tile introduite est un 4
+	double score_4 = 0.;	//somme des score si la tile introduite est un 4
 	resultat res;
 
 	// pour chaque tile vide on evalue la grille
@@ -190,14 +134,14 @@ double expected(grid g, int depth)
 					score_2 += res.score;
 				}
 				// puis on y met la valeur 2 et on fait éval()
-				/*set_tile(g, x, y, 2);
+				set_tile(g, x, y, 2);
 				score_4 += evaluation(g);
 				if(depth > 0)
 				{
 					res = max(g, depth - 1);
 					score_4 += res.score;
 				}
-*/
+
 				// on remet à 0 la tile
 				set_tile(g, x, y, 0);
 			}
@@ -206,7 +150,7 @@ double expected(grid g, int depth)
 
 	// on retour le score moyen de la grille pour cette direction.
 	// score_2 * 0.9 car on à 90% de chance d'avoir un 2 et score_4 * 0.1 pour les 10% restant.
-	double score = (score_2 /* * 0.9 + score_4 * 0.1*/) / emptyCells;
+	double score = (score_2  * 0.9 + score_4 * 0.1) / emptyCells;
 	//printf("%d %f ", direction ,score);
 	return score;
 }
@@ -231,7 +175,7 @@ double eval(grid g) {
 	}
 
 	// Coefficient d'importance rapport à la grille.
-	double 	smoothWeight =  1.,
+	double 	smoothWeight =  2.,
 			monoWeight = 2.,
 			emptyWeight = 1.,
 			maxWeight = 2.;

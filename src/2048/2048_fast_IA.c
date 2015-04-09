@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include <strategy.h>
+#include <strategy_fast.h>
 #include <grid.h>
 #include "affichage.h"
 #include <unistd.h>
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
 		add_tile(g);
 
 		// initialisation de la structure strategy
-		strat = A2_bonnet_borde_pinero_basic();
+		strat = A2_bonnet_borde_pinero_fast();
 
 		tour_suivant = true;
 

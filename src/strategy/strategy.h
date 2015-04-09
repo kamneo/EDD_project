@@ -27,14 +27,6 @@ struct strategy_s {
 	void (*free_strategy)(strategy); /** Frees any resources allocated during the strategy's creation (<name>, <mem>, ...). */
 };
 
-/*
- * stratégie capable de jouer au 2048
- * param : strategy s la structure stratégie
- * param : grid la grille
- * return: la direction optimale à jouer qui a été calculée par cette stratégie
- */
-strategy A2_bonnet_borde_pinero_basic();
-
 /**
  * Naively frees the <strat> pointer.
  */
