@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 
 project(2048)
-ADD_DEFINITIONS(-g -Wall -Werror)
+ADD_DEFINITIONS(-g -Wall)
 
 
 include_directories(${2048_SOURCE_DIR}/src/grid/ 
