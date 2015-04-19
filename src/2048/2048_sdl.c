@@ -7,15 +7,19 @@
 #include <SDL/SDL_ttf.h>
 
 
-//#define NOUVELLE_PARTIE 1
 
+void initTabColor(SDL_Surface *ecran);
 unsigned long int pow_of_2(tile t);
-void display(grid g, TTF_Font *police,SDL_Surface *ecran,SDL_Rect *posScore);
-int tile_size = 120; //taille en pixel d'un cote d'une tile
-int bordur=10; //nombre de pixels entre les tiles
+void display(grid g, TTF_Font *police,SDL_Surface *ecran,SDL_Rect posScore);
+
+static int tile_size = 120; //taille en pixel d'un cote d'une tile
+static int bordur=10; //nombre de pixels entre les tiles
+Uint32 ColorsTab[14];
 
 int longueur;
 int largeur;
+
+SDL_Color couleurNoire = {0, 0, 0};
 
 
 int main(int argc, char *argv[]){
@@ -32,7 +36,7 @@ int main(int argc, char *argv[]){
 	SDL_Event event; //initialisation de l'évenement
 
 	SDL_Rect posScore;
-	posScore.x=longueur-tile_size;
+	posScore.x=longueur-(tile_size/2);
 	posScore.y=largeur/2;
   
 
@@ -57,6 +61,9 @@ int main(int argc, char *argv[]){
 	}
 	SDL_WM_SetCaption("2048 (SDL)", NULL); //titre fenetre
 	SDL_FillRect(ecran,NULL,SDL_MapRGB(ecran->format, 255, 255, 255)); //couleur unique de ecran
+
+	initTabColor(ecran);
+
   
 
 	while(game)
@@ -67,7 +74,7 @@ int main(int argc, char *argv[]){
 		tour_suivant=true;
 		while(tour_suivant)
 		{	
-			display(g,police,ecran,&posScore);
+			display(g,police,ecran,posScore);
 			SDL_WaitEvent(&event);
 			switch(event.type)
 			{
@@ -98,6 +105,8 @@ int main(int argc, char *argv[]){
 					case SDLK_r:
 						tour_suivant=false;
 						break;
+						default:
+							continue;
 				}
 				break;
 				default:
@@ -120,17 +129,18 @@ int main(int argc, char *argv[]){
 	return EXIT_SUCCESS;
 }
 
-void display(grid g, TTF_Font *police, SDL_Surface *ecran, SDL_Rect *posScore){
+void display(grid g, TTF_Font *police, SDL_Surface *ecran, SDL_Rect posScore){
 
 
 	SDL_Rect posTile;
+
 	SDL_Rect posValue_Tile;
-	posValue_Tile.x=tile_size/2;
-	posValue_Tile.y=tile_size/2;
+	posValue_Tile.x=tile_size/2-5;
+	posValue_Tile.y=tile_size/2-15;
+
 	char s[20];
 	int valTile;
 	int score;
-	SDL_Color couleurNoire = {0, 0, 0};
 
 
 	for(int x=0;x<GRID_SIDE;x++){
@@ -138,8 +148,8 @@ void display(grid g, TTF_Font *police, SDL_Surface *ecran, SDL_Rect *posScore){
 			SDL_Surface *tile_Sdl = NULL;
 			SDL_Surface *texte=NULL;
 			tile_Sdl=SDL_CreateRGBSurface(SDL_HWSURFACE,tile_size,tile_size,32,0,0,0,0);
-			SDL_FillRect(tile_Sdl,NULL,SDL_MapRGB(ecran->format, 50, 120, 200));
 			valTile=get_tile(g,x,y);
+			SDL_FillRect(tile_Sdl,NULL,ColorsTab[valTile%14]);
 			sprintf(s,"%ld",pow_of_2(valTile));
 			texte= TTF_RenderText_Blended(police, s, couleurNoire);
 			posTile.y=(bordur*(x+1))+tile_size*x;
@@ -153,12 +163,12 @@ void display(grid g, TTF_Font *police, SDL_Surface *ecran, SDL_Rect *posScore){
 
 	SDL_Surface *sdl_score =NULL;
 	score=grid_score(g);
-	sprintf(s,"%d",score);
+	sprintf(s,"Score : %d",score);
 	sdl_score= TTF_RenderText_Blended(police, s, couleurNoire);
-	SDL_BlitSurface(sdl_score , NULL , ecran, posScore);
+	SDL_BlitSurface(sdl_score , NULL , ecran, &posScore);
 
 	SDL_Flip(ecran); //mise-à-jour de ecran
-}
+	}
 
 
 unsigned long int pow_of_2(tile t)
@@ -166,4 +176,24 @@ unsigned long int pow_of_2(tile t)
 	if (t == 0)	
 		return t;
 	return pow(2, t);
+}
+
+
+
+void initTabColor(SDL_Surface *ecran)
+{
+ColorsTab[0]=SDL_MapRGB(ecran->format, 206, 206, 206);
+ColorsTab[1]=SDL_MapRGB(ecran->format, 254, 254, 226);
+ColorsTab[2]=SDL_MapRGB(ecran->format, 253, 241, 184);
+ColorsTab[3]=SDL_MapRGB(ecran->format, 255, 203, 96);
+ColorsTab[4]=SDL_MapRGB(ecran->format, 254, 163, 71);
+ColorsTab[5]=SDL_MapRGB(ecran->format, 231, 62, 1);
+ColorsTab[6]=SDL_MapRGB(ecran->format, 255, 255, 107);
+ColorsTab[7]=SDL_MapRGB(ecran->format, 255, 215, 0);
+ColorsTab[8]=SDL_MapRGB(ecran->format, 255, 255, 0);
+ColorsTab[9]=SDL_MapRGB(ecran->format, 255, 73, 1);
+ColorsTab[10]=SDL_MapRGB(ecran->format, 247, 35, 12);
+ColorsTab[11]=SDL_MapRGB(ecran->format, 255, 0, 0);
+ColorsTab[12]=SDL_MapRGB(ecran->format, 0,0,0);
+ColorsTab[13]=SDL_MapRGB(ecran->format, 186, 186, 186);
 }
