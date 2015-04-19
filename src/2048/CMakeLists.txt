@@ -11,7 +11,7 @@ add_executable (play_efficicent_IA 2048_efficient_IA.c ../grid/affichage.c)
 
 #Ajout des librairies qui sont nécéssaires à "play_ncurses" 
 target_link_libraries(play_ncurses grid ncurses m)
-target_link_libraries(play_sdl grid SDL_mixer SDL m)
+target_link_libraries(play_sdl grid SDL_mixer SDL SDL_ttf m)
 target_link_libraries(play_fast_IA grid A2_bonnet_borde_pinero_fast m)
 target_link_libraries(play_efficicent_IA grid A2_bonnet_borde_pinero_efficient m)
 
