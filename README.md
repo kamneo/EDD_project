@@ -1,6 +1,13 @@
 # EDD_project
 Projet d'Environnement de Développement. Faculté de Bordeaux promotion 2015.
 
+Edit:
+Atention pour compiler la sdl les paquet suivant sont necessaire:
+	-libsdl1.2
+	-libsdl_mixer1.2
+	-libsdl_ttf1.2
+En cas d'erreur a la generation des makefile verifier que les paquet g++ sont bien installer egalement.
+
 Pour compiler il faut se placer dans le dossier "EDD_project/build" (EDD_project étant la racine du projet) et faire :
 
 	- $ cmake ..
