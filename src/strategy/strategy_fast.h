@@ -1,6 +1,7 @@
 #ifndef SRC_STRATEGY_STRATEGY_FAST_H_
 #define SRC_STRATEGY_STRATEGY_FAST_H_
 
+
 #include "strategy.h"
 #include <grid.h>
 
