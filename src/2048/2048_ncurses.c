@@ -110,7 +110,7 @@ void init_win()
 	initscr();				/* initialise le mode curses*/
 	start_color();			/* initialise la fonctionalité de la couleur */
 	cbreak();
-	keypad(stdscr, TRUE);	/* I need that nifty F1 	*/
+	keypad(stdscr, TRUE);
 	curs_set(FALSE);		/* supprime le curseur */
 	noecho();
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
