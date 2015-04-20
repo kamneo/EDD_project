@@ -25,7 +25,7 @@ void stop_chrono() {
 }
 
 /*
- * MEMOIRE qui contient les scores cumulés des grilles jusqu'a ce que
+ * MEMOIRE qui contient les scores cumulés des grilles jusqu'à ce que
  * l'utilisateur quitte le programme et le nombre de fois que la valeur max
  * est apparue
  */
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 	m.score = 0;
 	m.tab = malloc(sizeof(int) * MAX_VALUE);
 
-	bool tour_suivant;		// valeur boolean est a vrai quand on veut recommencer une partie
+	bool tour_suivant;		// valeur boolean est à vrai quand on veut recommencer une partie
 	dir direction;			// contient la direction décrite dans grid.h
 	grid g;					// instance de la grid
 	strategy strat;			// instance de la stratégie
@@ -75,7 +75,6 @@ int main(int argc, char *argv[]) {
 			// recherche de la meilleure direction
 			direction = strat->play_move(strat, g);
 
-			//sleep(1);
 
 			if(direction != -1)
 			{
@@ -85,7 +84,7 @@ int main(int argc, char *argv[]) {
 
 			if(key == '1')
 				display_grid(g);
-			// dans le cas ou la partie est terminée
+			// dans le cas où la partie est terminée
 			while (game_over(g) && tour_suivant) {
 				if(key == '2')
 					display_grid(g);
@@ -104,16 +103,16 @@ int main(int argc, char *argv[]) {
 
 				tour_suivant = false;
 				nb_tour--;
-			}// end game_over
-		} // end tour_suivant
-	} // end PARTIE_SUIVANTE
+			}// fin game_over
+		} // fin tour_suivant
+	} // fin PARTIE_SUIVANTE
 	stop_chrono();
 	return end_game_stat(m, g);
 }
 
 /*
- * \brief close the window created by ncurses & delete the grid
- * \param g the grid
+ * \ferme la fenêtre créée par ncurses & supprime la grille
+ * \paramètre g, la grille
  */
 int end_game(grid g) {
 	printf("Merci d'avoir joue.\n");
@@ -122,9 +121,9 @@ int end_game(grid g) {
 }
 
 /*
- * \brief close the window created by ncurses & delete the grid & display the statistics
- * \param g the grid
- * \param m Memoire
+ * \ferme la fenêtre créée par ncurses & supprime la grille & affiche les statistiques
+ * \paramètre g, la grille
+ * \paramètre m mémoire
  */
 int end_game_stat(MEMOIRE m, grid g) {
 	int total = 0;
@@ -142,11 +141,7 @@ int end_game_stat(MEMOIRE m, grid g) {
 	return EXIT_SUCCESS;
 }
 
-/*
- * \brief Calculate the pow of the tile
- * \param t the tile to be calculate
- * \return the pow of the tile if t > 0 or return 0
- */
+
 unsigned long int pow_of_2(tile t) {
 	if (t == 0)
 		return t;
