@@ -10,6 +10,7 @@
 
 	/*Declaration des variable*/
 
+
 static char s[MAX_CARACTERE];		// creer la chaine de caractere qui aceuillera les messages a afficher
 static Uint32 ColorsTab[NB_COLOR];	// tableau de couleur 
 static int longueur;				// longueur de la fenetre
