@@ -26,20 +26,19 @@
 Le projet ce compose de plusieurs parties de d\'eveloppement sur un sujet
 commun, le jeu du 2048. Ce jeu conciste \`a additionner des tuiles de m\^eme
 puissance de 2, sur un plateau de 16 tuiles, jusqu'\`a ce que le plateau soit
-plien et qu'aucune addition ne soit possible. Le but du jeu et d’arriver \'a
+plein et qu'aucune addition ne soit possible. Le but du jeu et d’arriver \'a
 construire une brique de valeur la plus grande possible (2048, 4096,
 8192, \ldots)
 \par 
 \emph{\color{red}POURQUOI PAS AJOUTER UNE PHOTO EXEMPLE ?!}
 \subsection{Le sujet}
 Dans le projet nous avons eu \`a r\'ealiser dans un premier temps l'ensemble du
-moteur du jeu et quelques tests qui nous garantisent un maximum la v\'eracit\'e 
+moteur du jeu et quelques tests qui nous garantisent au maximum la soliditer de notre code 
 pendant le d\'eveloppement. Dans un deuxi\`eme temps, nous devions faire la
 \og critique \fg{} du developpement de la premi\`ere partie faite par
 d'autres groupes bas\'e sur une grille d'evaluation qui nous a \'et\'e
 fourni. Ensuite nous avons r\'ealiser un ensemble de strat\'egie de jeu qui
-sont capable de jouer de mani\`ere autonome une partie enti\`ere, jusqu'\'a la
-fin de la partie. Ces strat\'egies doivent \`a chaque tours calculer le meilleur
+sont capable de jouer de mani\`ere autonome une partie enti\`ere. Ces strat\'egies doivent \`a chaque tours calculer le meilleur
 prochain coups pour atteindre le plus grand score possible. La derni\`ere partie
 du projet conciste \`a r\'ealis\'e une v\'eritable interface graphique pour
 jouer au jeu.
@@ -47,7 +46,7 @@ jouer au jeu.
 \newpage
 \section{D\'eveloppement du 2048 et tests}
 Pour le d\'eveloppement du 2048, le langage de programmation \'etait impos\'e,
-nous devions utilis\'e le langage C. Chaque groupe ont d\^u fournir les sources
+nous devions utilis\'e le langage C. Chaque groupe à d\^u fournir les sources
 permettant de g\'en\'erer une biblioth\`eque libgrid.a (impl\'ementant les
 fonctions d'\'ecrites dans grid.h en annexe \ref{grid_h}) ainsi qu’un
 ex\'ecutable permettant de jouer au 2048 dans la console. En plus de ça, nous
@@ -72,7 +71,7 @@ EDD_projet/        # Racine du projet
     bin/           # Fichiers ex\'ecutables.
     build/         # Fichiers de compilation du projet
     include/       # Fichiers .h des librairies g\'en\'er\'es
-    lib/           # Libraires
+    lib/           # Librairies
     src/           # Fichiers tous les fichiers sources
         2048/      # Fichiers sources de l'interface graphique
         grid/      # Fichiers du moteur de jeu
@@ -85,15 +84,15 @@ EDD_projet/        # Racine du projet
 Tout au long du d\'eveloppement du projet, tous les membres du groupe se sont
 mis d'accord sur le fait d'utiliser l'outils \href{http://www.cmake.org/}{CMake}
 pour compiler le projet, g\'en\'erer les Makefiles qui servent eux-m\^emes \`a g\'en\'erer les
-ex\'ecutables, les libraires et ex\'ecuter les tests.
+ex\'ecutables, les librairies et ex\'ecuter les tests.
 
 \subsection{Le developpement de grid.c}
 En ce qui concerne le d\'eveloppement de grid.c, qui est le moteur du jeu,
-c'\'et\'e relativement simple. Les fonctions qui ont m\'erit\'e un r\'eflexion
-s\'erieuse sont \og do\_move() \fg{} et \og cam\_move() \fg{}. Pour ces
+c'\'et\'e relativement simple. Les fonctions qui ont m\'erit\'e une r\'eflexion
+s\'erieuse sont \og do\_move() \fg{} et \og can\_move() \fg{}. Pour ces
 fonctions nous devions limit\'e au mieux la duplication de code et la compl\'exit\'e de
 l'algorithme. Chose que nous n'avions au final pas tr\`es bien reussi, mais nous
-veront dans la pratie \ref{notre_etude}.
+veront dans la partie \ref{notre_etude}.
 
 \subsubsection{Implementation de \og can\_move \fg{}}
 Pour cette fonction, nous avons choisi l'algorithme suivant :
@@ -121,6 +120,9 @@ Si la direction donn\'ee est \og RIGHT \fg{} ou \og LEFT \fg{} alors
 retourner faux
 }
 \end{alltt}
+
+C'est la que l'on peut voir que nous avons commit une erreur nous n'aurions
+pas du partir sur un algo qui traite séparement les direction haut/bas et droite/gauche.
 
 Cette fonction est utilis\'ee \'a plusieurs reprises dans d'autres fonction
 comme par exemple \og game\_over \fg{} ou \og do\_move \fg{}. d'o\`u
@@ -174,7 +176,11 @@ n'avions d'affichage dynamique de la grille \`a chaque coup. Pour \^etre plus
 clair, lorsqu'on jou\'e un coups avec les deux premi\`eres version de
 l'affichage, la grille du coup pr\'ecedent \'etait toujours pr\'esent dans la
 console. D\'esormais, la console n'affiche plus qu'une grille et elle met \`a
-jour apr\`es chaque coups.
+jour apr\`es chaque coups.\par
+
+La version ncurses de notre projet n'a cependant pas été trés facile à implementer.
+Ce genre de librairie demande un grand nombre d'initialisation de variable qui rende
+difficile la conservation d'un code propre mais aussi qui multiplie les risques de fuite memoire.
 
 \subsection{Les tests}
 Les Tests sont \'ecrit pour confronter une r\'ealisation \`a sa sp\'ecification.
@@ -191,9 +197,8 @@ le fichier \og grid.h \fg{} et un test sur la r\'ealisation de plusieurs parties
 qui s'ex\'ecutent avec une strat\'egie basique qui consiste \`a jouer a gauche
 si on le peut sinon \`a droite, sinon en haut enfin en bas. Ainsi lorsqu'on fait
 des modifications de l'une de ces fonctions, nous nous assurons que cela n'a en
-rien chang\'e \`a la v\'eracit\'e des r\'esultats. L'e\'ecution des tests
-s'\'effectue avec la commande \og make test \fg{}. L'utilisation de la
-technologie \og CMake \fg{} nous permet d'avoir un affichage complet \`a la fin
+rien chang\'e \`a la v\'eracit\'e des r\'esultats. L'ex\'ecution des tests
+s'\'effectue avec la commande \og make test \fg{}. L'utilisation de l'outil \og CMake \fg{} nous permet d'avoir un affichage complet \`a la fin
 des tests sur leurs r\'esultats pour savoir s'ils sont pass\'es avec succ\`es
 ou non (exemple en annexe \ref{test}).
 
