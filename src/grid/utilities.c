@@ -6,9 +6,9 @@
 #include "utilities.h"
 
 /*
- * \brief Calculate the pow of the tile
- * \param t the tile to be calculate
- * \return the pow of the tile if t > 0 or return 0
+ * \Calcule (valeur_tile)^2
+ * \paramètre t, la tuile à calculer
+ * \retourne la puissance de la tuile si t>0 ou retourne 0
  */
 static unsigned long int pow_of_2(tile t)
 {
@@ -18,26 +18,25 @@ static unsigned long int pow_of_2(tile t)
 }
 
 /*
- * \brief Do the additions between tiles on one ligne
- * \param g grid
- * \param i the line where the operations will makes
- * \param debut 0 if is a left movement GRID_SIDE - 1 if is a RIGHT movement (do anithing else)
- * \param fin GRID_SIDE - 1 if is a left movement 0 if is a RIGHT movement (do anithing else)
- * \param facteur -1 if is a left movement and 1 if is a right movment
- * \return value to add at the score
+ * \Fait les additions entre les tuiles d'une ligne
+ * \paramètre g, la grille
+ * \paramètre i, la ligne de la grille où les additions vont s'effectuer
+ * \paramètre debut, 0 si c'est un mouvement vers la gauche, GRID_SIDE - 1 si c'est un mouvement vers la droite
+ * \paramètre fin GRID_SIDE - 1 si c'est un mouvement vers la gauche, 0  si c'est un mouvement vers la droite
+ * \retoure la valeur à ajouter au score
  */
 static unsigned long int add_ligne(grid g, int i, int debut, int fin, int facteur) 
 {
-	int pos = -1;					// position de le dernier tile non nulle
-	tile empty_tile = 0; 			// default tile
-	tile val = -1;					// valeur de la tile précedente
+	int pos = -1;					// position de la dernière tuile non nulle
+	tile empty_tile = 0; 			// tuile par défaut
+	tile val = -1;					// valeur de la tuile précédente
 	unsigned long int to_add = 0;	// valeur a ajouter au score
 
 	for (int j =  debut; j * facteur < fin; j += 1 * facteur) 
 	{
 		if (get_tile (g, i, j)!=0)
 		{
-			//fait l'addition des deux tiles et remplace la seconde par la tile par défaut
+			//fait l'addition des deux tuiles et remplace la seconde par la tuile par défaut
 			if(val == get_tile (g, i, j))
 			{
 				set_tile (g, i, pos, get_tile (g, i, pos)+1);
@@ -46,7 +45,7 @@ static unsigned long int add_ligne(grid g, int i, int debut, int fin, int facteu
 				pos=-1;
 				val=-1;
 			}
-			// sauvegarde la tile précedente
+			// sauvegarde la tuile précédente
 			if (val != get_tile (g, i, j))
 			{
 				val=get_tile (g, i, j);
@@ -54,30 +53,30 @@ static unsigned long int add_ligne(grid g, int i, int debut, int fin, int facteu
 			}
 		}
 	}
-	// retourne la valeur a ajouter au score
+	// retourne la valeur à ajouter au score
 	return to_add;
 }
 
 /*
- * \brief Do the additions between tiles on one column
- * \param g grid
- * \param j the column where the operations will makes
- * \param debut 0 if is a up movement GRID_SIDE - 1 if is a down movement (do anithing else)
- * \param fin GRID_SIDE - 1 if is a up movement 0 if is a down movement (do anithing else)
- * \param facteur -1 if is a up movement and 1 if is a down movment
- * \return value to add at the score
+ * \Fait les additions entre les tuiles d'une colonne
+ * \paramètre g, la grille
+ * \paramètre j, la colonne où les additions vont s'effectuer
+ * \paramètre debut 0 si c'est un mouvement vers le haut, GRID_SIDE - 1 si c'est un mouvement vers le bas
+ * \paramètre fin GRID_SIDE - 1 si c'est un mouvement vers le haut, 0 si c'est un mouvement vers le bas
+ * \paramètre facteur -1 si c'est un mouvement vers le haut, 1 si c'est un mouvement vers le bas
+ * \retourne la valeur à ajouter au score
  */
 static unsigned long int add_column(grid g, int j, int debut, int fin, int facteur){
-	int pos = -1;					// position de le dernier tile non nulle
-	tile empty_tile = 0; 			// default tile
-	tile val = -1;					// valeur de la tile précedente
-	unsigned long int to_add = 0;	// valeur a ajouter au score
+	int pos = -1;					// position de la dernière tuile non nulle
+	tile empty_tile = 0; 			// tuile par défaut
+	tile val = -1;					// valeur de la tuile précédente
+	unsigned long int to_add = 0;	// valeur à ajouter au score
 
 	for (int i =  debut; i * facteur < fin; i += 1 * facteur) 
 	{
 		if (get_tile (g, i, j)!=0)
 		{
-			// fait l'addition des deux tiles et remplace la seconde par la tile par défaut
+			// fait l'addition des deux tuiles et remplace la seconde par la tuile par défaut
 			if(val == get_tile (g, i, j))
 			{
 				set_tile (g, pos, j, get_tile (g, pos, j)+1);
@@ -86,7 +85,7 @@ static unsigned long int add_column(grid g, int j, int debut, int fin, int facte
 				pos=-1;
 				val=-1;
 			}
-			// sauvegarde de la premiere derniere tile non nulle
+			// sauvegarde la tuile précédente
 			if (val != get_tile (g, i, j))
 			{
 				val= get_tile (g, i, j);
@@ -99,13 +98,12 @@ static unsigned long int add_column(grid g, int j, int debut, int fin, int facte
 }
 
 /*
- * \brief concat each tile not null on the left of the grid for a left mouvement or right for 
- *        the right mouvement (Do anithing else for a different direction)
- * \param g grid
- * \param i the line where the operations will makes
- * \param debut 0 if is a left movement GRID_SIDE - 1 if is a RIGHT movement (do anithing else)
- * \param fin GRID_SIDE - 1 if is a left movement 0 if is a RIGHT movement (do anithing else)
- * \param facteur -1 if is a left movement and 1 if is a right movment
+ * \Concatène chaque tuile non nulle sur la gauche de la grille pour un mouvement vers la gauche ou sur la droite pour un mouvement vers la droite
+ * \paramètre g, la grille
+ * \paramètre i la ligne où l'opération s'effectue
+ * \paramètre debut, 0 si c'est un mouvement vers la gauche, GRID_SIDE - 1 si c'est un mouvement vers la droite
+ * \paramètre fin GRID_SIDE - 1 si c'est un mouvement vers la gauche, 0  si c'est un mouvement vers la droite
+ * \paramètre facteur -1 si c'est un mouvement vers la gauche, 1 si vers la droite
  */
 static void concat_ligne(grid g, int i, int debut, int fin, int facteur)
 {
@@ -125,13 +123,12 @@ static void concat_ligne(grid g, int i, int debut, int fin, int facteur)
 }
 
 /*
- * \brief concat each tile not null on the top of the grid for a up mouvement or top for 
- *        the down mouvement (Do anithing else for a different direction)
- * \param g grid
- * \param j the column where the operations will makes
- * \param debut 0 if is a up movement GRID_SIDE - 1 if is a down movement (do anithing else)
- * \param fin GRID_SIDE - 1 if is a up movement 0 if is a down movement (do anithing else)
- * \param facteur -1 if is a up movement and 1 if is a down movment
+ *Concatène chaque tuile non nulle sur le haut de la grille pour un mouvement vers le haut ou sur le bas pour un mouvement vers le bas
+ * \paramètre g, la grille
+ * \paramètre j, la colonne où les additions vont s'effectuer
+ * \paramètre debut 0 si c'est un mouvement vers le haut, GRID_SIDE - 1 si c'est un mouvement vers le bas
+ * \paramètre fin GRID_SIDE - 1 si c'est un mouvement vers le haut, 0 si c'est un mouvement vers le bas
+ * \paramètre facteur -1 si c'est un mouvement vers le haut, 1 si c'est un mouvement vers le bas
  */
 void concat_column(grid g, int j, int debut, int fin, int facteur)
 {
@@ -151,29 +148,29 @@ void concat_column(grid g, int j, int debut, int fin, int facteur)
 }
 
 /**
- * \brief verify if the lign can move in the direction
- * \param g the grid
- * \param i the curent lign
- * \param debut the first indice worked 0 if the direction is LEFT and GRID_SIZE - 1 if the direction is RIGHT
- * \param fin the last indice worked 0 if the direction is RIGHT and GRID_SIZE - 1 if the direction is LEFT
- * \param facteur it's the variable needed for increment if the direction is RIGHT or increment
- * \return if the lign can move or not
+ * \Vérifie si la ligne peut bouger vers la direction
+ * \paramètre g, la grille
+ * \paramètre i la ligne en question
+ * \paramètre debut, le premier indice 0 si la direction est gauche, GRID_SIZE - 1 si la direction est droite
+ * \paramètre fin, le dernier indice 0 si la direction est droite, GRID_SIZE - 1  si la direction est gauche
+ * \paramètre facteur -1 si c'est un mouvement vers la gauche, 1 si vers la droite
+ * \retourne vrai si la ligne peut bouger, faux sinon
  */
 bool lign_can_move(grid g, int i, int debut, int fin, int facteur){
 	tile pre = 0;
 	bool tile_free = false;
 
 	for (int j =  debut; j * facteur < fin; j += 1 * facteur) {
-		// Si on est pas sur la premiere tile et que le precedant == le tile courant
+		// Si on est pas sur la première tuile et que le précédent == la tuile courante
 		// on retourne vrai
 		// exemple :|2	|3	|1	|1	| est vrai
 		if(pre != 0 && pre == get_tile (g, i, j))
 			return true;
-		//si le tile courant et vide on met tile free a vrai
+		//si la tuile courante et vide on met tile_free à vrai
 		if(get_tile (g, i, j) == 0)
 			tile_free = true;
 
-		// si il y a un tile free avant et que le tile courant n'est pas null
+		// si il y a une tuile libre avant et que le tuile courantz n'est pas null on retourne vrai
 		// exemple :|0	|1	|0	|0	| est vrai
 		if(tile_free && get_tile (g, i, j) != 0)
 			return true;
@@ -184,11 +181,11 @@ bool lign_can_move(grid g, int i, int debut, int fin, int facteur){
 }
 
 /**
- * \brief verify if the column can move in the direction
- * \param g the grid
- * \param j the curent column
- * \param debut the first indice worked 0 if the direction is LEFT and GRID_SIZE - 1 if the direction is DOWN
- * \param fin the last indice worked 0 if the direction is RIGHT and GRID_SIZE - 1 if the direction is LEFT
+ * \Vérifie si la colonne peut bouger dvers la direction
+ * \paramètre g, la grille
+ * \paramètre j, la colonne en question
+ * \param debut le premier indice, 0 si la direction est haut GRID_SIZE - 1 si la direction est bas
+ * \param fin le dernier indice 0 if the direction is RIGHT and GRID_SIZE - 1 if the direction is LEFT
  * \param facteur it's the variable needed for increment if the direction is RIGHT or increment
  * \return if the column can move or not
  */
@@ -197,16 +194,16 @@ bool column_can_move(grid g, int j, int debut, int fin, int facteur){
 	bool tile_free = false;
 
 	for (int i =  debut; i * facteur < fin; i += 1 * facteur) {
-		// Si on est pas sur la premiere tile et que le precedant == le tile courant
+		// Si on est pas sur la première tuile et que le précédent == la tuile courante
 		// on retourne vrai
 		// exemple :|2	|3	|1	|1	| est vrai
 		if(pre != 0 && pre == get_tile (g, i, j))
 			return true;
-		//si le tile courant et vide on met tile free a vrai
+		//si la tuile courante est vide on met tile_free à vrai
 		if(get_tile (g, i, j) == 0)
 			tile_free = true;
 
-		// si il y a un tile free avant et que le tile courant n'est pas null
+		// si il y a une tuile libre avant et que la tuile courante n'est pas null on retourne vrai
 		// exemple :|0	|1	|0	|0	| est vrai
 		if(tile_free && get_tile (g, i, j) != 0)
 			return true;
@@ -218,10 +215,10 @@ bool column_can_move(grid g, int j, int debut, int fin, int facteur){
 }
 
 /**
- * \brief do the move on a line in the grid 
- * \param g the grid
- * \param i the curent line
- * \param d the direction on the line (LEFT or RIGHt any else do nothing)
+ * \Fait le mouvement sur une ligne de la grille
+ * \paramètre g, la grille
+ * \paramètre i, la ligne en question
+ * \paramètre d  la direction
  */
 unsigned long int lign_do_move(grid g, int i, dir d)
 {
@@ -245,10 +242,10 @@ unsigned long int lign_do_move(grid g, int i, dir d)
 }
 
 /**
- * \brief do the move on a column in the grid 
- * \param g the grid
- * \param i the curent column
- * \param d the direction on the column (UP or DOWN any else do nothing)
+ * \Fait le mouvement sur une colonne de la grille
+ * \paramètre g, la grille
+ * \paramètre j, la ligne en question
+ * \paramètre d  la direction
  */
 unsigned long int column_do_move(grid g, int j, dir d)
 {
