@@ -6,9 +6,9 @@
 #include "affichage.h"
 
 /*
- * \brief Calculate the pow of the tile
- * \param t the tile to be calculate
- * \return the pow of the tile if t > 0 or return 0
+ * \Calcule (valeur_tile)^2
+ * \paramètre t, la tuile à calculer
+ * \retourne la puissance de la tuile si t>0 ou retourne 0
  */
 static unsigned long int pow_of_2(tile t) {
 	if (t == 0)
@@ -17,7 +17,7 @@ static unsigned long int pow_of_2(tile t) {
 }
 
 /**
- * \brief Display in console the grid with color and the pow of value contained in tile
+ * \Affiche en console la grille avec des couleurs et la puissance des valeurs contenues dans les tuiles
  */
 void display_grid(grid g) {
 
@@ -48,7 +48,7 @@ void display_grid(grid g) {
 }
 
 /**
- * \brief Display in console the grid with color and the value contained in tile
+ * \Affiche en console la grille avec des couleurs et la valeur contenue dans les tuiles
  */
 void display_normal_grid(grid g) {
 
@@ -75,7 +75,7 @@ void display_normal_grid(grid g) {
 }
 
 /**
- * \brief Display in console the grid without form just numbres in only one line
+ * \Affiche en console la grille sans les cases, juste les valeurs des cases sur une ligne
  */
 void light_display_grid(grid g) {
 	for (int i = 0; i < GRID_SIDE; i++) {
