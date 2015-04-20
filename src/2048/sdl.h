@@ -24,17 +24,20 @@ unsigned long int pow_of_2(tile t);
 	fonction qui retourne le score de la tile
 */
 
-void display(grid g, TTF_Font *police,SDL_Surface *ecran,SDL_Rect posScore);
+void display(grid g, TTF_Font *police,SDL_Surface *ecran);
 /*
 	fonction qui affiche une grid
 	ces paramétre sont: une grid , une police de caractere, la fenetre principale , une position pour le score)
 */
 
 
-#define NB_COLOR 14		// nombre de couleur disponible
+void endGame(SDL_Surface *ecran);
+
+
+#define NB_COLOR 13		// nombre de couleur disponible
 #define TILE_SIZE 120	// taille en pixel d'un cote d'une tile
 #define EDGE 10			// nombre de pixels entre les tiles
-#define MAX_CARACTERE 20// taille de la chaine de caractere des message a afficher
+#define MAX_CARACTERE 50// taille de la chaine de caractere des message a afficher
 
 
 

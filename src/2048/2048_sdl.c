@@ -16,7 +16,6 @@ static Uint32 ColorsTab[NB_COLOR];	// tableau de couleur
 static int longueur;				// longueur de la fenetre
 static int largeur;					// largeur de la fenetre
 static SDL_Color couleurNoire = {0, 0, 0};			// couleur de police
-static SDL_Color couleurBlanche = {255, 255, 255};	// couleur de police
 static int police_size = 35; 						// taille de la police de caractere
 
 /* Main*/
@@ -31,26 +30,22 @@ int main(int argc, char *argv[])
 	grid g;
 
 	largeur = (TILE_SIZE*GRID_SIDE)+(EDGE*(GRID_SIDE+1));			// on initialise la taille de la fenetre avec
-	longueur = (TILE_SIZE*(GRID_SIDE+1))+(EDGE*(GRID_SIDE+1));	// la taille des tile et la taille des EDGEe
+	longueur = (TILE_SIZE*(GRID_SIDE+1))+(EDGE*(GRID_SIDE+1));		// la taille des tile et la taille des EDGEe
 																	// on se prevoit une marge en dessous pour le score
 
-	SDL_Rect posScore;						// initialisation de la position du score
-	posScore.y=longueur-(TILE_SIZE/2)-20;	// dans la fenetre. C'est pour cela qu'on avait prévu 
-	posScore.x=largeur/2-45;				// la taille d'une tile de marge
 											// les valeur soustrait a la fin sont arbitraire afin de bien trouver le milieu
 
 	SDL_Surface *ecran = NULL;				// Le pointeur qui va pointer la fenetre principale
 	SDL_Event event; 						// initialisation des évenements
-  
 
-    
-	SDL_Init(SDL_INIT_VIDEO); 		// initialise sdl
-	TTF_Init();						// initialisation de sdl_ttf (qui permet d'écrire sur l'écran)
 
-	TTF_Font *police = NULL;						// initialisation de la police de caractere
+	SDL_Init(SDL_INIT_VIDEO); 				// initialise sdl
+	TTF_Init();								// initialisation de sdl_ttf (qui permet d'écrire sur l'écran)
+
+	TTF_Font *police = NULL;								// initialisation de la police de caractere
 	police= TTF_OpenFont("angelina.ttf" , police_size);	
   
-	if(SDL_Init(SDL_INIT_VIDEO)==-1)		// on verifie si sdl c'est bien lancé
+	if(SDL_Init(SDL_INIT_VIDEO)==-1)						// on verifie si sdl c'est bien lancé
 	{
 		fprintf(stderr, "erreur initialisation SDL");
 		exit(EXIT_FAILURE);
@@ -83,7 +78,7 @@ int main(int argc, char *argv[])
 		tour_suivant=true;
 		while(tour_suivant)
 		{	
-			display(g,police,ecran,posScore);
+			display(g,police,ecran);
 			SDL_WaitEvent(&event);
 			switch(event.type)
 			{
@@ -95,39 +90,69 @@ int main(int argc, char *argv[])
 			case SDL_KEYDOWN:
 				switch(event.key.keysym.sym)
 				{
-					case SDLK_ESCAPE:
-						game=0;
-						tour_suivant=false;
-						break;
-					case SDLK_UP:
-						direction=UP;
-						break;
-					case SDLK_DOWN:
-						direction=DOWN;
-						break;
-					case SDLK_RIGHT:
-						direction=RIGHT;
-						break;
-					case SDLK_LEFT:
-						direction=LEFT;
-						break;
-					case SDLK_r:
-						tour_suivant=false;
-						break;
-						default:
-							continue;
+				case SDLK_ESCAPE:
+					game=0;
+					tour_suivant=false;
+					break;
+				case SDLK_UP:
+					direction=UP;
+					break;
+				case SDLK_DOWN:
+					direction=DOWN;
+					break;
+				case SDLK_RIGHT:
+					direction=RIGHT;
+					break;
+				case SDLK_LEFT:
+					direction=LEFT;
+					break;
+				case SDLK_r:
+					tour_suivant=false;
+					break;
+					default:
+						continue;
 				}
 				break;
 				default:
 					continue;
 			}
 			if(!can_move(g, direction))
-				{
 				continue;
-				}
 			play(g,direction);
+
+			/* Boucle du game over */
+
 			if(game_over(g))
-				tour_suivant=false;
+			{
+				endGame(ecran);
+				while (tour_suivant)
+				{
+					SDL_WaitEvent(&event);
+					switch(event.type)
+					{
+					case SDL_QUIT:
+						game=0;
+						tour_suivant=false;
+						break;
+					case SDL_KEYDOWN:
+						switch(event.key.keysym.sym)
+						{
+						case SDLK_ESCAPE:
+							game=0;
+							tour_suivant=false;
+							break;
+						case SDLK_r:
+							tour_suivant=false;
+							break;
+						default:
+							continue;
+						}
+					break;
+					}
+				}
+			}
+					
+		
 		}
 		delete_grid(g);
 	}
@@ -138,50 +163,93 @@ int main(int argc, char *argv[])
 	return EXIT_SUCCESS;
 }
 
-void display(grid g, TTF_Font *police, SDL_Surface *ecran,SDL_Rect posScore)
+void display(grid g, TTF_Font *police, SDL_Surface *ecran)
 {
 	SDL_FillRect(ecran,NULL,ColorsTab[NB_COLOR-1]);
 	SDL_Rect posTile;
-	SDL_Rect posValue_Tile;
-	posValue_Tile.x=TILE_SIZE/2-5;
-	posValue_Tile.y=TILE_SIZE/2-15;
+	SDL_Rect posTexte;
+	SDL_Surface *tile_Sdl = NULL;
+	SDL_Surface *texte = NULL;
 
 	int valTile;
-	int score;
 
+
+/*	Affichage des tiles */
 
 	for(int x=0;x<GRID_SIDE;x++)
 	{
 		for (int y=0;y<GRID_SIDE;y++)
 		{
-			SDL_Surface *tile_Sdl = NULL;
-			SDL_Surface *texte=NULL;
+
 			tile_Sdl=SDL_CreateRGBSurface(SDL_HWSURFACE,TILE_SIZE,TILE_SIZE,32,0,0,0,0);
 			valTile=get_tile(g,x,y);
 			SDL_FillRect(tile_Sdl,NULL,ColorsTab[valTile%14]);
 			sprintf(s,"%ld",pow_of_2(valTile));
-			if(valTile)
-				texte= TTF_RenderText_Blended(police, s, couleurNoire);
-			if(valTile%(NB_COLOR-2)==0 && valTile!=0)
-				texte= TTF_RenderText_Blended(police, s, couleurBlanche);
 			posTile.y=(EDGE*(x+1))+TILE_SIZE*x;
 			posTile.x=(EDGE*(y+1))+TILE_SIZE*y;
 
-			SDL_BlitSurface(texte , NULL , tile_Sdl, &posValue_Tile);
+			if(valTile)
+			{
+				texte= TTF_RenderText_Blended(police, s, couleurNoire);
+				posTexte.x=(TILE_SIZE/2)-(texte->w/2);
+				posTexte.y=(TILE_SIZE/2)-(texte->h/2);
+				SDL_BlitSurface(texte , NULL , tile_Sdl, &posTexte);
+				SDL_FreeSurface(texte);
+			}
 			SDL_BlitSurface(tile_Sdl,NULL,ecran, &posTile);
-			SDL_FreeSurface(texte);
 			SDL_FreeSurface(tile_Sdl);
 		}
 	}
-	score=grid_score(g);
-	sprintf(s,"score : %d",score);
+
+	/* Affichage du score */
+
+	sprintf(s,"score : %lu",grid_score(g));
 	SDL_Surface *sdlScore=NULL;
 	sdlScore= TTF_RenderText_Blended(police, s, couleurNoire);
-	SDL_BlitSurface(sdlScore , NULL , ecran, &posScore);
+	posTexte.y=longueur-(TILE_SIZE/2)-(sdlScore->h/2);	
+	posTexte.x=largeur/2-(sdlScore->w/2);				
+	SDL_BlitSurface(sdlScore , NULL , ecran, &posTexte);
 	SDL_FreeSurface(sdlScore);
+
+	/* Affichage du restart */
+
+	sprintf(s,"press r to restart");
+	texte= TTF_RenderText_Blended(police, s, couleurNoire);
+	posTexte.y=longueur-(TILE_SIZE/3);
+	posTexte.x=EDGE;
+	SDL_BlitSurface(texte , NULL , ecran, &posTexte);
+	SDL_FreeSurface(texte);
+
+	/* Affichage du quit */
+
+	sprintf(s,"press ESC to quit");
+	texte= TTF_RenderText_Blended(police, s, couleurNoire);
+	posTexte.y=longueur-(TILE_SIZE);
+	posTexte.x=EDGE;
+	SDL_BlitSurface(texte , NULL , ecran, &posTexte);
+	SDL_FreeSurface(texte);
 
 	SDL_Flip(ecran); //mise-à-jour de ecran
 }
+
+
+
+void endGame( SDL_Surface *ecran)
+{
+	TTF_Font *police = NULL;
+	police= TTF_OpenFont("angelina.ttf" , police_size*3);	
+	SDL_Rect posTexte;
+	SDL_Surface *texte = NULL;
+	sprintf(s,"GAME OVER");
+	texte= TTF_RenderText_Blended(police, s, couleurNoire);
+	posTexte.y=longueur/2-(texte->h/2);
+	posTexte.x=largeur/2-(texte->w/2);
+	SDL_BlitSurface(texte , NULL , ecran, &posTexte);
+	SDL_FreeSurface(texte);
+
+	SDL_Flip(ecran); //mise-à-jour de ecran
+}
+
 
 
 unsigned long int pow_of_2(tile t)
@@ -191,13 +259,14 @@ unsigned long int pow_of_2(tile t)
 	return pow(2, t);
 }
 
+
 	/* Initiaisation du tableau place des couleur dans le format des couleur sdl et le format choisit pour l'écrans */
 void initTabColor(SDL_Surface *ecran)
 {
-	ColorsTab[0]=SDL_MapRGB(ecran->format, 206, 206, 206);  //couleur des tile vide
-	ColorsTab[1]=SDL_MapRGB(ecran->format, 254, 254, 226);	// couleur des tile a 2	
-	ColorsTab[2]=SDL_MapRGB(ecran->format, 253, 241, 184);	// couleur des tile a 4
-	ColorsTab[3]=SDL_MapRGB(ecran->format, 255, 203, 96);	//etc...
+	ColorsTab[0]=SDL_MapRGB(ecran->format, 206, 206, 206);		//couleur des tile vide
+	ColorsTab[1]=SDL_MapRGB(ecran->format, 254, 254, 226);		// couleur des tile a 2	
+	ColorsTab[2]=SDL_MapRGB(ecran->format, 253, 241, 184);		// couleur des tile a 4
+	ColorsTab[3]=SDL_MapRGB(ecran->format, 255, 203, 96);		//etc...
 	ColorsTab[4]=SDL_MapRGB(ecran->format, 254, 163, 71);
 	ColorsTab[5]=SDL_MapRGB(ecran->format, 231, 62, 1);
 	ColorsTab[6]=SDL_MapRGB(ecran->format, 255, 255, 107);
@@ -206,6 +275,5 @@ void initTabColor(SDL_Surface *ecran)
 	ColorsTab[9]=SDL_MapRGB(ecran->format, 255, 73, 1);
 	ColorsTab[10]=SDL_MapRGB(ecran->format, 247, 35, 12);
 	ColorsTab[11]=SDL_MapRGB(ecran->format, 255, 0, 0);
-	ColorsTab[12]=SDL_MapRGB(ecran->format, 0,0,0);
-	ColorsTab[13]=SDL_MapRGB(ecran->format, 186, 186, 186); // couleur de l'écran
+	ColorsTab[12]=SDL_MapRGB(ecran->format, 186, 186, 186);		// couleur de l'écran
 }
