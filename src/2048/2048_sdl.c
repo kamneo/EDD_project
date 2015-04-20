@@ -16,7 +16,7 @@ static Uint32 ColorsTab[NB_COLOR];	// tableau de couleur
 static int longueur;				// longueur de la fenetre
 static int largeur;					// largeur de la fenetre
 static SDL_Color couleurNoire = {0, 0, 0};			// couleur de police
-static int police_size = 35; 						// taille de la police de caractere
+static int police_size = 40; 						// taille de la police de caractere
 
 /* Main*/
 
@@ -65,48 +65,49 @@ int main(int argc, char *argv[])
 	initTabColor(ecran);		// on initialise le tableau de couleur pour quelle soit dans un format
 								// utilisable par sdl.
 
-	SDL_WM_SetCaption("2048 (SDL)", NULL); //titre fenetre
+	//SDL_WM_SetCaption("2048 (SDL)", NULL); //titre fenetre
 
   
 	/* Debut de la boucle des évenement de sdl*/
 
 	while(game)
 	{
-		g=new_grid();
+		g=new_grid();				//initialisation de la grid
 		add_tile(g);
 		add_tile(g);
+		
 		tour_suivant=true;
-		while(tour_suivant)
+		while(tour_suivant)			//boucle de la partie
 		{	
 			display(g,police,ecran);
 			SDL_WaitEvent(&event);
 			switch(event.type)
 			{
 
-			case SDL_QUIT:
+			case SDL_QUIT:			// permet la fermeture de la fenetre par clic sur la croix
 				game=0;
 				tour_suivant=false;
 				break;
 			case SDL_KEYDOWN:
-				switch(event.key.keysym.sym)
+				switch(event.key.keysym.sym)		// switch des event de pression des touches
 				{
-				case SDLK_ESCAPE:
+				case SDLK_ESCAPE:					// la touche echap ferme la fenetre
 					game=0;
 					tour_suivant=false;
 					break;
-				case SDLK_UP:
+				case SDLK_UP:						// la fleche directionnelle haut joue en haut
 					direction=UP;
 					break;
-				case SDLK_DOWN:
+				case SDLK_DOWN:						// la fleche directionnelle bas joue en bas
 					direction=DOWN;
 					break;
-				case SDLK_RIGHT:
+				case SDLK_RIGHT:					// la fleche directionnelle droite joue a droite
 					direction=RIGHT;
 					break;
-				case SDLK_LEFT:
+				case SDLK_LEFT:						// la fleche directionnelle gauche joue a gauche
 					direction=LEFT;
 					break;
-				case SDLK_r:
+				case SDLK_r:						// la touche r recommence une nouvelle partie
 					tour_suivant=false;
 					break;
 					default:
@@ -116,21 +117,19 @@ int main(int argc, char *argv[])
 				default:
 					continue;
 			}
-			if(!can_move(g, direction))
-				continue;
-			play(g,direction);
+			play(g,direction);						// on joue dans la direction delectionné
 
 			/* Boucle du game over */
 
 			if(game_over(g))
 			{
-				endGame(ecran);
-				while (tour_suivant)
+				endGame(ecran);						// on affiche le game over
+				while (tour_suivant)				// on rentre dans la boucle des evenement lié au game over
 				{
 					SDL_WaitEvent(&event);
 					switch(event.type)
 					{
-					case SDL_QUIT:
+					case SDL_QUIT:					// se sont globalement les mèmes evenements
 						game=0;
 						tour_suivant=false;
 						break;
@@ -149,67 +148,79 @@ int main(int argc, char *argv[])
 						}
 					break;
 					}
-				}
-			}
+				}// fin while game_over
+			}//fin if game over
 					
 		
-		}
-		delete_grid(g);
-	}
-	SDL_FreeSurface(ecran);
-	TTF_Quit();
-	SDL_Quit(); //quitte sdl
+		}// fin while tour_suivant
+		delete_grid(g);						// on detruit la grille entre les deux whiles
+	}// fin while game
+
+	TTF_CloseFont (police);					// free de la police de caractere
+	SDL_FreeSurface(ecran);					// free de la surface ecran
+	TTF_Quit();								// on ferme ttf
+	SDL_Quit(); 							// on ferme sdl
 
 	return EXIT_SUCCESS;
 }
 
+
+/* fonction affichant l'écrans de jeux */
+
 void display(grid g, TTF_Font *police, SDL_Surface *ecran)
 {
-	SDL_FillRect(ecran,NULL,ColorsTab[NB_COLOR-1]);
-	SDL_Rect posTile;
-	SDL_Rect posTexte;
-	SDL_Surface *tile_Sdl = NULL;
-	SDL_Surface *texte = NULL;
+	SDL_FillRect(ecran,NULL,ColorsTab[NB_COLOR-1]);			//on reinitialise l'écrans pour ne pas réecrire par dessus	
 
-	int valTile;
+	SDL_Rect posTile;										// Cette variable acceuillera les position ou l'on collera les tiles sur l'écrans
+	SDL_Rect posTexte;										// Cette variable acceuillera les position ou l'on collera les textes sur l'écrans
+	SDL_Surface *tile_Sdl = NULL;							// Surface correspondant au tile
+	SDL_Surface *texte = NULL;								// Surface de texte
+
+	int valTile;											// contiendra les valeurs des tiles
 
 
 /*	Affichage des tiles */
 
-	for(int x=0;x<GRID_SIDE;x++)
+	for(int x=0;x<GRID_SIDE;x++)							// Boucle de parcourt de la grid
 	{
 		for (int y=0;y<GRID_SIDE;y++)
 		{
 
-			tile_Sdl=SDL_CreateRGBSurface(SDL_HWSURFACE,TILE_SIZE,TILE_SIZE,32,0,0,0,0);
-			valTile=get_tile(g,x,y);
-			SDL_FillRect(tile_Sdl,NULL,ColorsTab[valTile%14]);
-			sprintf(s,"%ld",pow_of_2(valTile));
-			posTile.y=(EDGE*(x+1))+TILE_SIZE*x;
+			tile_Sdl=SDL_CreateRGBSurface(SDL_HWSURFACE,TILE_SIZE,TILE_SIZE,32,0,0,0,0);	// on créer la surface en mode 32bit et de taille tile_size
+			valTile=get_tile(g,x,y);														// on recup la valeur de la tile
+			SDL_FillRect(tile_Sdl,NULL,ColorsTab[valTile%(NB_COLOR-2)]);					// on colorie la surface dans la couleur correspondant a sa valeur	
+			sprintf(s,"%ld",pow_of_2(valTile));												// on transforme notre valeur de tile en chaine de caractere
+			posTile.y=(EDGE*(x+1))+TILE_SIZE*x;												// on genere la position en fonction de EDGE(bordure) et tile_size
 			posTile.x=(EDGE*(y+1))+TILE_SIZE*y;
 
-			if(valTile)
+			if(valTile!=0)
 			{
-				texte= TTF_RenderText_Blended(police, s, couleurNoire);
-				posTexte.x=(TILE_SIZE/2)-(texte->w/2);
+				texte= TTF_RenderText_Blended(police, s, couleurNoire);						// on genere la surface a partir de la chaine de caractere
+				posTexte.x=(TILE_SIZE/2)-(texte->w/2);										// on initialise la posTexte au milieu de la tile et qui se re decal tout seul
 				posTexte.y=(TILE_SIZE/2)-(texte->h/2);
-				SDL_BlitSurface(texte , NULL , tile_Sdl, &posTexte);
-				SDL_FreeSurface(texte);
+				SDL_BlitSurface(texte , NULL , tile_Sdl, &posTexte);						// on colle le texte sur la tile fraichement générer
+				SDL_FreeSurface(texte);														// on libere la surface de texte
 			}
-			SDL_BlitSurface(tile_Sdl,NULL,ecran, &posTile);
+			SDL_BlitSurface(tile_Sdl,NULL,ecran, &posTile);									// on colle la surface de la tuile a l'écran
 			SDL_FreeSurface(tile_Sdl);
 		}
-	}
+	}//fin de boucle for
+
+	/*Cette partie marche comme la précedente sauf que l'on va determiner les positions de maniere plus arbitraire a savoir
+		le score : au millieu de la place qu'il nous reste sous les tiles
+		le restart : en bas a gauche de la place restante
+		le quit : en haut a gauche de la place restante 
+	*/
+
 
 	/* Affichage du score */
 
 	sprintf(s,"score : %lu",grid_score(g));
-	SDL_Surface *sdlScore=NULL;
-	sdlScore= TTF_RenderText_Blended(police, s, couleurNoire);
-	posTexte.y=longueur-(TILE_SIZE/2)-(sdlScore->h/2);	
-	posTexte.x=largeur/2-(sdlScore->w/2);				
-	SDL_BlitSurface(sdlScore , NULL , ecran, &posTexte);
-	SDL_FreeSurface(sdlScore);
+	texte= TTF_RenderText_Blended(police, s, couleurNoire);
+	posTexte.y=longueur-(TILE_SIZE/2)-(texte->h/2);	
+	posTexte.x=largeur/2-(texte->w/2);				
+	SDL_BlitSurface(texte , NULL , ecran, &posTexte);
+	SDL_FreeSurface(texte);
 
 	/* Affichage du restart */
 
@@ -233,6 +244,7 @@ void display(grid g, TTF_Font *police, SDL_Surface *ecran)
 }
 
 
+	/* Fonction qui affiche un game over en plein millieu de l'écrans */
 
 void endGame( SDL_Surface *ecran)
 {
@@ -245,9 +257,11 @@ void endGame( SDL_Surface *ecran)
 	posTexte.y=longueur/2-(texte->h/2);
 	posTexte.x=largeur/2-(texte->w/2);
 	SDL_BlitSurface(texte , NULL , ecran, &posTexte);
+
+	TTF_CloseFont (police);
 	SDL_FreeSurface(texte);
 
-	SDL_Flip(ecran); //mise-à-jour de ecran
+	SDL_Flip(ecran);
 }
 
 

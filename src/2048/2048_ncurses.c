@@ -48,7 +48,8 @@ int main(int argc, char *argv[]) {
 		update_boxes(&box, g);
 		tour_suivant=true;
 
-		while(tour_suivant){
+		while(tour_suivant)
+		{
 			key = getch();
 
 			switch(key)
@@ -98,6 +99,7 @@ int main(int argc, char *argv[]) {
 				}
 			}// fin game_over
 		} // fin tour_suivant
+		delete_grid(g);
 	} // fin PARTIE_SUIVANTE
 	return end_game(g);
 }
