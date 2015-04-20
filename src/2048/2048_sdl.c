@@ -3,24 +3,15 @@
 #include <math.h>
 #include <grid.h>
 #include <time.h>
+#include "sdl.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 
 
-	/*Prototype des fonction*/
-
-void initTabColor(SDL_Surface *ecran);
-unsigned long int pow_of_2(tile t);
-void display(grid g, TTF_Font *police,SDL_Surface *ecran,SDL_Rect posScore);
-
-
 	/*Declaration des variable*/
 
-#define nbColor 14					// nombre de couleur disponible
-
-static int tile_size = 120;			// taille en pixel d'un cote d'une tile
-static int bordur=10;				// nombre de pixels entre les tiles
-static Uint32 ColorsTab[nbColor];	// tableau de couleur 
+static char s[MAX_CARACTERE];		// creer la chaine de caractere qui aceuillera les messages a afficher
+static Uint32 ColorsTab[NB_COLOR];	// tableau de couleur 
 static int longueur;				// longueur de la fenetre
 static int largeur;					// largeur de la fenetre
 static SDL_Color couleurNoire = {0, 0, 0};			// couleur de police
@@ -38,12 +29,12 @@ int main(int argc, char *argv[])
 	dir direction;				// contient la direction a jouer pour chaque tour
 	grid g;
 
-	largeur = (tile_size*GRID_SIDE)+(bordur*(GRID_SIDE+1));			// on initialise la taille de la fenetre avec
-	longueur = (tile_size*(GRID_SIDE+1))+(bordur*(GRID_SIDE+1));	// la taille des tile et la taille des bordure
+	largeur = (TILE_SIZE*GRID_SIDE)+(EDGE*(GRID_SIDE+1));			// on initialise la taille de la fenetre avec
+	longueur = (TILE_SIZE*(GRID_SIDE+1))+(EDGE*(GRID_SIDE+1));	// la taille des tile et la taille des EDGEe
 																	// on se prevoit une marge en dessous pour le score
 
 	SDL_Rect posScore;						// initialisation de la position du score
-	posScore.y=longueur-(tile_size/2)-20;	// dans la fenetre. C'est pour cela qu'on avait prévu 
+	posScore.y=longueur-(TILE_SIZE/2)-20;	// dans la fenetre. C'est pour cela qu'on avait prévu 
 	posScore.x=largeur/2-45;				// la taille d'une tile de marge
 											// les valeur soustrait a la fin sont arbitraire afin de bien trouver le milieu
 
@@ -148,13 +139,12 @@ int main(int argc, char *argv[])
 
 void display(grid g, TTF_Font *police, SDL_Surface *ecran,SDL_Rect posScore)
 {
-	SDL_FillRect(ecran,NULL,ColorsTab[nbColor-1]);
+	SDL_FillRect(ecran,NULL,ColorsTab[NB_COLOR-1]);
 	SDL_Rect posTile;
 	SDL_Rect posValue_Tile;
-	posValue_Tile.x=tile_size/2-5;
-	posValue_Tile.y=tile_size/2-15;
+	posValue_Tile.x=TILE_SIZE/2-5;
+	posValue_Tile.y=TILE_SIZE/2-15;
 
-	char s[20];
 	int valTile;
 	int score;
 
@@ -165,16 +155,16 @@ void display(grid g, TTF_Font *police, SDL_Surface *ecran,SDL_Rect posScore)
 		{
 			SDL_Surface *tile_Sdl = NULL;
 			SDL_Surface *texte=NULL;
-			tile_Sdl=SDL_CreateRGBSurface(SDL_HWSURFACE,tile_size,tile_size,32,0,0,0,0);
+			tile_Sdl=SDL_CreateRGBSurface(SDL_HWSURFACE,TILE_SIZE,TILE_SIZE,32,0,0,0,0);
 			valTile=get_tile(g,x,y);
 			SDL_FillRect(tile_Sdl,NULL,ColorsTab[valTile%14]);
 			sprintf(s,"%ld",pow_of_2(valTile));
 			if(valTile)
 				texte= TTF_RenderText_Blended(police, s, couleurNoire);
-			if(valTile%nbColor-2==0 && valTile!=0)
+			if(valTile%(NB_COLOR-2)==0 && valTile!=0)
 				texte= TTF_RenderText_Blended(police, s, couleurBlanche);
-			posTile.y=(bordur*(x+1))+tile_size*x;
-			posTile.x=(bordur*(y+1))+tile_size*y;
+			posTile.y=(EDGE*(x+1))+TILE_SIZE*x;
+			posTile.x=(EDGE*(y+1))+TILE_SIZE*y;
 
 			SDL_BlitSurface(texte , NULL , tile_Sdl, &posValue_Tile);
 			SDL_BlitSurface(tile_Sdl,NULL,ecran, &posTile);
@@ -203,10 +193,10 @@ unsigned long int pow_of_2(tile t)
 	/* Initiaisation du tableau place des couleur dans le format des couleur sdl et le format choisit pour l'écrans */
 void initTabColor(SDL_Surface *ecran)
 {
-	ColorsTab[0]=SDL_MapRGB(ecran->format, 206, 206, 206);
-	ColorsTab[1]=SDL_MapRGB(ecran->format, 254, 254, 226);
-	ColorsTab[2]=SDL_MapRGB(ecran->format, 253, 241, 184);
-	ColorsTab[3]=SDL_MapRGB(ecran->format, 255, 203, 96);
+	ColorsTab[0]=SDL_MapRGB(ecran->format, 206, 206, 206);  //couleur des tile vide
+	ColorsTab[1]=SDL_MapRGB(ecran->format, 254, 254, 226);	// couleur des tile a 2	
+	ColorsTab[2]=SDL_MapRGB(ecran->format, 253, 241, 184);	// couleur des tile a 4
+	ColorsTab[3]=SDL_MapRGB(ecran->format, 255, 203, 96);	//etc...
 	ColorsTab[4]=SDL_MapRGB(ecran->format, 254, 163, 71);
 	ColorsTab[5]=SDL_MapRGB(ecran->format, 231, 62, 1);
 	ColorsTab[6]=SDL_MapRGB(ecran->format, 255, 255, 107);
@@ -216,5 +206,5 @@ void initTabColor(SDL_Surface *ecran)
 	ColorsTab[10]=SDL_MapRGB(ecran->format, 247, 35, 12);
 	ColorsTab[11]=SDL_MapRGB(ecran->format, 255, 0, 0);
 	ColorsTab[12]=SDL_MapRGB(ecran->format, 0,0,0);
-	ColorsTab[13]=SDL_MapRGB(ecran->format, 186, 186, 186);
+	ColorsTab[13]=SDL_MapRGB(ecran->format, 186, 186, 186); // couleur de l'écran
 }
