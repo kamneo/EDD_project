@@ -15,17 +15,17 @@ struct grid_s {
 };
 
 /*
- * \brief Calculate an random int beetween 0 and n
- * \param n Indice max
- * \return a random int beetween 0 and n
+ * \Calcule un int aléatoire entre 0 et n
+ * \paramètre n , le max
+ * \retourne un entier aléatoire entre 0 et n
  */
 static int rang_aleatoire(int n) {
 	return rand() % n;
 }
 
 /*
- * \brief Calculate a value, this value have 9/10 chance to be 1 and 1/10 to be 2
- * \return an int between 1 and 2
+ * \Calcule une valeur qui a 9/10 de chances d'être 1 et 1/10 d'êtrre 2
+ * \retourne un entier entre 1 et 2
  */
 static int valeur_aleatoire() {
 	if (rand() % 10 < 9)
@@ -35,8 +35,8 @@ static int valeur_aleatoire() {
 }
 
 /*
- * \brief Initialize grid structure
- * \return created an empty grid with score equal to 0
+ * \Initialise la structure de la grille
+ * \retourne une grille vide avec un score de 0
  */
 grid new_grid() {
 	// initialisation de la srand() qui gère la génération des nombres aléatoires
@@ -55,8 +55,8 @@ grid new_grid() {
 }
 
 /**
- * \brief Destroy the grid and free allocated memory
- * \param g the grid to destroy
+ * \Détruit la grille et libère la mémoire allouée
+ * \paramètre g , la grille à détruire
  */
 void delete_grid(grid g) {
 	for (int i = 0; i < GRID_SIDE; i++)
@@ -66,9 +66,9 @@ void delete_grid(grid g) {
 }
 
 /**
- * \brief Clone the grid
- * \param src the grid to copy
- * \param dst the copied grid
+ * \Clone la grille
+ * \paramètre src la grille à copier
+ * \paramètre dst la grille copiée
  */
 void copy_grid(grid src, grid dst) {
 	for (int i = 0; i < GRID_SIDE; i++)
@@ -79,40 +79,39 @@ void copy_grid(grid src, grid dst) {
 }
 
 /**
- * \brief Get game's score
- * \param g the grid
- * \return the computed score during the game
+ * \Obtient le score de la grille
+ * \paramètre g, la grille
+ * \retourne le score calculé pendant le jeu
  */
 unsigned long int grid_score(grid g) {
 	return g->score;
 }
 
 /**
- * \brief Get tile  (log_2-encoded) from the grid by specifying his coordinates
- * \param g the grid
- * \param x and y tile's coordinates
- * \return the tile
- * \pre 0 < = x < GRID_SIDE and 0 < = y < GRID_SIDE
+ * \Obtient une tuile de la grille grâce aux coordonnées spécifiées
+ * \paramètre g, la grille
+ * \paramètres x et y, les coordonnées de la tile
+ * \retourne la tuile
  */
 tile get_tile(grid g, int x, int y) {
 	return (g->tiles[x][y]);
 }
 
 /**
- * \brief Change tile's value
- * \param g the grid
- * \param x and y tile's coordinates
- * \param t new tile's value
+ * \Change la valeure de la tuile
+ * \paramètre g, la grille
+ * \paramètres x et y, les coordonnées de la tuile
+ * \paramètre t, la nouvelle valeur de la tuile
  */
 void set_tile(grid g, int x, int y, tile t) {
 	g->tiles[x][y] = t;
 }
 
 /**
- * \brief Verify if a given movement is possible
- * \param g the grid
- * \param d movement's direction
- * \return true if the movement is possible, false else
+ * \Vérifie si un mouvement donné est possible
+ * \paramètre g, la grille
+ * \paramètre d, la direction
+ * \retourne vrai si le mouvement est possible, faux sinon
  */
 bool can_move(grid g, dir d) {
 	switch (d) {
@@ -152,9 +151,9 @@ bool can_move(grid g, dir d) {
 }
 
 /**
- * \brief Verify game's status, if no more movement is possible the game is over
- * \param g the grid
- * \return true if there is no more possible movements, false else
+ * \Vérifie le statut du jeu, s'il n'y a plus de mouvement possible, le jeu est perdu
+ * \paramètre g, la grille
+ * \retourne vrai s'il n'y a plus de mouvement possible, faux sinon
  */
 bool game_over(grid g) {
 	return !can_move(g, LEFT) && !can_move(g, RIGHT) && !can_move(g, UP)
@@ -162,7 +161,7 @@ bool game_over(grid g) {
 }
 
 /**
- * \brief Move every tiles of the grid in the direction specified by the user
+ * \Déplace toutes les tuiles de la grille dans la direction spécifiée par l'utilisateur
  * \param g the grid
  * \param d the chosen direction
  * \pre the movement d must be possible (i.e. can_move(g,d) == true).
@@ -175,7 +174,7 @@ void do_move(grid g, dir d) {
 		return;
 	}
 
-	// en fonction de la direction passée en parametre, on fait un movement ligne à ligne ou colonne à colonne.
+	// en fonction de la direction passée en paramètre, on fait un mouvement ligne à ligne ou colonne à colonne.
 	if (d == LEFT || d == RIGHT) {
 		for (int i = 0; i < GRID_SIDE; i++) {
 			to_add += lign_do_move(g, i, d);
@@ -188,28 +187,27 @@ void do_move(grid g, dir d) {
 		}
 	}
 
-	// on ajoute au score les resultats de chaque ligne ou colonne.
+	// on ajoute au score les résultats de chaque ligne ou colonne.
 	g->score += to_add;
 
 }
 
 /**
- * \brief Randomly add a tile in the grid in a free space when a movement is finished.
- * With probability 9/10 the new tile has value 2 and with probability 1/10 the new tile has value 4.
- * \param g the grid
- * \pre grid g must contain  at least one empty tile.
+ * \Ajoute aléatoirement une tuile dans la grille à un espace libre dont la valeur sera 2 ou 4
+ * \paramètre g, la grille
+ * \La grille doit contenir au moins une tuile vide
  */
 void add_tile(grid g) {
 	int taille = (GRID_SIDE * GRID_SIDE) * 2; // taille maximale de notre tableau
-	int nbFree = 0; // nombre de tile libre
-	int* tab; // le tableau de coordonée
+	int nbFree = 0; // nombre de tuiles libres
+	int* tab; // le tableau de coordonées
 	int nombreAleatoire;
 
 	tab = malloc(sizeof(int) * taille);
 	// on parcourt la grille
 	for (int i = 0; i < GRID_SIDE; i++) {
 		for (int j = 0; j < GRID_SIDE; j++) {
-			// si la tile à la position i et j est vide on ajoute au tableau tab les valeurs de i et j
+			// si la tuile à la position (i,j) est vide on ajoute au tableau tab les valeurs de i et j
 			if (g->tiles[i][j] == 0) {
 				tab[nbFree * 2] = i;
 				tab[nbFree * 2 + 1] = j;
@@ -222,29 +220,24 @@ void add_tile(grid g) {
 		return;
 	}
 
-	// on génére un nombre aléatoire pour obtenir les coordonées dans le tableau tab d'une tile vide
+	// on génère un nombre aléatoire pour obtenir les coordonées dans le tableau tab d'une tuile vide
 	nombreAleatoire = rang_aleatoire(nbFree) * 2;
-	// au tile obtenue on change sa valeur entre 1 et 2 (9/10 chance d'avoir 1 et 1/10 chance d'avoir 2)
+	// on change la valeur de la tuile obtenue (9/10 chance d'avoir 1 et 1/10 chance d'avoir 2)
 	g->tiles[tab[nombreAleatoire]][tab[nombreAleatoire + 1]] =
 			valeur_aleatoire();
 	free(tab);
 }
 
 /**
- * \brief Play a direction in the grid.
- * \param g the grid
- * \param d the direction
- * \pre the movement d must be possible (i.e. can_move(g,d) == true).
+ * \Joue une direction dans la grille
+ * \paramètre g, la grille
+ * \paramètre d, la direction
+ * \le mouvement d doit être possible (c-à-d, can_move(g,d) == true)
  */
 void play(grid g, dir d) {
-	/*if(!can_move(g, d))
-	 {
-	 return;
-	 }*/
-
-	// on fait le movement sur la grille
+	// on fait le mouvement sur la grille
 	do_move(g, d);
 
-	// on ajoute une tile à une position aléatoire
+	// on ajoute une tuile à une position aléatoire
 	add_tile(g);
 }
