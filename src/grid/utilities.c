@@ -184,10 +184,10 @@ bool lign_can_move(grid g, int i, int debut, int fin, int facteur){
  * \Vérifie si la colonne peut bouger dvers la direction
  * \paramètre g, la grille
  * \paramètre j, la colonne en question
- * \param debut le premier indice, 0 si la direction est haut GRID_SIZE - 1 si la direction est bas
- * \param fin le dernier indice 0 if the direction is RIGHT and GRID_SIZE - 1 if the direction is LEFT
- * \param facteur it's the variable needed for increment if the direction is RIGHT or increment
- * \return if the column can move or not
+ * \paramètre debut le premier indice, 0 si la direction est haut GRID_SIZE - 1 si la direction est bas
+ * \paramètre fin le dernier indice, 0 si la direction est bas GRID_SIZE - 1 si la direction est haut
+ * \paramètre facteur -1 si c'est un mouvement vers le haut, 1 si vers le bas
+ * \retourne vrai si la colonne peut bouger, faux sinon
  */
 bool column_can_move(grid g, int j, int debut, int fin, int facteur){
 	tile pre = 0;
