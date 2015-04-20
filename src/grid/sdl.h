@@ -38,4 +38,5 @@ void display(grid g, TTF_Font *police,SDL_Surface *ecran,SDL_Rect posScore);
 
 
 
+
 #endif
