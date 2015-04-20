@@ -7,64 +7,81 @@
 #include <SDL/SDL_ttf.h>
 
 
+	/*Prototype des fonction*/
 
 void initTabColor(SDL_Surface *ecran);
 unsigned long int pow_of_2(tile t);
 void display(grid g, TTF_Font *police,SDL_Surface *ecran,SDL_Rect posScore);
 
-static int tile_size = 120; //taille en pixel d'un cote d'une tile
-static int bordur=10; //nombre de pixels entre les tiles
-Uint32 ColorsTab[14];
 
-int longueur;
-int largeur;
+	/*Declaration des variable*/
 
-SDL_Color couleurNoire = {0, 0, 0};
-SDL_Color couleurBlanche = {255, 255, 255};
+#define nbColor 14					// nombre de couleur disponible
 
+static int tile_size = 120;			// taille en pixel d'un cote d'une tile
+static int bordur=10;				// nombre de pixels entre les tiles
+static Uint32 ColorsTab[nbColor];	// tableau de couleur 
+static int longueur;				// longueur de la fenetre
+static int largeur;					// largeur de la fenetre
+static SDL_Color couleurNoire = {0, 0, 0};			// couleur de police
+static SDL_Color couleurBlanche = {255, 255, 255};	// couleur de police
+static int police_size = 35; 						// taille de la police de caractere
+
+/* Main*/
 
 int main(int argc, char *argv[])
 {
-	srand(time(NULL));
+	srand(time(NULL));			// on initialise srand
 
-	bool tour_suivant;		// valeur boolean est a vrai quand on veut continui la partie
-	dir direction;			// contient la direction décrite dans grid.h
+	bool game=true;				// variable pour la boucle principale de la sdl
+	bool tour_suivant; 			// valeur boolean est a vrai quand on veut continuer la partie
+	dir direction;				// contient la direction a jouer pour chaque tour
 	grid g;
-	int game=1;				// variable pour la boucle principale de la sdl
-	largeur = (tile_size*GRID_SIDE)+(bordur*(GRID_SIDE+1));
-	longueur = (tile_size*(GRID_SIDE+1))+(bordur*(GRID_SIDE+1));
 
-	SDL_Rect posScore;
-	posScore.y=longueur-(tile_size/2)-20;
-	posScore.x=largeur/2-45;
+	largeur = (tile_size*GRID_SIDE)+(bordur*(GRID_SIDE+1));			// on initialise la taille de la fenetre avec
+	longueur = (tile_size*(GRID_SIDE+1))+(bordur*(GRID_SIDE+1));	// la taille des tile et la taille des bordure
+																	// on se prevoit une marge en dessous pour le score
 
-	SDL_Surface *ecran = NULL;
-	SDL_Event event; //initialisation de l'évenement
+	SDL_Rect posScore;						// initialisation de la position du score
+	posScore.y=longueur-(tile_size/2)-20;	// dans la fenetre. C'est pour cela qu'on avait prévu 
+	posScore.x=largeur/2-45;				// la taille d'une tile de marge
+											// les valeur soustrait a la fin sont arbitraire afin de bien trouver le milieu
+
+	SDL_Surface *ecran = NULL;				// Le pointeur qui va pointer la fenetre principale
+	SDL_Event event; 						// initialisation des évenements
   
 
     
-	SDL_Init(SDL_INIT_VIDEO); //initialise sdl
-	TTF_Init();
+	SDL_Init(SDL_INIT_VIDEO); 		// initialise sdl
+	TTF_Init();						// initialisation de sdl_ttf (qui permet d'écrire sur l'écran)
 
-	TTF_Font *police = NULL;
-	police= TTF_OpenFont("angelina.ttf" , 35);
+	TTF_Font *police = NULL;						// initialisation de la police de caractere
+	police= TTF_OpenFont("angelina.ttf" , police_size);	
   
-	if(SDL_Init(SDL_INIT_VIDEO)==-1){
+	if(SDL_Init(SDL_INIT_VIDEO)==-1)		// on verifie si sdl c'est bien lancé
+	{
 		fprintf(stderr, "erreur initialisation SDL");
 		exit(EXIT_FAILURE);
 	}
 
-    ecran = SDL_SetVideoMode(largeur,longueur, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	// On entre les caracteristique de l'écrans (longeur,largeur,couleur codé sur 32bit, option de fonctionnement)
+	// (SDL_HWSURFACE stocke les valeur en ram et SDL_DOUBLEBUF évite le scintillement d'image)
+    ecran = SDL_SetVideoMode(largeur,longueur, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);	
 	
 
-	if(ecran == NULL){
+	if(ecran == NULL)		// on verifie si l'écran c'est bien initialisé
+	{
 		fprintf(stderr, "Impossible de charger mode vidéo : %s\n", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
-	initTabColor(ecran);
+
+	initTabColor(ecran);		// on initialise le tableau de couleur pour quelle soit dans un format
+								// utilisable par sdl.
+
 	SDL_WM_SetCaption("2048 (SDL)", NULL); //titre fenetre
 
   
+	/* Debut de la boucle des évenement de sdl*/
 
 	while(game)
 	{
@@ -74,7 +91,6 @@ int main(int argc, char *argv[])
 		tour_suivant=true;
 		while(tour_suivant)
 		{	
-			SDL_FillRect(ecran,NULL,ColorsTab[13]);
 			display(g,police,ecran,posScore);
 			SDL_WaitEvent(&event);
 			switch(event.type)
@@ -132,6 +148,7 @@ int main(int argc, char *argv[])
 
 void display(grid g, TTF_Font *police, SDL_Surface *ecran,SDL_Rect posScore)
 {
+	SDL_FillRect(ecran,NULL,ColorsTab[nbColor-1]);
 	SDL_Rect posTile;
 	SDL_Rect posValue_Tile;
 	posValue_Tile.x=tile_size/2-5;
@@ -154,10 +171,11 @@ void display(grid g, TTF_Font *police, SDL_Surface *ecran,SDL_Rect posScore)
 			sprintf(s,"%ld",pow_of_2(valTile));
 			if(valTile)
 				texte= TTF_RenderText_Blended(police, s, couleurNoire);
-			if(valTile%12==0 && valTile!=0)
+			if(valTile%nbColor-2==0 && valTile!=0)
 				texte= TTF_RenderText_Blended(police, s, couleurBlanche);
 			posTile.y=(bordur*(x+1))+tile_size*x;
 			posTile.x=(bordur*(y+1))+tile_size*y;
+
 			SDL_BlitSurface(texte , NULL , tile_Sdl, &posValue_Tile);
 			SDL_BlitSurface(tile_Sdl,NULL,ecran, &posTile);
 			SDL_FreeSurface(texte);
@@ -182,7 +200,7 @@ unsigned long int pow_of_2(tile t)
 	return pow(2, t);
 }
 
-
+	/* Initiaisation du tableau place des couleur dans le format des couleur sdl et le format choisit pour l'écrans */
 void initTabColor(SDL_Surface *ecran)
 {
 	ColorsTab[0]=SDL_MapRGB(ecran->format, 206, 206, 206);
