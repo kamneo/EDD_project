@@ -7,6 +7,7 @@ Atention pour compiler la sdl les paquet suivant sont necessaire:
 	- libsdl-mixer1.2-dev
 	- libsdl-ttf2.0-dev
 	- libfreetype6-dev
+
 En cas d'erreur a la generation des makefile verifier que les paquet g++ sont bien installer egalement.
 
 Pour compiler il faut se placer dans le dossier "EDD_project/build" (EDD_project étant la racine du projet) et faire :
