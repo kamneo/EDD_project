@@ -33,7 +33,7 @@ strategy A2_bonnet_borde_pinero_efficient() {
 	strat->play_move = rapide_strategie; 				//cf strategy.c
 	strat->mem = malloc(sizeof(int));
 
-	*(int*) (strat->mem) = 0; // on pointe sur un int qui sera un compteur de tour jouer(pour certaine strat)
+	*(int*) (strat->mem) = 0; // on pointe sur un int qui sera un compteur de tour jouer(pour certaines strats)
 
 	strat->free_strategy = free_memless_strat;
 
@@ -41,10 +41,10 @@ strategy A2_bonnet_borde_pinero_efficient() {
 }
 
 /*
- * strategie basée sur expected max qui retourne la direction optimale à jouer
- * param : strategy s la sutructure stratégie
- * param : grid la grille
- * return: la direction optimale à jouer qui a été calculée par cette stratégie
+ * stratégie basée sur expected max qui retourne la direction optimale à jouer
+ * paramètre strat la sutructure stratégie
+ * paramètre g, la grille
+ * retourne la direction optimale à jouer qui a été calculée par cette stratégie
  */
 dir rapide_strategie(strategy strat, grid g) {
 	// initialisation de la structure resultat
@@ -61,7 +61,7 @@ resultat max(grid g, int depth)
 {
 	resultat MeilleurRes;
 
-	// pour chaque directions possible ont fait le traitement expected();
+	// pour chaque direction possible on fait le traitement expected();
 	do_expected(g, &MeilleurRes, LEFT, depth);
 	do_expected(g, &MeilleurRes, RIGHT, depth);
 	do_expected(g, &MeilleurRes, DOWN, depth);
@@ -72,17 +72,17 @@ resultat max(grid g, int depth)
 
 /*
  * fonction qui pour une direction calcule la valeur moyenne de toutes les grilles
- * possibles et si le resultat est plus grand que celui contenu dans la structure resultat
+ * possibles et si le résultat est plus grand que celui contenu dans la structure résultat
  * modifie les champs de la structure avec les nouvelles valeurs (direction, score)
- * param : grid la grille
- * param : resultat * res un pointeur sur la structure resultat
- * param : dir direction la direction choisi
+ * paramètre g, la grille
+ * paramètre bestRes, un pointeur sur la structure resultat
+ * paramètre direction, la direction choisie
  */
 void do_expected(grid g, resultat* bestRes, dir direction, int depth)
 {
 	double expect = 0;
 
-	// creation d'une nouvelle grille sur laquel on fera les statistiques
+	// création d'une nouvelle grille sur laquelle on fera les statistiques
 	grid ng = new_grid();
 	copy_grid(g, ng);
 
@@ -102,38 +102,37 @@ void do_expected(grid g, resultat* bestRes, dir direction, int depth)
 }
 
 /*
- * fonction qui calcule la valeur de chaque grille qui peuvent etre généré pour une direction
+ * fonction qui calcule la valeur de chaque grille qui peuvent être générées pour une direction
  * et retourne le score moyen de toute ces grilles
- * param : grid g la grille
- * param : dir direction la direction choisi
- * return: double la valeur moyenne de chaque grille dans une direction
+ * paramètre g, la grille
+ * paramètre direction, la direction choisie
+ * retourne la valeur moyenne de chaque grille dans une direction
  */
 double expected(grid g, int depth)
 {
-	// creation du pointeur de fonction sur la fonction d'evaluation de la grille
+	// création du pointeur de fonction sur la fonction d'évaluation de la grille
 	double (*evaluation)(grid);
 	evaluation = eval;
 
-	int emptyCells = 0;		// nombre de tile vide
-	double score_2 = 0.;	//somme des score si la tile introduite est un 2
-	double score_4 = 0.;	//somme des score si la tile introduite est un 4
+	int emptyCells = 0;		// nombre de tuile vides
+	double score_2 = 0.;	//somme des scores si la tuile introduite est un 2
+	double score_4 = 0.;	//somme des scores si la tuile introduite est un 4
 	resultat res;
 
-	// pour chaque tile vide on evalue la grille
+	// pour chaque tuile vide on évalue la grille
 	for (int x = 0; x < GRID_SIDE; ++x) {
 		for (int y = 0; y < GRID_SIDE; ++y) {
 			if(get_tile(g, x, y) == 0){
 				emptyCells++;
-				// si la tile est vide on y met la valeur 1 et on fait éval()
+				// si la tuile est vide on y met la valeur 1 et on fait eval()
 				set_tile(g, x, y, 1);
 				score_2 += evaluation(g);
-				//
 				if(depth > 0)
 				{
 					res = max(g, depth - 1);
 					score_2 += res.score;
 				}
-				// puis on y met la valeur 2 et on fait éval()
+				// puis on y met la valeur 2 et on fait eval()
 				set_tile(g, x, y, 2);
 				score_4 += evaluation(g);
 				if(depth > 0)
@@ -142,26 +141,25 @@ double expected(grid g, int depth)
 					score_4 += res.score;
 				}
 
-				// on remet à 0 la tile
+				// on remet la tuile à 0
 				set_tile(g, x, y, 0);
 			}
 		}
 	}
 
-	// on retour le score moyen de la grille pour cette direction.
-	// score_2 * 0.9 car on à 90% de chance d'avoir un 2 et score_4 * 0.1 pour les 10% restant.
+	// on retourne le score moyen de la grille pour cette direction
+	// score_2 * 0.9 car on a 90% de chances d'avoir un 2 et score_4 * 0.1 pour les 10% restants
 	double score = (score_2  * 0.9 + score_4 * 0.1) / emptyCells;
-	//printf("%d %f ", direction ,score);
 	return score;
 }
 
 /*
  * fonction qui évalue le poids de la grille
- * param : g qui est la grille à évaluer
- * return: double qui est la valeur de la grille
+ * paramètre g, qui est la grille à évaluer
+ * retourne la valeur de la grille
  */
 double eval(grid g) {
-	// emptyCells qui compte le nombre de tile vide
+	// emptyCells qui compte le nombre de tuile vides
 	// maxValue qui contient la plus grande valeur de la grille
 	int emptyCells = 0, maxValue = 0;
 
@@ -186,10 +184,10 @@ double eval(grid g) {
 
 /**
  * fonction qui donne une note comprise entre 1 et 0 sur sur la régularité de la grille.
- * c'est a dire si les valeurs ce suivent, on preferera avoir une suite 2 - 4 - 8 - 16,
- * plutot que 2 - 16 - 64 - 128
- * param : grid g qui est la grille à évaluer
- * return : double le score quelle a obtenue.
+ * c'est-à-dire si les valeurs se suivent, on préfèrera avoir une suite 2 - 4 - 8 - 16,
+ * plutôt que 2 - 16 - 64 - 128
+ * paramètre g,  qui est la grille à évaluer
+ * retourne le score qu'elle a obtenu
  */
 double reguliere(grid g) {
 	double bareme = 1. / (GRID_SIDE * GRID_SIDE);
@@ -197,13 +195,13 @@ double reguliere(grid g) {
 
 	for (int x = 0; x < GRID_SIDE; ++x) {
 		for (int y = 0; y < GRID_SIDE; ++y) {
-			// on verifie que la tile ne soit pas nulle
+			// on vérifie que la tuile ne soit pas nulle
 			if (get_tile(g, x, y) != 0) {
-				// la tile sous la tile courante doit etre superieure de 1
+				// la tuile sous la tuile courante doit être supérieure à 1
 				if (y < GRID_SIDE - 1 && get_tile(g, x, y + 1) != 0
 						&& (get_tile(g, x, y) + 1) != get_tile(g, x, y + 1))
 					score -= bareme / 2.;
-				// la tile à gauche de la tile courante doit etre superieure de 1
+				// la tuile à gauche de la tuile courante doit être superieure à 1
 				if (x > 0 && get_tile(g, x - 1, y) != 0
 						&& (get_tile(g, x, y) + 1) != get_tile(g, x - 1, y))
 					score -= bareme / 2.;
@@ -215,12 +213,12 @@ double reguliere(grid g) {
 }
 
 /**
- * fonction qui donne une note comprise entre 1 et 0 sur sur la progressivité de la grille.
- * C'est à dire lorsque la valeur des cases augmente ou descend quelle que soit la direction.
+ * fonction qui donne une note comprise entre 1 et 0 sur la progressivité de la grille
+ * C'est-à-dire lorsque la valeur des cases augmente ou descend quelque soit la direction
  * Ainsi, 2 - 4 - 8 - 16 est acceptable, tout comme 32 - 8 - 4 -2.
- * Mais 2 - 8 - 2 - 16 ne l'est pas.
- * param : grid g qui est la grille à évaluer
- * return : double le score quelle a obtenue.
+ * Mais 2 - 8 - 2 - 16 ne l'est pas
+ * paramètre g, qui est la grille à évaluer
+ * retourne le score quelle a obtenu
  */
 double progressive(grid g) {
 	double bareme = 1. / (GRID_SIDE * 2);
@@ -228,13 +226,13 @@ double progressive(grid g) {
 
 	for (int x = 0; x < GRID_SIDE; ++x) {
 		for (int y = 0; y < GRID_SIDE; ++y) {
-			// on verifie que la tile ne soit pas nulle
+			// on vérifie que la tuile ne soit pas nulle
 			if (get_tile(g, x, y) != 0) {
-				// la tile sous la tile courante doit etre superieure
+				// la tuile sous la tuile courante doit être supérieure
 				if (y < GRID_SIDE - 1
 						&& get_tile(g, x, y) > get_tile(g, x, y + 1))
 					score -= bareme;
-				// la tile à gauche de la tile courante doit etre superieure
+				// la tuile à gauche de la tuile courante doit être supérieure
 				if (x > 0 && get_tile(g, x, y) > get_tile(g, x - 1, y))
 					score -= bareme;
 			}
