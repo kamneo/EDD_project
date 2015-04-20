@@ -197,6 +197,18 @@ technologie \og CMake \fg{} nous permet d'avoir un affichage complet \`a la fin
 des tests sur leurs r\'esultats pour savoir s'ils sont pass\'es avec succ\`es
 ou non (exemple en annexe \ref{test}).
 
+\par Comme dis pr\'ec\'edement, chaque test est sp\'ecifique \`a une fonction.
+\begin{itemize}
+  \item La cr\'eation d'une grille et sont initialisation correcte.
+  \item L'homog\'en\'eit\'e de la fonction add\_tile, c'est \`a dire que la
+  probabilit\'e que la tuile g\'en\'er\'e soit bien de $
+  \frac{1}{le\ nombre\ de\ tuille} $ avec un marge de 0.05\%.
+  \item La v\'eracit\'e des fonctions \og game\_over \fg{} et \og can\_move
+  \fg{}
+  \item La bonne ex\'ecution des mouvements dans chaque direction.
+  \item Enfin l'ex\'ecution sans erreur de 1000 parties.
+\end{itemize}
+
 \newpage
 \section{Relectures critiques}
 \`A l’issue de la premi\`ere phase de travail, chaque groupe ont d\^u relire le
@@ -244,13 +256,98 @@ impos\'e de les mettre qu'en anglais.
 
 \newpage
 \section{Les strat\'egies}
+Dans cette partie, chacun des groupes ont du mettre au points au minimum deux
+strat\'egies. Une strat\'egie rapide (capable de jouer une partie en moins de
+10s) et une strat\'egie plus gourmande (capable de jouer une partie en moins de
+2min). Une strat\'egie est une structure qui impl\'emente l’interface d\'ecrite
+dans strategy.h. Chaque strat\'egie sont de la forme d’une biblioth\`eque
+dynamique. Nous avons implementer quatre strat\'egies pour l'instant, deux
+plutot triviales qui sont basées sur la strat\'egie du coin, et deux autres sur
+la strat\'egies \og expected max \fg{}. 
+
+\subsection{Stratégie du coin}
+La stratégie fonctionnelle choisie pour le rapport est la stratégie du coin.
+Pour cela, nous avions fait un premier algorithme qui se contente de jouer vers
+la gauche tant qu'on le peut, sinon il joue vers le bas encore une fois tant
+qu'on le peut, de même vers la droite puis vers le haut. Avec cet stratégie, sur
+48 parties nous avons un score moyen de 2475, avec 6x64, 20x128, 20x256 et
+2x512.
+
+Dans un seconds temps, nous avons fait un second algorithme qui est basé sur le
+premier mais qui un coup sur deux change les mouvements favoris. Les premiers
+mouvements favoris sont dans cet ordre, gauche, bas, droite et haut, et les
+seconds mouvements sont dans cet ordre, bas, gauche, droite et haut. Avec cette
+stratégie, sur 48 parties nous avons un score moyen de 2259, avec 1x32, 3x64,
+21x128 et 23x256.
+
+Les deux stratégies se valent à peu près, mais c'est bien la première qui est la
+meilleure.
+
+\subsection{Implémentation d'expected max}
+\og Expected Max \fg{} est un algorithme qui consiste \`a retourner la direction
+optimale \`a jouer. Elle est bas\'ee sur l'algorithme \og minimax \fg{}. Le
+principe est de donner une valeur à la grille en fonction de plusieurs critères
+(cf. \og \ref{eval_grid} Evaluation de la grille \fg{}) ainsi nous jouerons le
+coup avec le maximum de chances de gagner combiné au coup avec le minimum de
+chances de perdre.
+\par L'une des limites de cette m\'ethode est qu'il faille jouer \`a deux
+joueurs, or au 2048 on joue tout seul. C'est pour cette raison qu'on utilisera pas le
+th\'eor\`eme du \og minimax \fg{} mais celui d'\og expected Max \fg{}. En effet
+ici on concid\`erera le second joueur comme l'ordinateur qui remplira de façon
+aléatoire une des tuilles vides apr\`es la direction choisie. Cela engage de
+calculer, pour chaque grille et pour toutes les possibilit\'es de remplissage
+d'une tile vide, la valeur de cette grille. Il faudra ensuite faire une moyenne
+de toutes les valeurs calculées pour chaque direction afin de déterminer laquel
+est la plus intéressante. Pour un algorithme encore plus performant il serait
+avantageux de pouvoir \'etendre notre arbre \`a une profondeur N choisie au
+d\'ebut du programme. Il parait évident qu'une telle technique va avoir un coût
+en mémoire et calcule important. Hors dans la mesure où des limitations en temps
+d'exécution nous sont imposés il faudra trouver un équilibre entre résultats et
+performances.
+\par Pour la strat\'egie courte nous n'allons qu'a une profondeur de 2 (nous
+avons deux sous arbres) et calculons avec une probabilit\'e de 100 \%
+d'avoir une tuile de valeur 2 qui apparait. Pour la strat\'egie plus
+\'efficiente, nous allons \`a une profondeur de trois et nous prenons en compte
+la probabilit\'e de 10 \% qu'il y est une tuille de valeur 4 qui soit
+g\'en\'er\'e.
+
+\subsection{Evaluation de la grille}
+\label{eval_grid}
+Pour évaluer la grille, nous avons pris en compte quatre paramètres, et à chacun
+de ces paramètres nous leurs avons donné un coefficient pour leur donner plus ou
+moins d'importance. \cite{Eval}
+
+\subsubsection{Le nombre de tiles vides}
+On compte le nombre de tiles vides que l'on a après avoir joué.
+\subsubsection{La plus grande tile} 
+Est la valeur de la tile avec la plus grande valeur.
+
+\subsubsection{La grille la plus progressive possible}
+Une grille est progressive lorsque la valeur des cases augmente ou descend
+quelle que soit la direction. Ainsi, 2 - 4 - 8 - 16 est acceptable, tout comme
+32 - 8 - 4 - 2. Mais 2 - 8 - 2 - 16 ne l'est pas (\`a cause de la 3eme case).
+\`A chaque mouvement on doit vérifier si  le mouvement d'apr\`es rendra la
+grille plus progressive. Si c'est le cas, le mouvement doit \^etre effectu\'e.
+Si non, trouver un autre mouvement.
+
+\subsubsection{La grille la plus réguli\`ere possible}
+Pour pouvoir fusionner, les cases doivent comporter des valeurs identiques.
+Ainsi une suite 2 - 16 - 64 - 256 respecte la r\`egle de progressivit\`e) mais
+aboutira à un \'echec car on ne pourra fusionner aucune case avec sa voisine. Il
+faut donc respecter un autre crit\`ere : la r\'egularit\'e. Et faire en sorte de
+ne pas avoir de cassure dans les s\'eries. Entre cr\'eer une série 2 - 4 - 8 -
+16 et cr\'eer une s\'erie 16 - 64 - 256 - 1024 on pr\'ef\'erera donc la
+premi\`ere, m\^eme si la possibilit\'e d'obtenir un nombre fort comme 1024 peut
+\^etre tentante a priori.
 
 \newpage
 \section{Une vrai interface graphique ?!}
 
 \newpage
 \section{En bref}
-
+Bien que passionnant, le projet fu tr\`es long mais tr\`es enrichissant. Nous
+avons appris \`a travailler en groupe, utiliser des technologies nouvelles comme
+GIT, SDL, 
 \newpage
 \bibliographystyle{alpha}
 \bibliography{biblio}
