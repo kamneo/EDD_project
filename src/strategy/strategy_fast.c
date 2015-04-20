@@ -267,7 +267,7 @@ double reguliere(grid g) {
  * Ainsi, 2 - 4 - 8 - 16 est acceptable, tout comme 32 - 8 - 4 -2.
  * Mais 2 - 8 - 2 - 16 ne l'est pas.
  * paramètre g, qui est la grille à évaluer
- * retourne le score quelle a obtenue.
+ * retourne le score quelle a obtenu
  */
 double progressive(grid g) {
 	double bareme = 1. / (GRID_SIDE * 2);
