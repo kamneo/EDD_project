@@ -286,7 +286,8 @@ stratégie, sur 48 parties nous avons un score moyen de 2259, avec 1x32, 3x64,
 21x128 et 23x256.
 
 Les deux stratégies se valent à peu près, mais c'est bien la première qui est la
-meilleure.
+meilleure. Biensur cette stratègie n'étais qu'un essai et ces résultats sont trés mauvais
+les vrais stratégie arrive aprés.
 
 \subsection{Implémentation d'expected max}
 \og Expected Max \fg{} est un algorithme qui consiste \`a retourner la direction
@@ -347,6 +348,51 @@ premi\`ere, m\^eme si la possibilit\'e d'obtenir un nombre fort comme 1024 peut
 
 \newpage
 \section{Une vrai interface graphique ?!}
+Pour cette dernière étape du projet les groupes devaient choisir une librairie graphique
+utilisable en c et implémenter une véritable interface graphique. Nous avons comme
+beaucoup d'autre choisit simplement la librairie sdl qui en plus d’être
+complète est très utilisé se qui signifie de bonne doc ou de bon tuto disponible
+dans plusieurs langues
+\par la librairie sdl fonctionne essentiellement sur le principe de génération de
+surface que l'on colle sur la fenêtre principale. Au fur et a mesure que nous apprenions a nous en servir
+deux possibilité d’implémentation nous sont apparus
+
+\subsection{Structure du programme}
+La première de ces solutions consistent a coller directement des images des tuiles de la grille en cour.
+Cette technique est certes simple a implémenter et peu être très jolie mais très limité
+car absolument par modifiable de manière simple.
+Nous avons donc choisit la deuxième option qui consiste a générer soit même au fur et a mesure
+l'apparence des surfaces correspondant au tuile de la partie en cour. Pour cela nous avons utiliser
+les capacité le la lib \og TTF \fg.
+\par Notre programme possède donc deux fonctions principale qui sont le \og main \fg qui contient la boucle
+principale des événements du programme et la fonction \og display \fg qui se charge a chaque tour de lire l'état
+de la grille en cour. Pour chaque tuile elle génère une surface carré d'une taille prédéfinit et d'une couleur
+correspondant a la valeur de la tuile. Puis on génère une surface de texte correspondant a la valeur de la tuile
+et on colle le texte au milieu de la surface de tuile que l'on colle a l’écran a la bonne position.
+\par Cette implémentation permet une bonne modularité du code, elle va nous permette de rendre compatibl
+ notre interface graphique au changement de taille de grid.
+
+\subsection {Problématique de la librairie SDL}
+Si un certain niveau de modularité a été atteint par le biais de l’implémentation vu
+précédemment, un certain nombre de difficulté ont été beaucoup plus dur a gérer.
+\par Premièrement sdl demande l'utilisation de nombreuse variable, pointeur etc...
+Si il n'est pas très difficile de manipuler cette librairie il est par contre beaucoup plus
+dur de garder un code parfaitement propre dans ces conditions.
+Nous aurions sans doute pu pousser plus loin notre factorisation de code mais nous
+avons manqué de temps.
+\par Deuxièmement dans la manipulation de tout ces variables de nombreuse allocation sont
+nécessaire et la moindre erreur coûte très chère en fuite mémoire.
+Nous avons cependant pu réduire a son maximum ces fuite ne laissant que 50 octet
+perdu de manière constante quel que soit le temps de jeux ou le nombre de partie ce qui est
+un résultat certes imparfait mais correcte.
+\par Et pour finir le code de sdl peut être relativement problématique a corriger. A certain
+moment du développement des erreurs de segmentation aléatoire sont survenue.
+Ce genre de soucis aurait pu être un calvaire a déboguer a l'aide de printf mais
+nous avons su faire une utilisation judicieuse de gdb se qui nous a permit résoudre
+ces soucis avec une grande facilité. Il est clair après se projet que l'utilisation d'un outil de débogage
+tel que gdb est parfaitement indispensable a un développer digne de se nom.
+
+
 
 \newpage
 \section{En bref}

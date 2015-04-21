@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	grid g;
 
 	largeur = (TILE_SIZE*GRID_SIDE)+(EDGE*(GRID_SIDE+1));			// on initialise la taille de la fenetre avec
-	longueur = (TILE_SIZE*(GRID_SIDE+1))+(EDGE*(GRID_SIDE+1));		// la taille des tile et la taille des EDGEe
+	longueur = (TILE_SIZE*(GRID_SIDE+1))+(EDGE*(GRID_SIDE+1));		// la taille des tile et la taille des EDGE(bordure)
 																	// on se prevoit une marge en dessous pour le score
 
 											// les valeur soustrait a la fin sont arbitraire afin de bien trouver le milieu
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 		
 		}// fin while tour_suivant
 		delete_grid(g);						// on detruit la grille entre les deux whiles
-	}// fin while game
+	}// fin while game 
 
 	TTF_CloseFont (police);					// free de la police de caractere
 	SDL_FreeSurface(ecran);					// free de la surface ecran
