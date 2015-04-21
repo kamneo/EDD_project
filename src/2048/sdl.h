@@ -6,38 +6,42 @@
 #include <math.h>
 /*
 	Fichier sdl.h
-	contient les fonction et les constante necessaire a 2048_sdl.c .
+	contient les fonctiosn et les constantes nécessaires à 2048_sdl.c .
 */
+
 
 
 	/*Prototype des fonction*/
 
-void initTabColor(SDL_Surface *ecran);
 /* 
-	Fonction qui initialise le tableau des couleur disponible
-	la derniere case du tableau sera toujours la couleur de l'écrans la premiere les tile vide
-	la seconde les tile a 2 la troisieme les tile a 4 etc...
+	Fonction qui initialise le tableau des couleurs disponible
+	la dernière case du tableau sera toujours la couleur de l'écran, la première sera la couleur des tuiles vides,
+	la seconde des tuiles à 2, la troisième des tuiles à 4 etc...
 */
+void initTabColor(SDL_Surface *ecran);
 
+
+/*
+	fonction qui fait la puissance de 2 d'une tuile
+*/
 unsigned long int pow_of_2(tile t);
+
+
 /*
-	fonction qui retourne le score de la tile
+	fonction qui affiche une grille
+	ses paramètres sont: une grille, une police de caractères, la fenêtre principale, une position pour le score
 */
-
-void display(grid g, TTF_Font *police,SDL_Surface *ecran);
-/*
-	fonction qui affiche une grid
-	ces paramétre sont: une grid , une police de caractere, la fenetre principale , une position pour le score)
-*/
+void display(grid g, TTF_Font *police,SDL_Surface *ecran,int heigth,int width);
 
 
-void endGame(SDL_Surface *ecran);
+void endGame(SDL_Surface *ecran,int heigth,int width);
 
 
-#define NB_COLOR 13		// nombre de couleur disponible
-#define TILE_SIZE 130	// taille en pixel d'un cote d'une tile
-#define EDGE 10			// nombre de pixels entre les tiles
-#define MAX_CARACTERE 50// taille de la chaine de caractere des message a afficher
+#define NB_COLOR 13			// nombre de couleurs disponibles
+#define TILE_SIZE 130		// taille en pixels d'un côté d'une tuile
+#define EDGE 10				// nombre de pixels entre les tuiles
+#define MAX_CARACTERE 50	// taille de la chaine de caractères des messages à afficher
+#define CHARACTER_SIZE 40	// taille de la police de caractere
 
 
 

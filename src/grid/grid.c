@@ -19,7 +19,7 @@ struct grid_s {
  * \paramètre n , le max
  * \retourne un entier aléatoire entre 0 et n
  */
-static int rang_aleatoire(int n) {
+static int random_rank(int n) {
 	return rand() % n;
 }
 
@@ -27,7 +27,7 @@ static int rang_aleatoire(int n) {
  * \Calcule une valeur qui a 9/10 de chances d'être 1 et 1/10 d'êtrre 2
  * \retourne un entier entre 1 et 2
  */
-static int valeur_aleatoire() {
+static int random_value() {
 	if (rand() % 10 < 9)
 		return 1;
 	else
@@ -67,8 +67,8 @@ void delete_grid(grid g) {
 
 /**
  * \Clone la grille
- * \paramètre src la grille à copier
- * \paramètre dst la grille copiée
+ * \paramètre src la grille à copier (source)
+ * \paramètre dst la grille copiée (destination)
  */
 void copy_grid(grid src, grid dst) {
 	for (int i = 0; i < GRID_SIDE; i++)
@@ -198,12 +198,12 @@ void do_move(grid g, dir d) {
  * \La grille doit contenir au moins une tuile vide
  */
 void add_tile(grid g) {
-	int taille = (GRID_SIDE * GRID_SIDE) * 2; // taille maximale de notre tableau
+	int maxSize = (GRID_SIDE * GRID_SIDE) * 2; // taille maximale de notre tableau
 	int nbFree = 0; // nombre de tuiles libres
 	int* tab; // le tableau de coordonées
-	int nombreAleatoire;
+	int randomNumber;
 
-	tab = malloc(sizeof(int) * taille);
+	tab = malloc(sizeof(int) * maxSize);
 	// on parcourt la grille
 	for (int i = 0; i < GRID_SIDE; i++) {
 		for (int j = 0; j < GRID_SIDE; j++) {
@@ -221,10 +221,10 @@ void add_tile(grid g) {
 	}
 
 	// on génère un nombre aléatoire pour obtenir les coordonées dans le tableau tab d'une tuile vide
-	nombreAleatoire = rang_aleatoire(nbFree) * 2;
+	randomNumber = random_rank(nbFree) * 2;
 	// on change la valeur de la tuile obtenue (9/10 chance d'avoir 1 et 1/10 chance d'avoir 2)
-	g->tiles[tab[nombreAleatoire]][tab[nombreAleatoire + 1]] =
-			valeur_aleatoire();
+	g->tiles[tab[randomNumber]][tab[randomNumber + 1]] =
+			random_value();
 	free(tab);
 }
 
