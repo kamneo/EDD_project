@@ -18,7 +18,7 @@
 	la dernière case du tableau sera toujours la couleur de l'écran, la première sera la couleur des tuiles vides,
 	la seconde des tuiles à 2, la troisième des tuiles à 4 etc...
 */
-void initTabColor(SDL_Surface *ecran);
+void initTabColor(SDL_Surface *screen);
 
 
 /*
@@ -31,10 +31,10 @@ unsigned long int pow_of_2(tile t);
 	fonction qui affiche une grille
 	ses paramètres sont: une grille, une police de caractères, la fenêtre principale, une position pour le score
 */
-void display(grid g, TTF_Font *police,SDL_Surface *ecran,int heigth,int width);
+void display(grid g, TTF_Font *character_Font,SDL_Surface *screen,int heigth,int width);
 
 
-void endGame(SDL_Surface *ecran,int heigth,int width);
+void endGame(SDL_Surface *screen,int heigth,int width);
 
 
 #define NB_COLOR 13			// nombre de couleurs disponibles

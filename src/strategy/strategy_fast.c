@@ -21,7 +21,7 @@ dir strategy_fast(strategy s, grid g);
 result max(grid g, int depth);
 double eval(grid g);
 double progressive(grid g);
-double reguliere(grid g);
+double regular(grid g);
 void do_expected(grid g, result* res, dir direction, int depth);
 double expected(grid g, int depth);
 
@@ -227,7 +227,7 @@ double eval(grid g) {
 			emptyWeight = 1.,
 			maxWeight = 2.;
 
-	return progressive(g) * smoothWeight + reguliere(g) * monoWeight
+	return progressive(g) * smoothWeight + regular(g) * monoWeight
 			+ emptyCells * emptyWeight + maxValue * maxWeight;
 }
 
@@ -238,7 +238,7 @@ double eval(grid g) {
  * paramètre g, qui est la grille à évaluer
  * retourne le score qu'elle a obtenu
  */
-double reguliere(grid g) {
+double regular(grid g) {
 	double bareme = 1. / (GRID_SIDE * GRID_SIDE);
 	double score = 1.;
 
