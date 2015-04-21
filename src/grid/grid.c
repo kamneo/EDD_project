@@ -67,8 +67,8 @@ void delete_grid(grid g) {
 
 /**
  * \Clone la grille
- * \paramètre src la grille à copier
- * \paramètre dst la grille copiée
+ * \paramètre src la grille à copier (source)
+ * \paramètre dst la grille copiée (destination)
  */
 void copy_grid(grid src, grid dst) {
 	for (int i = 0; i < GRID_SIDE; i++)
