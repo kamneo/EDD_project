@@ -35,7 +35,7 @@ void endGame(SDL_Surface *ecran);
 
 
 #define NB_COLOR 13		// nombre de couleur disponible
-#define TILE_SIZE 120	// taille en pixel d'un cote d'une tile
+#define TILE_SIZE 130	// taille en pixel d'un cote d'une tile
 #define EDGE 10			// nombre de pixels entre les tiles
 #define MAX_CARACTERE 50// taille de la chaine de caractere des message a afficher
 
