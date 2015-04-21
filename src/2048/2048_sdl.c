@@ -119,6 +119,7 @@ int main(int argc, char *argv[])
 
 			if(game_over(g))
 			{
+				display(g,character_Font,screen,heigth,width);
 				endGame(screen,heigth,width);						// on affiche le game over
 				while (next_round)				// on entre dans la boucle des évenements liés au game over
 				{
