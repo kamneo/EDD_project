@@ -23,56 +23,56 @@
 
 \section{Le projet}
 \subsection{Pr\'esentation}
-Le projet ce compose de plusieurs parties de d\'eveloppement sur un sujet
-commun, le jeu du 2048. Ce jeu conciste \`a additionner des tuiles de m\^eme
+Le projet se compose de plusieurs parties de d\'eveloppement sur un sujet
+commun, le jeu du 2048. Ce jeu consiste \`a additionner des tuiles de m\^eme
 puissance de 2, sur un plateau de 16 tuiles, jusqu'\`a ce que le plateau soit
-plein et qu'aucune addition ne soit possible. Le but du jeu et d’arriver \'a
+plein et qu'aucune addition ne soit possible. Le but du jeu est d’arriver \'a
 construire une brique de valeur la plus grande possible (2048, 4096,
 8192, \ldots)
 \par 
 \emph{\color{red}POURQUOI PAS AJOUTER UNE PHOTO EXEMPLE ?!}
 \subsection{Le sujet}
 Dans le projet nous avons eu \`a r\'ealiser dans un premier temps l'ensemble du
-moteur du jeu et quelques tests qui nous garantisent au maximum la soliditer de notre code 
+moteur du jeu et quelques tests qui nous garantissent au maximum la solidité de notre code 
 pendant le d\'eveloppement. Dans un deuxi\`eme temps, nous devions faire la
-\og critique \fg{} du developpement de la premi\`ere partie faite par
-d'autres groupes bas\'e sur une grille d'evaluation qui nous a \'et\'e
-fourni. Ensuite nous avons r\'ealiser un ensemble de strat\'egie de jeu qui
-sont capable de jouer de mani\`ere autonome une partie enti\`ere. Ces strat\'egies doivent \`a chaque tours calculer le meilleur
-prochain coups pour atteindre le plus grand score possible. La derni\`ere partie
-du projet conciste \`a r\'ealis\'e une v\'eritable interface graphique pour
+\og critique \fg{} du développement de la premi\`ere partie faite par
+d'autres groupes bas\'e sur une grille d'évaluation qui nous a \'et\'ee
+fournie. Ensuite nous avons r\'ealisé un ensemble de strat\'egies de jeu qui
+sont capables de jouer de mani\`ere autonome une partie enti\`ere. Ces strat\'egies doivent \`a chaque tour calculer le meilleur
+prochain coup pour atteindre le plus grand score possible. La derni\`ere partie
+du projet consiste \`a r\'ealiser une v\'eritable interface graphique pour
 jouer au jeu.
 
 \newpage
 \section{D\'eveloppement du 2048 et tests}
 Pour le d\'eveloppement du 2048, le langage de programmation \'etait impos\'e,
-nous devions utilis\'e le langage C. Chaque groupe à d\^u fournir les sources
+nous devions utiliser le langage C. Chaque groupe a d\^u fournir les sources
 permettant de g\'en\'erer une biblioth\`eque libgrid.a (impl\'ementant les
-fonctions d'\'ecrites dans grid.h en annexe \ref{grid_h}) ainsi qu’un
+fonctions décrites dans grid.h en annexe \ref{grid_h}) ainsi qu’un
 ex\'ecutable permettant de jouer au 2048 dans la console. En plus de ça, nous
 avons r\'ealis\'e des tests pour v\'erifier toutes les fonctions
-impl\'ement\'es.\par
+impl\'ement\'ees.\par
 
 Avant de commencer le travail de d\'eveloppement, nous avons utilis\'e un
 outil de gestion de versions d\'ecentralis\'e pour que chaque membre du groupe
 puisse avoir acc\'es \`a chaque instant \`a la derni\`ere version du projet.
-Pour ça nous avons choisit le logiciel \href{http://git-scm.com/}{GIT}, et la plateforme
-\href{http://github.com/}{GitHub}. Les sources du projet ont \'et\'e disponible tout
+Pour ça nous avons choisi le logiciel \href{http://git-scm.com/}{GIT}, et la plateforme
+\href{http://github.com/}{GitHub}. Les sources du projet ont \'et\'e disponibles tout
 au long du d\'eveloppement \href{http://github.com/kamneo/EDD_project}{ici}.\par
 
 En ce qui concerne l'arborescence de notre projet, nous avons d\'ecid\'e d'avoir
-une organisation bien pr\'ecise pour quelle puisse \^etre le plus possible
-g\'en\'erique, c'est \'a dire quelle s'adapte aux \'evolutions du projet.
-Mais surtout pour quelle soit le plus clair possible.
+une organisation bien pr\'ecise pour qu'elle puisse \^etre le plus possible
+g\'en\'erique, c'est-\'a-dire qu'elle s'adapte aux \'evolutions du projet.
+Mais surtout pour qu'elle soit la plus clair possible.
 
 \begin{alltt}
 {\color{gray}
 EDD_projet/        # Racine du projet
     bin/           # Fichiers ex\'ecutables.
     build/         # Fichiers de compilation du projet
-    include/       # Fichiers .h des librairies g\'en\'er\'es
+    include/       # Fichiers .h des librairies g\'en\'er\'ees
     lib/           # Librairies
-    src/           # Fichiers tous les fichiers sources
+    src/           # Fichiers sources
         2048/      # Fichiers sources de l'interface graphique
         grid/      # Fichiers du moteur de jeu
             tests/ # Fichiers qui testent le moteur de jeu
@@ -82,19 +82,19 @@ EDD_projet/        # Racine du projet
 \par
 
 Tout au long du d\'eveloppement du projet, tous les membres du groupe se sont
-mis d'accord sur le fait d'utiliser l'outils \href{http://www.cmake.org/}{CMake}
-pour compiler le projet, g\'en\'erer les Makefiles qui servent eux-m\^emes \`a g\'en\'erer les
+mis d'accord sur le fait d'utiliser l'outil \href{http://www.cmake.org/}{CMake}
+pour compiler le projet, g\'en\'erer les Makefiles qui servent eux-m\^eme \`a g\'en\'erer les
 ex\'ecutables, les librairies et ex\'ecuter les tests.
 
-\subsection{Le developpement de grid.c}
+\subsection{Le développement de grid.c}
 En ce qui concerne le d\'eveloppement de grid.c, qui est le moteur du jeu,
-c'\'et\'e relativement simple. Les fonctions qui ont m\'erit\'e une r\'eflexion
+c'était relativement simple. Les fonctions qui ont m\'erit\'e une r\'eflexion
 s\'erieuse sont \og do\_move() \fg{} et \og can\_move() \fg{}. Pour ces
-fonctions nous devions limit\'e au mieux la duplication de code et la compl\'exit\'e de
+fonctions nous devions limiter au mieux la duplication de code et la compl\'exit\'e de
 l'algorithme. Chose que nous n'avions au final pas tr\`es bien reussi, mais nous
-veront dans la partie \ref{notre_etude}.
+verrons dans la partie \ref{notre_etude}.
 
-\subsubsection{Implementation de \og can\_move \fg{}}
+\subsubsection{Implémentation de \og can\_move \fg{}}
 Pour cette fonction, nous avons choisi l'algorithme suivant :
 
 \begin{alltt}
@@ -102,88 +102,86 @@ Pour cette fonction, nous avons choisi l'algorithme suivant :
 Si la direction donn\'ee est \og UP \fg{} ou \og DOWN \fg{} alors
     Pour chaque colonne faire :
         Pour chaque tuile de la colonne faire :
-            Si la tuille pr\'ec\'edente est \'egale \`a la courante
+            Si la tuile pr\'ec\'edente est \'egale \`a la courante
                 retourner vrai
  		
-            Si la tuille courante et non vide 
-                   et qu'il y a une tuille vide dans la colonne
+            Si la tuile courante est non vide 
+                   et qu'il y a une tuile vide dans la colonne
                 retourner vrai	    	
 Si la direction donn\'ee est \og RIGHT \fg{} ou \og LEFT \fg{} alors
     Pour chaque ligne faire 
         Pour chaque tuile de la ligne faire
-            Si la tuille pr\'ec\'edente est \'egale \`a la courante
+            Si la tuile pr\'ec\'edente est \'egale \`a la courante
                 retourner vrai
  		
-            Si la tuille courante et non vide alors
+            Si la tuile courante est non vide
                    et qu'il y a une tuille vide dans la ligne
                 retourner vrai	    	
 retourner faux
 }
 \end{alltt}
 
-C'est la que l'on peut voir que nous avons commit une erreur nous n'aurions
-pas du partir sur un algo qui traite séparement les direction haut/bas et droite/gauche.
+C'est là que l'on peut voir que nous avons commis une erreur nous n'aurions
+pas dù partir sur un algorithme qui traite séparément les directions haut/bas et droite/gauche.
 
-Cette fonction est utilis\'ee \'a plusieurs reprises dans d'autres fonction
+Cette fonction est utilis\'ee \'a plusieurs reprises dans d'autres fonctions
 comme par exemple \og game\_over \fg{} ou \og do\_move \fg{}. d'o\`u
-l'importance qu'elle n'ai pas une trop grande comp\`exit\'e de calcul.
+l'importance qu'elle n'ai pas une trop grande complexit\'e de calcul.
 
-\subsubsection{Implementation de \og do\_move \fg{}}
+\subsubsection{Implémentation de \og do\_move \fg{}}
 Pour cette fonction, nous avons choisi l'algorithme suivant :
 \begin{alltt}
 {\color{gray}
-Si la direction donn\'ee ne peut pas \^etre jouer
+Si la direction donn\'ee ne peut pas \^etre jouée
     Ne rien faire
-    
-    
-Si la direction donn\'e est \og UP \fg{} ou \og DOWN \fg{} alors
+     
+Si la direction donn\'ee est \og UP \fg{} ou \og DOWN \fg{} alors
     Pour chaque colonne faire :
         Pour chaque tuile de la colonne faire :
-            Si la tuille pr\'ec\'edente est \'egale \`a la courante
-                On fusionne les deux tuilles
+            Si la tuile pr\'ec\'edente est \'egale \`a la courante
+                On fusionne les deux tuiles
                 On modifie le score de la partie
             
-            Si la tuille courante est vide alors
-            	On change sa place avec la premi\`ere tuille non vide
+            Si la tuile courante est vide alors
+            	On change sa place avec la premi\`ere tuile non vide
             	
 Si la direction donn\'ee est \og RIGHT \fg{} ou \og LEFT \fg{} alors
     Pour chaque ligne faire 
         Pour chaque tuile de la ligne faire :
-            Si la tuille pr\'ec\'edente est \'egale \`a la courante
-                On fusionne les deux tuilles
+            Si la tuile pr\'ec\'edente est \'egale \`a la courante
+                On fusionne les deux tuiles
                 On modifie le score de la partie
             
-            Si la tuille courante est vide alors
-            	On change sa place avec la premi\`ere tuille non vide
+            Si la tuile courante est vide alors
+            	On change sa place avec la premi\`ere tuile non vide
 }
 \end{alltt}
 
-\subsection{L'afficage de la grille dans la console}
-Pour l'affichage de la grille dans la console, nous avons eu plusieurs version
-et design. La toute premi\`ere version \'etait une simple grille dans la console
-o\`u \'etait affich\'e le score et les valeurs des tuilles. Dans cette version
+\subsection{L'affichage de la grille dans la console}
+Pour l'affichage de la grille dans la console, nous avons eu plusieurs versions
+et designs. La toute premi\`ere version \'etait une simple grille dans la console
+o\`u \'etait affich\'e le score et les valeurs des tuiles. Dans cette version
 nous devions jouer avec les lettres Z, Q, S et D du clavier car dans le language C, la
 fonction \og scanf \fg{} de la librairie \og stdio \fg{} qui permet de
 lire l'entr\'ee standard, ne prend pas en compte les fl\`eches du clavier.
-En annexe vous touverai une capture d'ecran de cette version.\par
-Dans une deuxim\`eme version, nous avions d\'ecid\'e de mettre des couleurs dans
-les tuilles en fonction de leurs valeurs. (\`a voir en annexe \ref{grille_couleur}).\par
+En annexe vous trouverez une capture d'écran de cette version.\par
+Dans une deuxi\`eme version, nous avions d\'ecid\'e de mettre des couleurs dans
+les tuiles en fonction de leurs valeurs. (\`a voir en annexe \ref{grille_couleur}).\par
 Enfin pour r\'epondre correctement au sujet, nous avons utilis\'e la librairie
 \og NCurses \fg{}. L'utilisation de cette librairie nous a permis de se
-lib\'erer de deux de nos difficult\'es. La premi\`ere \'etait celle que nous devions jouer
+lib\'erer de deux de nos difficult\'es. La premi\`ere \'etait que nous devions jouer
 avec des lettres et non les fl\`eches du clavier, la seconde \'etait que nous
-n'avions d'affichage dynamique de la grille \`a chaque coup. Pour \^etre plus
-clair, lorsqu'on jou\'e un coups avec les deux premi\`eres version de
-l'affichage, la grille du coup pr\'ecedent \'etait toujours pr\'esent dans la
-console. D\'esormais, la console n'affiche plus qu'une grille et elle met \`a
-jour apr\`es chaque coups.\par
+n'avions pas d'affichage dynamique de la grille \`a chaque coup. Pour \^etre plus
+clair, lorsqu'on jouais un coup avec les deux premi\`eres versions de
+l'affichage, la grille du coup pr\'ecédent \'etait toujours pr\'esente dans la
+console. D\'esormais, la console n'affiche plus qu'une grille et elle met-\`a-jour apr\`es chaque coup.\par
 
-La version ncurses de notre projet n'a cependant pas été trés facile à implementer.
-Ce genre de librairie demande un grand nombre d'initialisation de variable qui rende
+La version ncurses de notre projet n'a cependant pas été trés facile à implémenter.
+Ce genre de librairie demande un grand nombre d'initialisations de variable qui rendent
 difficile la conservation d'un code propre mais aussi qui multiplie les risques de fuite memoire.
 
 \subsection{Les tests}
-Les Tests sont \'ecrit pour confronter une r\'ealisation \`a sa sp\'ecification.
+Les Tests sont \'ecrits pour confronter une r\'ealisation \`a sa sp\'ecification.
 Le test d\'efinit un crit\`ere d’arr\^et (\'etat ou sorties \`a l’issue de
 l’ex\'ecution) et permet de statuer sur le succ\`es ou sur l’\'echec d’une
 v\'erification. Gr\^ace \`a la sp\'ecification, on est en mesure de faire
@@ -194,20 +192,19 @@ sp\'ecification est bel et bien r\'ealis\'ee.
 
 \par Sur ce principe nous avons r\'ealis\'e un test par fonction d\'ecrite dans
 le fichier \og grid.h \fg{} et un test sur la r\'ealisation de plusieurs parties
-qui s'ex\'ecutent avec une strat\'egie basique qui consiste \`a jouer a gauche
-si on le peut sinon \`a droite, sinon en haut enfin en bas. Ainsi lorsqu'on fait
+qui s'ex\'ecutent avec une strat\'egie basique qui consiste \`a jouer à gauche
+si on le peut sinon \`a droite, sinon en haut et enfin en bas. Ainsi lorsqu'on fait
 des modifications de l'une de ces fonctions, nous nous assurons que cela n'a en
 rien chang\'e \`a la v\'eracit\'e des r\'esultats. L'ex\'ecution des tests
-s'\'effectue avec la commande \og make test \fg{}. L'utilisation de l'outil \og CMake \fg{} nous permet d'avoir un affichage complet \`a la fin
-des tests sur leurs r\'esultats pour savoir s'ils sont pass\'es avec succ\`es
+s'\'effectue avec la commande \og make test \fg{}. L'utilisation de l'outil \og CMake \fg{} nous permet d'avoir un affichage complet \`a la fin des tests sur leurs r\'esultats pour savoir s'ils sont pass\'es avec succ\`es
 ou non (exemple en annexe \ref{test}).
 
-\par Comme dis pr\'ec\'edement, chaque test est sp\'ecifique \`a une fonction.
+\par Comme dit pr\'ec\'edement, chaque test est sp\'ecifique \`a une fonction.
 \begin{itemize}
-  \item La cr\'eation d'une grille et sont initialisation correcte.
-  \item L'homog\'en\'eit\'e de la fonction add\_tile, c'est \`a dire que la
-  probabilit\'e que la tuile g\'en\'er\'e soit bien de $
-  \frac{1}{le\ nombre\ de\ tuille} $ avec un marge de 0.05\%.
+  \item La cr\'eation d'une grille et son initialisation correcte.
+  \item L'homog\'en\'eit\'e de la fonction add\_tile, c'est-\`a-dire que la
+  probabilit\'e que la tuile g\'en\'er\'ee soit bien de $
+  \frac{1}{le\ nombre\ de\ tuiles} $ avec une marge de 0.05\%.
   \item La v\'eracit\'e des fonctions \og game\_over \fg{} et \og can\_move
   \fg{}
   \item La bonne ex\'ecution des mouvements dans chaque direction.
