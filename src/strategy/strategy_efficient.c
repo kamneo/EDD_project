@@ -7,19 +7,20 @@
 
 #define DEPTH 2
 
-typedef struct s_resultat resultat;
 
-struct s_resultat {
+struct s_result {
 	double score;
 	dir direction;
 };
 
-dir rapide_strategie(strategy s, grid g);
-resultat max(grid g, int depth);
+typedef struct s_result result;
+
+dir strategy_fast(strategy s, grid g);
+result max(grid g, int depth);
 double eval(grid g);
 double progressive(grid g);
-double reguliere(grid g);
-void do_expected(grid g, resultat* res, dir direction, int depth);
+double regular(grid g);
+void do_expected(grid g, result* res, dir direction, int depth);
 double expected(grid g, int depth);
 
 void free_memless_strat(strategy strat) {
@@ -30,7 +31,7 @@ void free_memless_strat(strategy strat) {
 strategy A2_bonnet_borde_pinero_efficient() {
 	strategy strat = malloc(sizeof(struct strategy_s)); //initialisation de notre structure strategy
 	strat->name = "Strategie du fast";				// Nom de la strategie
-	strat->play_move = rapide_strategie; 				//cf strategy.c
+	strat->play_move = strategy_fast; 				//cf strategy.c
 	strat->mem = malloc(sizeof(int));
 
 	*(int*) (strat->mem) = 0; // on pointe sur un int qui sera un compteur de tour jouer(pour certaines strats)
@@ -46,9 +47,9 @@ strategy A2_bonnet_borde_pinero_efficient() {
  * paramètre g, la grille
  * retourne la direction optimale à jouer qui a été calculée par cette stratégie
  */
-dir rapide_strategie(strategy strat, grid g) {
+dir strategy_fast(strategy strat, grid g) {
 	// initialisation de la structure resultat
-	resultat res;
+	result res;
 	res.score = 0;
 	res.direction = -1;
 
@@ -57,17 +58,17 @@ dir rapide_strategie(strategy strat, grid g) {
 	return res.direction;
 }
 
-resultat max(grid g, int depth)
+result max(grid g, int depth)
 {
-	resultat MeilleurRes;
+	result bestRes;
 
 	// pour chaque direction possible on fait le traitement expected();
-	do_expected(g, &MeilleurRes, LEFT, depth);
-	do_expected(g, &MeilleurRes, RIGHT, depth);
-	do_expected(g, &MeilleurRes, DOWN, depth);
-	do_expected(g, &MeilleurRes, UP, depth);
+	do_expected(g, &bestRes, LEFT, depth);
+	do_expected(g, &bestRes, RIGHT, depth);
+	do_expected(g, &bestRes, DOWN, depth);
+	do_expected(g, &bestRes, UP, depth);
 
-	return MeilleurRes;
+	return bestRes;
 }
 
 /*
@@ -78,7 +79,7 @@ resultat max(grid g, int depth)
  * paramètre bestRes, un pointeur sur la structure resultat
  * paramètre direction, la direction choisie
  */
-void do_expected(grid g, resultat* bestRes, dir direction, int depth)
+void do_expected(grid g, result* bestRes, dir direction, int depth)
 {
 	double expect = 0;
 
@@ -117,7 +118,7 @@ double expected(grid g, int depth)
 	int emptyCells = 0;		// nombre de tuile vides
 	double score_2 = 0.;	//somme des scores si la tuile introduite est un 2
 	double score_4 = 0.;	//somme des scores si la tuile introduite est un 4
-	resultat res;
+	result res;
 
 	// pour chaque tuile vide on évalue la grille
 	for (int x = 0; x < GRID_SIDE; ++x) {
@@ -178,7 +179,7 @@ double eval(grid g) {
 			emptyWeight = 1.,
 			maxWeight = 2.;
 
-	return progressive(g) * smoothWeight + reguliere(g) * monoWeight
+	return progressive(g) * smoothWeight + regular(g) * monoWeight
 			+ emptyCells * emptyWeight + maxValue * maxWeight;
 }
 
@@ -189,7 +190,7 @@ double eval(grid g) {
  * paramètre g,  qui est la grille à évaluer
  * retourne le score qu'elle a obtenu
  */
-double reguliere(grid g) {
+double regular(grid g) {
 	double bareme = 1. / (GRID_SIDE * GRID_SIDE);
 	double score = 1.;
 
