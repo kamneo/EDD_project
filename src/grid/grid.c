@@ -6,8 +6,8 @@
 #include "grid.h"
 #include "utilities.h"
 
-#define SENS_NEGATIF -1
-#define SENS_POSITIF 1
+#define NEGATIVE_DIR -1
+#define POSITIVE_DIR 1
 
 struct grid_s {
 	tile** tiles;
@@ -118,28 +118,28 @@ bool can_move(grid g, dir d) {
 	case LEFT:
 		for (int i = 0; i < GRID_SIDE; i++) {
 			// ici on parcourt la grille de l'indice 0 à la taille du tableau pour chaque ligne
-			if (lign_can_move(g, i, 0, GRID_SIDE, SENS_POSITIF))
+			if (line_can_move(g, i, 0, GRID_SIDE, POSITIVE_DIR))
 				return true;
 		}
 		break;
 	case RIGHT:
 		for (int i = 0; i < GRID_SIDE; i++) {
 			// ici on parcourt la grille de l'indice la taille du tableau - 1 à 1 pour chaque ligne
-			if (lign_can_move(g, i, GRID_SIDE - 1, 1, SENS_NEGATIF))
+			if (line_can_move(g, i, GRID_SIDE - 1, 1, NEGATIVE_DIR))
 				return true;
 		}
 		break;
 	case UP:
 		for (int i = 0; i < GRID_SIDE; i++) {
 			// ici on parcourt la grille de l'indice 0 à la taille du tableau pour chaque colonne
-			if (column_can_move(g, i, 0, GRID_SIDE, SENS_POSITIF))
+			if (column_can_move(g, i, 0, GRID_SIDE, POSITIVE_DIR))
 				return true;
 		}
 		break;
 	case DOWN:
 		for (int i = 0; i < GRID_SIDE; i++) {
 			// ici on parcourt la grille de l'indice la taille du tableau - 1 à 1 pour chaque colonne
-			if (column_can_move(g, i, GRID_SIDE - 1, 1, SENS_NEGATIF))
+			if (column_can_move(g, i, GRID_SIDE - 1, 1, NEGATIVE_DIR))
 				return true;
 		}
 		break;
@@ -177,7 +177,7 @@ void do_move(grid g, dir d) {
 	// en fonction de la direction passée en paramètre, on fait un mouvement ligne à ligne ou colonne à colonne.
 	if (d == LEFT || d == RIGHT) {
 		for (int i = 0; i < GRID_SIDE; i++) {
-			to_add += lign_do_move(g, i, d);
+			to_add += line_do_move(g, i, d);
 		}
 	}
 
