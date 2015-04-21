@@ -26,20 +26,19 @@
 Le projet ce compose de plusieurs parties de d\'eveloppement sur un sujet
 commun, le jeu du 2048. Ce jeu conciste \`a additionner des tuiles de m\^eme
 puissance de 2, sur un plateau de 16 tuiles, jusqu'\`a ce que le plateau soit
-plien et qu'aucune addition ne soit possible. Le but du jeu et d’arriver \'a
+plein et qu'aucune addition ne soit possible. Le but du jeu et d’arriver \'a
 construire une brique de valeur la plus grande possible (2048, 4096,
 8192, \ldots)
 \par 
 \emph{\color{red}POURQUOI PAS AJOUTER UNE PHOTO EXEMPLE ?!}
 \subsection{Le sujet}
 Dans le projet nous avons eu \`a r\'ealiser dans un premier temps l'ensemble du
-moteur du jeu et quelques tests qui nous garantisent un maximum la v\'eracit\'e 
+moteur du jeu et quelques tests qui nous garantisent au maximum la soliditer de notre code 
 pendant le d\'eveloppement. Dans un deuxi\`eme temps, nous devions faire la
 \og critique \fg{} du developpement de la premi\`ere partie faite par
 d'autres groupes bas\'e sur une grille d'evaluation qui nous a \'et\'e
 fourni. Ensuite nous avons r\'ealiser un ensemble de strat\'egie de jeu qui
-sont capable de jouer de mani\`ere autonome une partie enti\`ere, jusqu'\'a la
-fin de la partie. Ces strat\'egies doivent \`a chaque tours calculer le meilleur
+sont capable de jouer de mani\`ere autonome une partie enti\`ere. Ces strat\'egies doivent \`a chaque tours calculer le meilleur
 prochain coups pour atteindre le plus grand score possible. La derni\`ere partie
 du projet conciste \`a r\'ealis\'e une v\'eritable interface graphique pour
 jouer au jeu.
@@ -47,7 +46,7 @@ jouer au jeu.
 \newpage
 \section{D\'eveloppement du 2048 et tests}
 Pour le d\'eveloppement du 2048, le langage de programmation \'etait impos\'e,
-nous devions utilis\'e le langage C. Chaque groupe ont d\^u fournir les sources
+nous devions utilis\'e le langage C. Chaque groupe à d\^u fournir les sources
 permettant de g\'en\'erer une biblioth\`eque libgrid.a (impl\'ementant les
 fonctions d'\'ecrites dans grid.h en annexe \ref{grid_h}) ainsi qu’un
 ex\'ecutable permettant de jouer au 2048 dans la console. En plus de ça, nous
@@ -72,7 +71,7 @@ EDD_projet/        # Racine du projet
     bin/           # Fichiers ex\'ecutables.
     build/         # Fichiers de compilation du projet
     include/       # Fichiers .h des librairies g\'en\'er\'es
-    lib/           # Libraires
+    lib/           # Librairies
     src/           # Fichiers tous les fichiers sources
         2048/      # Fichiers sources de l'interface graphique
         grid/      # Fichiers du moteur de jeu
@@ -85,15 +84,15 @@ EDD_projet/        # Racine du projet
 Tout au long du d\'eveloppement du projet, tous les membres du groupe se sont
 mis d'accord sur le fait d'utiliser l'outils \href{http://www.cmake.org/}{CMake}
 pour compiler le projet, g\'en\'erer les Makefiles qui servent eux-m\^emes \`a g\'en\'erer les
-ex\'ecutables, les libraires et ex\'ecuter les tests.
+ex\'ecutables, les librairies et ex\'ecuter les tests.
 
 \subsection{Le developpement de grid.c}
 En ce qui concerne le d\'eveloppement de grid.c, qui est le moteur du jeu,
-c'\'et\'e relativement simple. Les fonctions qui ont m\'erit\'e un r\'eflexion
-s\'erieuse sont \og do\_move() \fg{} et \og cam\_move() \fg{}. Pour ces
+c'\'et\'e relativement simple. Les fonctions qui ont m\'erit\'e une r\'eflexion
+s\'erieuse sont \og do\_move() \fg{} et \og can\_move() \fg{}. Pour ces
 fonctions nous devions limit\'e au mieux la duplication de code et la compl\'exit\'e de
 l'algorithme. Chose que nous n'avions au final pas tr\`es bien reussi, mais nous
-veront dans la pratie \ref{notre_etude}.
+veront dans la partie \ref{notre_etude}.
 
 \subsubsection{Implementation de \og can\_move \fg{}}
 Pour cette fonction, nous avons choisi l'algorithme suivant :
@@ -121,6 +120,9 @@ Si la direction donn\'ee est \og RIGHT \fg{} ou \og LEFT \fg{} alors
 retourner faux
 }
 \end{alltt}
+
+C'est la que l'on peut voir que nous avons commit une erreur nous n'aurions
+pas du partir sur un algo qui traite séparement les direction haut/bas et droite/gauche.
 
 Cette fonction est utilis\'ee \'a plusieurs reprises dans d'autres fonction
 comme par exemple \og game\_over \fg{} ou \og do\_move \fg{}. d'o\`u
@@ -174,7 +176,11 @@ n'avions d'affichage dynamique de la grille \`a chaque coup. Pour \^etre plus
 clair, lorsqu'on jou\'e un coups avec les deux premi\`eres version de
 l'affichage, la grille du coup pr\'ecedent \'etait toujours pr\'esent dans la
 console. D\'esormais, la console n'affiche plus qu'une grille et elle met \`a
-jour apr\`es chaque coups.
+jour apr\`es chaque coups.\par
+
+La version ncurses de notre projet n'a cependant pas été trés facile à implementer.
+Ce genre de librairie demande un grand nombre d'initialisation de variable qui rende
+difficile la conservation d'un code propre mais aussi qui multiplie les risques de fuite memoire.
 
 \subsection{Les tests}
 Les Tests sont \'ecrit pour confronter une r\'ealisation \`a sa sp\'ecification.
@@ -191,9 +197,8 @@ le fichier \og grid.h \fg{} et un test sur la r\'ealisation de plusieurs parties
 qui s'ex\'ecutent avec une strat\'egie basique qui consiste \`a jouer a gauche
 si on le peut sinon \`a droite, sinon en haut enfin en bas. Ainsi lorsqu'on fait
 des modifications de l'une de ces fonctions, nous nous assurons que cela n'a en
-rien chang\'e \`a la v\'eracit\'e des r\'esultats. L'e\'ecution des tests
-s'\'effectue avec la commande \og make test \fg{}. L'utilisation de la
-technologie \og CMake \fg{} nous permet d'avoir un affichage complet \`a la fin
+rien chang\'e \`a la v\'eracit\'e des r\'esultats. L'ex\'ecution des tests
+s'\'effectue avec la commande \og make test \fg{}. L'utilisation de l'outil \og CMake \fg{} nous permet d'avoir un affichage complet \`a la fin
 des tests sur leurs r\'esultats pour savoir s'ils sont pass\'es avec succ\`es
 ou non (exemple en annexe \ref{test}).
 
@@ -281,7 +286,8 @@ stratégie, sur 48 parties nous avons un score moyen de 2259, avec 1x32, 3x64,
 21x128 et 23x256.
 
 Les deux stratégies se valent à peu près, mais c'est bien la première qui est la
-meilleure.
+meilleure. Biensur cette stratègie n'étais qu'un essai et ces résultats sont trés mauvais
+les vrais stratégie arrive aprés.
 
 \subsection{Implémentation d'expected max}
 \og Expected Max \fg{} est un algorithme qui consiste \`a retourner la direction
@@ -342,6 +348,51 @@ premi\`ere, m\^eme si la possibilit\'e d'obtenir un nombre fort comme 1024 peut
 
 \newpage
 \section{Une vrai interface graphique ?!}
+Pour cette dernière étape du projet les groupes devaient choisir une librairie graphique
+utilisable en c et implémenter une véritable interface graphique. Nous avons comme
+beaucoup d'autre choisit simplement la librairie sdl qui en plus d’être
+complète est très utilisé se qui signifie de bonne doc ou de bon tuto disponible
+dans plusieurs langues
+\par la librairie sdl fonctionne essentiellement sur le principe de génération de
+surface que l'on colle sur la fenêtre principale. Au fur et a mesure que nous apprenions a nous en servir
+deux possibilité d’implémentation nous sont apparus
+
+\subsection{Structure du programme}
+La première de ces solutions consistent a coller directement des images des tuiles de la grille en cour.
+Cette technique est certes simple a implémenter et peu être très jolie mais très limité
+car absolument par modifiable de manière simple.
+Nous avons donc choisit la deuxième option qui consiste a générer soit même au fur et a mesure
+l'apparence des surfaces correspondant au tuile de la partie en cour. Pour cela nous avons utiliser
+les capacité le la lib \og TTF \fg.
+\par Notre programme possède donc deux fonctions principale qui sont le \og main \fg qui contient la boucle
+principale des événements du programme et la fonction \og display \fg qui se charge a chaque tour de lire l'état
+de la grille en cour. Pour chaque tuile elle génère une surface carré d'une taille prédéfinit et d'une couleur
+correspondant a la valeur de la tuile. Puis on génère une surface de texte correspondant a la valeur de la tuile
+et on colle le texte au milieu de la surface de tuile que l'on colle a l’écran a la bonne position.
+\par Cette implémentation permet une bonne modularité du code, elle va nous permette de rendre compatibl
+ notre interface graphique au changement de taille de grid.
+
+\subsection {Problématique de la librairie SDL}
+Si un certain niveau de modularité a été atteint par le biais de l’implémentation vu
+précédemment, un certain nombre de difficulté ont été beaucoup plus dur a gérer.
+\par Premièrement sdl demande l'utilisation de nombreuse variable, pointeur etc...
+Si il n'est pas très difficile de manipuler cette librairie il est par contre beaucoup plus
+dur de garder un code parfaitement propre dans ces conditions.
+Nous aurions sans doute pu pousser plus loin notre factorisation de code mais nous
+avons manqué de temps.
+\par Deuxièmement dans la manipulation de tout ces variables de nombreuse allocation sont
+nécessaire et la moindre erreur coûte très chère en fuite mémoire.
+Nous avons cependant pu réduire a son maximum ces fuite ne laissant que 50 octet
+perdu de manière constante quel que soit le temps de jeux ou le nombre de partie ce qui est
+un résultat certes imparfait mais correcte.
+\par Et pour finir le code de sdl peut être relativement problématique a corriger. A certain
+moment du développement des erreurs de segmentation aléatoire sont survenue.
+Ce genre de soucis aurait pu être un calvaire a déboguer a l'aide de printf mais
+nous avons su faire une utilisation judicieuse de gdb se qui nous a permit résoudre
+ces soucis avec une grande facilité. Il est clair après se projet que l'utilisation d'un outil de débogage
+tel que gdb est parfaitement indispensable a un développer digne de se nom.
+
+
 
 \newpage
 \section{En bref}

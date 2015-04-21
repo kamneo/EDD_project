@@ -8,12 +8,12 @@
 #define NOUVELLE_PARTIE 1
 #define TO_CLEAR 10
 
-// struct which contains diplay properties of the box
+// structure qui contient les propriétés d'affichage de la box
 typedef struct _box_border_struct {
 	chtype ls, rs, ts, bs, tl, tr, bl, br;
 }BOX_BORDER;
 
-// struct which contains all diplay properties of the box
+
 typedef struct _BOX_struct {
 	int startx, starty;
 	int height, width;
@@ -31,9 +31,9 @@ int main(int argc, char *argv[]) {
 	// initialisation de time pour la génération aléatoire de tile
 	srand(time(NULL));
 	
-	BOX box;				// parametre de la console
-	int key;				// caractere saisi au clavier
-	bool tour_suivant;		// valeur boolean est a vrai quand on veut recommencer une partie
+	BOX box;				// paramètre de la console
+	int key;				// caractère saisi au clavier
+	bool tour_suivant;		// valeur boolean est à vrai quand on veut recommencer une partie
 	dir direction;			// contient la direction décrite dans grid.h
 	grid g;					// instance de la grid
 
@@ -48,7 +48,8 @@ int main(int argc, char *argv[]) {
 		update_boxes(&box, g);
 		tour_suivant=true;
 
-		while(tour_suivant){
+		while(tour_suivant)
+		{
 			key = getch();
 
 			switch(key)
@@ -85,7 +86,7 @@ int main(int argc, char *argv[]) {
 		 	// Rafraichissement de l'affichage
 			update_boxes(&box, g);
 
-			// dans le cas ou la partie est terminée
+			// dans le cas où la partie est terminée
 			while (game_over(g) && tour_suivant){
 				mvprintw(box.height * GRID_SIDE + 3, 0, "voulez-vous rejouer ? : y , n");
 				key = getch();
@@ -96,22 +97,23 @@ int main(int argc, char *argv[]) {
 				if (key=='n'){
 					return end_game(g);
 				}
-			}// end game_over
-		} // end tour_suivant
-	} // end PARTIE_SUIVANTE
+			}// fin game_over
+		} // fin tour_suivant
+		delete_grid(g);
+	} // fin PARTIE_SUIVANTE
 	return end_game(g);
 }
 
 /*
- * brief initialize the ncurses windows
+ * initialise la fenêtre ncurses
  */
 void init_win()
 {
-	initscr();				/* Start curses mode 		*/
-	start_color();			/* Start the color functionality */
+	initscr();				/* initialise le mode curses*/
+	start_color();			/* initialise la fonctionalité de la couleur */
 	cbreak();
-	keypad(stdscr, TRUE);	/* I need that nifty F1 	*/
-	curs_set(FALSE);		/* disable cursor */
+	keypad(stdscr, TRUE);
+	curs_set(FALSE);		/* supprime le curseur */
 	noecho();
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
 	attron(COLOR_PAIR(1));
@@ -120,7 +122,7 @@ void init_win()
 }
 
 /*
- * brief initialize boxes proprieties
+ * initialise les propriétés des box
  */
 void init_box_params(BOX *p_box)
 {
@@ -141,8 +143,8 @@ void init_box_params(BOX *p_box)
 }
 
 /*
- * \brief create the grid on windows and all backgroud utilities
- * \param p_box the boxes properties of ncurses
+ * \Créé la grille dans la fenêtre et tous les utilitaires d'arrière-plan
+ * \paramètre p_box les propriétés des box de ncurses
  */
 void create_boxes(BOX *p_box)
 {
@@ -153,20 +155,20 @@ void create_boxes(BOX *p_box)
 	w = p_box->width;
 	h = p_box->height;
 
-	// create an empty grid in the window
+	// créé une grille vide dans la fenêtre
 	for (int i = 0; i < GRID_SIDE; i++)
 	{
 		for (int j = 0; j < GRID_SIDE; j++)
 		{
-			mvaddch(y + h*j, x + w*i, p_box->border.tl);			// draw the left up corner of a box
-			mvaddch(y + h*j, x + w*(i+1), p_box->border.tr);		// draw the right up corner of a box
-			mvaddch(y + h*(j+1), x + w*i, p_box->border.bl);		// draw the left down corner of a box
-			mvaddch(y + h*(j+1), x + w*(i+1), p_box->border.br);	// draw the right down corner of a box
+			mvaddch(y + h*j, x + w*i, p_box->border.tl);			// dessine le coin supérieur gauche d'une box
+			mvaddch(y + h*j, x + w*(i+1), p_box->border.tr);		// dessine le coin supérieur droit d'une box
+			mvaddch(y + h*(j+1), x + w*i, p_box->border.bl);		// dessine le coin inférieur gauche d'une box
+			mvaddch(y + h*(j+1), x + w*(i+1), p_box->border.br);	// dessine le coin inférieur droit d'une box
 
-			mvhline(y + h*j, x+1 + w*i, p_box->border.ts, w-1);		// draw the up corner of a box
-			mvhline(y + h*(j+1), x+1 + w*i, p_box->border.bs, w-1);	// draw the down corner of a box
-			mvvline(y+1 + h*j, x + w*i, p_box->border.ls, h-1);		// draw the left corner of a box
-			mvvline(y+1 + h*j, x + w*(i+1), p_box->border.rs, h-1);	// draw the right corner of a box
+			mvhline(y + h*j, x+1 + w*i, p_box->border.ts, w-1);		// dessine le trait supérieur
+			mvhline(y + h*(j+1), x+1 + w*i, p_box->border.bs, w-1);	// dessine le trait inférieur
+			mvvline(y+1 + h*j, x + w*i, p_box->border.ls, h-1);		// dessine le trait gauche
+			mvvline(y+1 + h*j, x + w*(i+1), p_box->border.rs, h-1);	// dessine le trait droit
 		}
 	}
 
@@ -178,8 +180,8 @@ void create_boxes(BOX *p_box)
 
 
 /*
- * \brief update the content of the grid display in window and delete help for users
- * \param p_box the boxes properties of ncurses
+ * \Met à jour le contenu de la grille affiché dans la fenêtre et supprime l'aide pour les utilisateurs
+ * \paramètre p_box les porpriétés des box de ncurses
  * \param g the grid
  */
 void update_boxes(BOX *p_box, grid g)
@@ -191,7 +193,7 @@ void update_boxes(BOX *p_box, grid g)
 	w = p_box->width;
 	h = p_box->height;
 
-	// Efface le contenu de chaque tile et les remplace par leur nouvelle valeur
+	// Efface le contenu de chaque tuile et les remplace par leur nouvelle valeur
 	for (int j= 0; j< GRID_SIDE;j++)
 	{
 		for (int i = 0; i < GRID_SIDE; i++)
@@ -206,7 +208,7 @@ void update_boxes(BOX *p_box, grid g)
 		}
 	}
 
-	// Efface tout ce qui apparait sous la grille sauf la ligne 2 et le debut de la ligne 1
+	// Efface tout ce qui apparait sous la grille sauf la ligne 2 et le début de la ligne 1
 	for (int i = 1; i < TO_CLEAR; i++)
 	{
 		if(i == 1)
@@ -215,14 +217,14 @@ void update_boxes(BOX *p_box, grid g)
 			mvhline(h * GRID_SIDE + i, 0, ' ', w * GRID_SIDE);
 	}
 
-	// met a jour le score
+	// met à jour le score
 	mvprintw(h * GRID_SIDE + 1, 8, "%lu", grid_score(g));
 	refresh();
 }
 
 /*
- * \brief close the window created by ncurses & delete the grid
- * \param g the grid
+ * \ferme la fenêtre créée par ncurses & supprimes la grille
+ * \paramètre g, la grille
  */
 int end_game(grid g)
 {
@@ -232,11 +234,7 @@ int end_game(grid g)
 	return EXIT_SUCCESS;
 }
 
-/*
- * \brief Calculate the pow of the tile
- * \param t the tile to be calculate
- * \return the pow of the tile if t > 0 or return 0
- */
+
 unsigned long int pow_of_2(tile t)
 {
 	if (t == 0)	
