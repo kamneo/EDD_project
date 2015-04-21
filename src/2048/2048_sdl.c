@@ -13,10 +13,7 @@
 
 static char s[MAX_CARACTERE];		// créé la chaine de caractères qui accueillera les messages à afficher
 static Uint32 ColorsTab[NB_COLOR];	// tableau de couleurs 
-static int heigth;				// longueur de la fenêtre
-static int width;					// largeur de la fenêtre
 static SDL_Color blackColor = {0, 0, 0};			// couleur de police
-static int police_size = 40; 						// taille de la police de caractères
 
 /* Main*/
 
@@ -29,8 +26,8 @@ int main(int argc, char *argv[])
 	dir direction;				// contient la direction à jouer pour chaque tour
 	grid g;
 
-	width = (TILE_SIZE*GRID_SIDE)+(EDGE*(GRID_SIDE+1));			// on initialise la taille de la fenêtre avec
-	heigth = (TILE_SIZE*(GRID_SIDE+1))+(EDGE*(GRID_SIDE+1));		// la taille des tuiles et la taille des EDGE(bordure)
+	int width = (TILE_SIZE*GRID_SIDE)+(EDGE*(GRID_SIDE+1));			// on initialise la taille de la fenêtre avec
+	int heigth = (TILE_SIZE*(GRID_SIDE+1))+(EDGE*(GRID_SIDE+1));		// la taille des tuiles et la taille des EDGE(bordure)
 																	// on se prevoit une marge en dessous pour le score
 
 											// les valeurs soustraites à la fin sont arbitraires afin de bien trouver le milieu
@@ -43,7 +40,7 @@ int main(int argc, char *argv[])
 	TTF_Init();								// initialisation de sdl_ttf (qui permet d'écrire sur l'écran)
 
 	TTF_Font *character_Font = NULL;								// initialisation de la police de caractères
-	character_Font= TTF_OpenFont("angelina.ttf" , police_size);	
+	character_Font= TTF_OpenFont("angelina.ttf" , CHARACTER_SIZE);	
   
 	if(SDL_Init(SDL_INIT_VIDEO)==-1)						// on vérifie si sdl s'est bien lancé
 	{
@@ -78,7 +75,7 @@ int main(int argc, char *argv[])
 		next_round=true;
 		while(next_round)			//boucle de la partie
 		{	
-			display(g,character_Font,screen);
+			display(g,character_Font,screen,heigth,width);
 			SDL_WaitEvent(&event);
 			switch(event.type)
 			{
@@ -122,7 +119,7 @@ int main(int argc, char *argv[])
 
 			if(game_over(g))
 			{
-				endGame(screen);						// on affiche le game over
+				endGame(screen,heigth,width);						// on affiche le game over
 				while (next_round)				// on entre dans la boucle des évenements liés au game over
 				{
 					SDL_WaitEvent(&event);
@@ -165,7 +162,7 @@ int main(int argc, char *argv[])
 
 
 /* fonction affichant l'écran de jeu */
-void display(grid g, TTF_Font *character_Font, SDL_Surface *screen)
+void display(grid g, TTF_Font *character_Font, SDL_Surface *screen,int heigth,int width)
 {
 	SDL_FillRect(screen,NULL,ColorsTab[NB_COLOR-1]);			//on réinitialise l'écran pour ne pas reécrire par dessus	
 
@@ -239,10 +236,10 @@ void display(grid g, TTF_Font *character_Font, SDL_Surface *screen)
 
 
 /* Fonction qui affiche un game over en plein milieu de l'écran */
-void endGame( SDL_Surface *screen)
+void endGame( SDL_Surface *screen,int heigth,int width)
 {
 	TTF_Font *character_Font = NULL;
-	character_Font= TTF_OpenFont("angelina.ttf" , police_size*3);	
+	character_Font= TTF_OpenFont("angelina.ttf" , CHARACTER_SIZE*3);	
 	SDL_Rect posTexte;
 	SDL_Surface *texte = NULL;
 	sprintf(s,"GAME OVER");
