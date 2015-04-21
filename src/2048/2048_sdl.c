@@ -62,8 +62,6 @@ int main(int argc, char *argv[])
 	initTabColor(screen);		// on initialise le tableau de couleurs pour qu'elles soient dans un format
 								// utilisable par sdl
 
-	//SDL_WM_SetCaption("2048 (SDL)", NULL); //titre fenêtre
-
   
 	/* Début de la boucle des évenements de sdl*/
 	while(game)
