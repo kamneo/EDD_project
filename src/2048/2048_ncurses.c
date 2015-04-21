@@ -5,7 +5,7 @@
 
 #include <grid.h>
 
-#define NOUVELLE_PARTIE 1
+#define NEW_GAME 1
 #define TO_CLEAR 10
 
 // structure qui contient les propriétés d'affichage de la box
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 	
 	BOX box;				// paramètre de la console
 	int key;				// caractère saisi au clavier
-	bool tour_suivant;		// valeur boolean est à vrai quand on veut recommencer une partie
+	bool next_round;		// valeur boolean est à vrai quand on veut recommencer une partie
 	dir direction;			// contient la direction décrite dans grid.h
 	grid g;					// instance de la grid
 
@@ -41,14 +41,14 @@ int main(int argc, char *argv[]) {
 	init_box_params(&box);
 	create_boxes(&box);
 
-	while(NOUVELLE_PARTIE){
+	while(NEW_GAME){
 		g=new_grid();
 		add_tile(g);
 		add_tile(g);
 		update_boxes(&box, g);
-		tour_suivant=true;
+		next_round=true;
 
-		while(tour_suivant)
+		while(next_round)
 		{
 			key = getch();
 
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 				case 'q':
 					return end_game(g);
 				case 'r':
-					tour_suivant=false;
+					next_round=false;
 				default:
 					continue;
 			}
@@ -87,18 +87,18 @@ int main(int argc, char *argv[]) {
 			update_boxes(&box, g);
 
 			// dans le cas où la partie est terminée
-			while (game_over(g) && tour_suivant){
+			while (game_over(g) && next_round){
 				mvprintw(box.height * GRID_SIDE + 3, 0, "voulez-vous rejouer ? : y , n");
 				key = getch();
 				mvprintw(box.height * GRID_SIDE + 4, 0, "%c", key);
 				if (key=='y')
-					tour_suivant=false;
+					next_round=false;
 				
 				if (key=='n'){
 					return end_game(g);
 				}
 			}// fin game_over
-		} // fin tour_suivant
+		} // fin next_round
 		delete_grid(g);
 	} // fin PARTIE_SUIVANTE
 	return end_game(g);

@@ -7,58 +7,58 @@
 #include "affichage.h"
 #include <unistd.h>
 
-#define NOUVELLE_PARTIE 1
+#define NEW_GAME 1
 #define MAX_VALUE 12
-#define TOUR 1
+#define ROUND 1
 
 long int top_chrono;
 int verbose = 0; // niveau de debuging
 
-void demarrer_chrono() {
+void start_chrono() {
         top_chrono = clock();
 }
 
 void stop_chrono() {
-        long int arret_chrono = clock();
+        long int end_chrono = clock();
         fprintf(stderr, "Le calcul a pris %f secondes.\n",
-                (float)(arret_chrono - top_chrono) / CLOCKS_PER_SEC);
+                (float)(end_chrono - top_chrono) / CLOCKS_PER_SEC);
 }
 
 /*
- * MEMOIRE qui contient les scores cumulés des grilles jusqu'à ce que
+ * MEMORY qui contient les scores cumulés des grilles jusqu'à ce que
  * l'utilisateur quitte le programme et le nombre de fois que la valeur max
  * est apparue
  */
-typedef struct _memoire {
+typedef struct _memory {
 	int* tab;
 	unsigned long int score;
-} MEMOIRE;
+} MEMORY;
 
 int end_game(grid g);
-int end_game_stat(MEMOIRE m, grid g);
+int end_game_stat(MEMORY m, grid g);
 unsigned long int pow_of_2(tile t);
 
 int main(int argc, char *argv[]) {
 	// initialisation de time pour la génération aléatoire de tile
 	srand(time(NULL));
-	MEMOIRE m;
+	MEMORY m;
 	m.score = 0;
 	m.tab = malloc(sizeof(int) * MAX_VALUE);
 
-	bool tour_suivant;		// valeur boolean est à vrai quand on veut recommencer une partie
+	bool next_round;		// valeur boolean est à vrai quand on veut recommencer une partie
 	dir direction;			// contient la direction décrite dans grid.h
 	grid g;					// instance de la grid
 	strategy strat;			// instance de la stratégie
 
-	int nb_tour = TOUR;
+	int nb_round = ROUND;
 
 	printf("1 - affiche la grille à chaque coup\n");
 	printf("2 - affiche juste la grille de fin\n");
 	int key = getchar();
 
-		demarrer_chrono();
+		start_chrono();
 
-	while (NOUVELLE_PARTIE   && nb_tour != 0) {
+	while (NEW_GAME   && nb_round != 0) {
 		g = new_grid();
 		add_tile(g);
 		add_tile(g);
@@ -66,12 +66,12 @@ int main(int argc, char *argv[]) {
 		// initialisation de la structure strategy
 		strat = A2_bonnet_borde_pinero_efficient();
 
-		tour_suivant = true;
+		next_round = true;
 
 		if(key == '1')
 			display_grid(g);
 
-		while (tour_suivant) {
+		while (next_round) {
 			// recherche de la meilleure direction
 			direction = strat->play_move(strat, g);
 
@@ -85,27 +85,27 @@ int main(int argc, char *argv[]) {
 			if(key == '1')
 				display_grid(g);
 			// dans le cas où la partie est terminée
-			while (game_over(g) && tour_suivant) {
+			while (game_over(g) && next_round) {
 				if(key == '2')
 					display_grid(g);
 
 				// Ceci ne sert que pour les stats
 				m.score += grid_score(g);
-				int indice = 0;
+				int index = 0;
 				for (int x = 0; x < GRID_SIDE; ++x) {
 					for (int y = 0; y < GRID_SIDE; ++y) {
-						if (get_tile(g, x, y) > indice) {
-							indice = get_tile(g, x, y);
+						if (get_tile(g, x, y) > index) {
+							index = get_tile(g, x, y);
 						}
 					}
 				}
-				m.tab[indice] += 1;
+				m.tab[index] += 1;
 
-				tour_suivant = false;
-				nb_tour--;
+				next_round = false;
+				nb_round--;
 			}// fin game_over
-		} // fin tour_suivant
-	} // fin PARTIE_SUIVANTE
+		} // fin next_round
+	} // fin NEW_GAME
 	stop_chrono();
 	return end_game_stat(m, g);
 }
@@ -125,7 +125,7 @@ int end_game(grid g) {
  * \paramètre g, la grille
  * \paramètre m mémoire
  */
-int end_game_stat(MEMOIRE m, grid g) {
+int end_game_stat(MEMORY m, grid g) {
 	int total = 0;
 
 	printf("Merci d'avoir joue.\n");
