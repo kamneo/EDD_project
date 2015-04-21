@@ -24,4 +24,4 @@ install (FILES "${2048_SOURCE_DIR}/src/2048/angelina.ttf" DESTINATION "${2048_SO
 
 #Lors du make clean le fichier sera supprimé
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES 
-"${2048_SOURCE_DIR}/bin/play_ncurses;${2048_SOURCE_DIR}/bin/play_sdl;${2048_SOURCE_DIR}/bin/play_efficient_IA;${2048_SOURCE_DIR}/bin/play_fast_IA;${2048_SOURCE_DIR}/bin/play_IA;${2048_SOURCE_DIR}/src/2048/angelina.ttf")
+"${2048_SOURCE_DIR}/bin/play_ncurses;${2048_SOURCE_DIR}/bin/play_sdl;${2048_SOURCE_DIR}/bin/play_efficient_IA;${2048_SOURCE_DIR}/bin/play_fast_IA;${2048_SOURCE_DIR}/bin/angelina.ttf")
