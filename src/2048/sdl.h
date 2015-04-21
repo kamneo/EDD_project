@@ -26,6 +26,7 @@ void initTabColor(SDL_Surface *screen);
 */
 unsigned long int pow_of_2(tile t);
 
+void blitSurface(SDL_Surface *surface1,SDL_Surface *surface2,SDL_Rect pos);
 
 /*
 	fonction qui affiche une grille

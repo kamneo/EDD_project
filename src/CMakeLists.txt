@@ -12,13 +12,14 @@ add_subdirectory(2048)
 #Lors de la commande make install, le fichier grid.h est copié dans "EDD_project/include"
 install (FILES "${2048_SOURCE_DIR}/src/grid/grid.h" DESTINATION ${2048_SOURCE_DIR}/include)
 install (FILES "${2048_SOURCE_DIR}/src/strategy/strategy.h" DESTINATION ${2048_SOURCE_DIR}/include)
+install (FILES "${2048_SOURCE_DIR}/src/2048/sdl.h" DESTINATION ${2048_SOURCE_DIR}/include)
 install (FILES "${2048_BINARY_DIR}/src/libgrid.a" DESTINATION ${2048_SOURCE_DIR}/lib)
 install (FILES "${2048_BINARY_DIR}/src/libA2_bonnet_borde_pinero_fast.so" DESTINATION ${2048_SOURCE_DIR}/lib)
 install (FILES "${2048_BINARY_DIR}/src/libA2_bonnet_borde_pinero_efficient.so" DESTINATION ${2048_SOURCE_DIR}/lib)
 
 #Lors du make clean, les fichiers suivants seront aussi supprimés
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES 
-    "${2048_SOURCE_DIR}/include/grid.h;${2048_SOURCE_DIR}/include/strategy.h;
+    "${2048_SOURCE_DIR}/include/grid.h;${2048_SOURCE_DIR}/include/strategy.h;${2048_SOURCE_DIR}/include/sdl.h;
     ${2048_SOURCE_DIR}/lib/libgrid.a;
     ${2048_SOURCE_DIR}/lib/libA2_bonnet_borde_pinero_fast.so;
     ${2048_SOURCE_DIR}/lib/libA2_bonnet_borde_pinero_efficient.so")

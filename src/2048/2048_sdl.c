@@ -152,8 +152,8 @@ int main(int argc, char *argv[])
 		delete_grid(g);						// on détruit la grille entre les deux whiles
 	}// fin while game 
 
-	TTF_CloseFont (character_Font);					// free de la police de caractères
-	SDL_FreeSurface(screen);					// free de la surface ecran
+	TTF_CloseFont (character_Font);			// free de la police de caractères
+	SDL_FreeSurface(screen);				// free de la surface ecran
 	TTF_Quit();								// on ferme ttf
 	SDL_Quit(); 							// on ferme sdl
 
@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
 /* fonction affichant l'écran de jeu */
 void display(grid g, TTF_Font *character_Font, SDL_Surface *screen,int heigth,int width)
 {
-	SDL_FillRect(screen,NULL,ColorsTab[NB_COLOR-1]);			//on réinitialise l'écran pour ne pas reécrire par dessus	
+	SDL_FillRect(screen,NULL,ColorsTab[NB_COLOR-1]);		//on réinitialise l'écran pour ne pas reécrire par dessus	
 
 	SDL_Rect posTile;										// Cette variable accueillera les positions où on collera les tuiles sur l'écran
 	SDL_Rect posTexte;										// Cette variable accueillera les positions où on collera les textes sur l'écran
@@ -189,14 +189,12 @@ void display(grid g, TTF_Font *character_Font, SDL_Surface *screen,int heigth,in
 
 			if(valTile!=0)
 			{
-				texte= TTF_RenderText_Blended(character_Font, s, blackColor);						// on génère la surface à partir de la chaine de caractères
+				texte= TTF_RenderText_Blended(character_Font, s, blackColor);				// on génère la surface à partir de la chaine de caractères
 				posTexte.x=(TILE_SIZE/2)-(texte->w/2);										// on initialise la posTexte au milieu de la tuile et qui se redecale toute seule
 				posTexte.y=(TILE_SIZE/2)-(texte->h/2);
-				SDL_BlitSurface(texte , NULL , tile_Sdl, &posTexte);						// on colle le texte sur la tuile fraichement générée
-				SDL_FreeSurface(texte);														// on libère la surface de texte
+				blitSurface(tile_Sdl,texte,posTexte);										// on libère la surface de texte
 			}
-			SDL_BlitSurface(tile_Sdl,NULL,screen, &posTile);									// on colle la surface de la tuile à l'écran
-			SDL_FreeSurface(tile_Sdl);
+			blitSurface(screen,tile_Sdl,posTile);
 		}
 	}//fin de boucle for
 
@@ -211,25 +209,22 @@ void display(grid g, TTF_Font *character_Font, SDL_Surface *screen,int heigth,in
 	sprintf(s,"score : %lu",grid_score(g));
 	texte= TTF_RenderText_Blended(character_Font, s, blackColor);
 	posTexte.y=heigth-(TILE_SIZE/2)-(texte->h/2);	
-	posTexte.x=width/2-(texte->w/2);				
-	SDL_BlitSurface(texte , NULL , screen, &posTexte);
-	SDL_FreeSurface(texte);
+	posTexte.x=width/2-(texte->w/2);
+	blitSurface(screen,texte,posTexte);
 
 	/* Affichage du restart */
 	sprintf(s,"press r to restart");
 	texte= TTF_RenderText_Blended(character_Font, s, blackColor);
 	posTexte.y=heigth-(TILE_SIZE/3);
 	posTexte.x=EDGE;
-	SDL_BlitSurface(texte , NULL , screen, &posTexte);
-	SDL_FreeSurface(texte);
+	blitSurface(screen,texte,posTexte);
 
 	/* Affichage du quit */
 	sprintf(s,"press ESC to quit");
 	texte= TTF_RenderText_Blended(character_Font, s, blackColor);
 	posTexte.y=heigth-(TILE_SIZE);
 	posTexte.x=EDGE;
-	SDL_BlitSurface(texte , NULL , screen, &posTexte);
-	SDL_FreeSurface(texte);
+	blitSurface(screen,texte,posTexte);
 
 	SDL_Flip(screen); //mise-à-jour de écran
 }
@@ -246,10 +241,8 @@ void endGame( SDL_Surface *screen,int heigth,int width)
 	texte= TTF_RenderText_Blended(character_Font, s, blackColor);
 	posTexte.y=heigth/2-(texte->h/2);
 	posTexte.x=width/2-(texte->w/2);
-	SDL_BlitSurface(texte , NULL , screen, &posTexte);
-
+	blitSurface(screen,texte,posTexte);
 	TTF_CloseFont (character_Font);
-	SDL_FreeSurface(texte);
 
 	SDL_Flip(screen);
 }
@@ -263,6 +256,13 @@ unsigned long int pow_of_2(tile t)
 	return pow(2, t);
 }
 
+/* 	Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre
+	Permet un peu de factorisation de code.*/
+void blitSurface(SDL_Surface *surface1,SDL_Surface *surface2,SDL_Rect pos)
+{
+SDL_BlitSurface(surface2, NULL, surface1, &pos);
+SDL_FreeSurface(surface2);
+}
 
 /* Initialisation du tableau, place des couleurs dans le format des couleurs sdl et le format choisit pour l'écran */
 void initTabColor(SDL_Surface *screen)
