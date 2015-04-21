@@ -22,55 +22,55 @@
 \newpage
 
 \section{Le projet}
-\subsection{Pr\'esentation}
-Le projet se compose de plusieurs parties de d\'eveloppement sur un sujet
-commun, le jeu du 2048. Ce jeu consiste \`a additionner des tuiles de m\^eme
-puissance de 2, sur un plateau de 16 tuiles, jusqu'\`a ce que le plateau soit
+\subsection{Présentation}
+Le projet se compose de plusieurs parties de développement sur un sujet
+commun, le jeu du 2048. Ce jeu consiste à additionner des tuiles de même
+puissance de 2, sur un plateau de 16 tuiles, jusqu'à ce que le plateau soit
 plein et qu'aucune addition ne soit possible. Le but du jeu est d’arriver \'a
 construire une brique de valeur la plus grande possible (2048, 4096,
 8192, \ldots)
 \par 
 \emph{\color{red}POURQUOI PAS AJOUTER UNE PHOTO EXEMPLE ?!}
 \subsection{Le sujet}
-Dans le projet nous avons eu \`a r\'ealiser dans un premier temps l'ensemble du
+Dans le projet nous avons eu à réaliser dans un premier temps l'ensemble du
 moteur du jeu et quelques tests qui nous garantissent au maximum la solidité de notre code 
-pendant le d\'eveloppement. Dans un deuxi\`eme temps, nous devions faire la
-\og critique \fg{} du développement de la premi\`ere partie faite par
-d'autres groupes bas\'e sur une grille d'évaluation qui nous a \'et\'ee
-fournie. Ensuite nous avons r\'ealisé un ensemble de strat\'egies de jeu qui
-sont capables de jouer de mani\`ere autonome une partie enti\`ere. Ces strat\'egies doivent \`a chaque tour calculer le meilleur
-prochain coup pour atteindre le plus grand score possible. La derni\`ere partie
-du projet consiste \`a r\'ealiser une v\'eritable interface graphique pour
+pendant le développement. Dans un deuxième temps, nous devions faire la
+" critique " du développement de la première partie faite par
+d'autres groupes basé sur une grille d'évaluation qui nous a été
+fournie. Ensuite nous avons réalisé un ensemble de stratégies de jeu qui
+sont capables de jouer de manière autonome une partie entière. Ces stratégies doivent à chaque tour calculer le meilleur
+prochain coup pour atteindre le plus grand score possible. La dernière partie
+du projet consiste à réaliser une véritable interface graphique pour
 jouer au jeu.
 
 \newpage
-\section{D\'eveloppement du 2048 et tests}
-Pour le d\'eveloppement du 2048, le langage de programmation \'etait impos\'e,
-nous devions utiliser le langage C. Chaque groupe a d\^u fournir les sources
-permettant de g\'en\'erer une biblioth\`eque libgrid.a (impl\'ementant les
+\section{Développement du 2048 et tests}
+Pour le développement du 2048, le langage de programmation était imposé,
+nous devions utiliser le langage C. Chaque groupe a dû fournir les sources
+permettant de générer une bibliothèque libgrid.a (implémentant les
 fonctions décrites dans grid.h en annexe \ref{grid_h}) ainsi qu’un
-ex\'ecutable permettant de jouer au 2048 dans la console. En plus de ça, nous
-avons r\'ealis\'e des tests pour v\'erifier toutes les fonctions
-impl\'ement\'ees.\par
+exécutable permettant de jouer au 2048 dans la console. En plus de ça, nous
+avons réalisé des tests pour vérifier toutes les fonctions
+implémentées.\par
 
-Avant de commencer le travail de d\'eveloppement, nous avons utilis\'e un
-outil de gestion de versions d\'ecentralis\'e pour que chaque membre du groupe
-puisse avoir acc\'es \`a chaque instant \`a la derni\`ere version du projet.
+Avant de commencer le travail de développement, nous avons utilisé un
+outil de gestion de versions décentralisé pour que chaque membre du groupe
+puisse avoir accès à chaque instant à la dernière version du projet.
 Pour ça nous avons choisi le logiciel \href{http://git-scm.com/}{GIT}, et la plateforme
-\href{http://github.com/}{GitHub}. Les sources du projet ont \'et\'e disponibles tout
-au long du d\'eveloppement \href{http://github.com/kamneo/EDD_project}{ici}.\par
+\href{http://github.com/}{GitHub}. Les sources du projet ont été disponibles tout
+au long du développement \href{http://github.com/kamneo/EDD_project}{ici}.\par
 
-En ce qui concerne l'arborescence de notre projet, nous avons d\'ecid\'e d'avoir
-une organisation bien pr\'ecise pour qu'elle puisse \^etre le plus possible
-g\'en\'erique, c'est-\'a-dire qu'elle s'adapte aux \'evolutions du projet.
+En ce qui concerne l'arborescence de notre projet, nous avons décidé d'avoir
+une organisation bien précise pour qu'elle puisse être le plus possible
+générique, c'est-\`a-dire qu'elle s'adapte aux évolutions du projet.
 Mais surtout pour qu'elle soit la plus clair possible.
 
 \begin{alltt}
 {\color{gray}
 EDD_projet/        # Racine du projet
-    bin/           # Fichiers ex\'ecutables.
+    bin/           # Fichiers exécutables.
     build/         # Fichiers de compilation du projet
-    include/       # Fichiers .h des librairies g\'en\'er\'ees
+    include/       # Fichiers .h des librairies générées
     lib/           # Librairies
     src/           # Fichiers sources
         2048/      # Fichiers sources de l'interface graphique
@@ -81,199 +81,200 @@ EDD_projet/        # Racine du projet
 
 \par
 
-Tout au long du d\'eveloppement du projet, tous les membres du groupe se sont
+Tout au long du développement du projet, tous les membres du groupe se sont
 mis d'accord sur le fait d'utiliser l'outil \href{http://www.cmake.org/}{CMake}
-pour compiler le projet, g\'en\'erer les Makefiles qui servent eux-m\^eme \`a g\'en\'erer les
-ex\'ecutables, les librairies et ex\'ecuter les tests.
+pour compiler le projet, générer les Makefiles qui servent eux-mêmes à générer
+les exécutables, les librairies et exécuter les tests.
 
 \subsection{Le développement de grid.c}
-En ce qui concerne le d\'eveloppement de grid.c, qui est le moteur du jeu,
-c'était relativement simple. Les fonctions qui ont m\'erit\'e une r\'eflexion
-s\'erieuse sont \og do\_move() \fg{} et \og can\_move() \fg{}. Pour ces
-fonctions nous devions limiter au mieux la duplication de code et la compl\'exit\'e de
-l'algorithme. Chose que nous n'avions au final pas tr\`es bien reussi, mais nous
-verrons dans la partie \ref{notre_etude}.
+En ce qui concerne le développement de grid.c, qui est le moteur du jeu,
+c'était relativement simple. Les fonctions qui ont mérité une réflexion
+sérieuse sont " do\_move() " et " can\_move() ". Pour ces
+fonctions nous devions limiter au mieux la duplication de code et la complexité
+de l'algorithme. Chose que nous n'avions au final pas très bien r\'eussi, mais
+nous verrons dans la partie \ref{notre_etude}.
 
-\subsubsection{Implémentation de \og can\_move \fg{}}
+\subsubsection{Implémentation de " can\_move "}
 Pour cette fonction, nous avons choisi l'algorithme suivant :
 
 \begin{alltt}
 {\color{gray}
-Si la direction donn\'ee est \og UP \fg{} ou \og DOWN \fg{} alors
+Si la direction donnée est " UP " ou " DOWN " alors
     Pour chaque colonne faire :
         Pour chaque tuile de la colonne faire :
-            Si la tuile pr\'ec\'edente est \'egale \`a la courante
+            Si la tuile précédente est égale à la courante
                 retourner vrai
  		
             Si la tuile courante est non vide 
                    et qu'il y a une tuile vide dans la colonne
                 retourner vrai	    	
-Si la direction donn\'ee est \og RIGHT \fg{} ou \og LEFT \fg{} alors
+Si la direction donnée est " RIGHT " ou " LEFT " alors
     Pour chaque ligne faire 
         Pour chaque tuile de la ligne faire
-            Si la tuile pr\'ec\'edente est \'egale \`a la courante
+            Si la tuile précédente est égale à la courante
                 retourner vrai
  		
             Si la tuile courante est non vide
-                   et qu'il y a une tuille vide dans la ligne
+                   et qu'il y a une tuile vide dans la ligne
                 retourner vrai	    	
 retourner faux
 }
 \end{alltt}
 
 C'est là que l'on peut voir que nous avons commis une erreur nous n'aurions
-pas dù partir sur un algorithme qui traite séparément les directions haut/bas et droite/gauche.
+pas d\^u partir sur un algorithme qui traite séparément les directions haut/bas et droite/gauche.
 
-Cette fonction est utilis\'ee \'a plusieurs reprises dans d'autres fonctions
-comme par exemple \og game\_over \fg{} ou \og do\_move \fg{}. d'o\`u
-l'importance qu'elle n'ai pas une trop grande complexit\'e de calcul.
+Cette fonction est utilisée \'a plusieurs reprises dans d'autres fonctions
+comme par exemple " game\_over " ou " do\_move ". d'o\`u
+l'importance qu'elle n'ai pas une trop grande complexité de calcul.
 
-\subsubsection{Implémentation de \og do\_move \fg{}}
+\subsubsection{Implémentation de " do\_move "}
 Pour cette fonction, nous avons choisi l'algorithme suivant :
 \begin{alltt}
 {\color{gray}
-Si la direction donn\'ee ne peut pas \^etre jouée
+Si la direction donnée ne peut pas être jouée
     Ne rien faire
      
-Si la direction donn\'ee est \og UP \fg{} ou \og DOWN \fg{} alors
+Si la direction donnée est " UP " ou " DOWN " alors
     Pour chaque colonne faire :
         Pour chaque tuile de la colonne faire :
-            Si la tuile pr\'ec\'edente est \'egale \`a la courante
+            Si la tuile précédente est égale à la courante
                 On fusionne les deux tuiles
                 On modifie le score de la partie
             
             Si la tuile courante est vide alors
-            	On change sa place avec la premi\`ere tuile non vide
+            	On change sa place avec la première tuile non vide
             	
-Si la direction donn\'ee est \og RIGHT \fg{} ou \og LEFT \fg{} alors
+Si la direction donnée est " RIGHT " ou " LEFT " alors
     Pour chaque ligne faire 
         Pour chaque tuile de la ligne faire :
-            Si la tuile pr\'ec\'edente est \'egale \`a la courante
+            Si la tuile précédente est égale à la courante
                 On fusionne les deux tuiles
                 On modifie le score de la partie
             
             Si la tuile courante est vide alors
-            	On change sa place avec la premi\`ere tuile non vide
+            	On change sa place avec la première tuile non vide
 }
 \end{alltt}
 
 \subsection{L'affichage de la grille dans la console}
 Pour l'affichage de la grille dans la console, nous avons eu plusieurs versions
-et designs. La toute premi\`ere version \'etait une simple grille dans la console
-o\`u \'etait affich\'e le score et les valeurs des tuiles. Dans cette version
-nous devions jouer avec les lettres Z, Q, S et D du clavier car dans le language C, la
-fonction \og scanf \fg{} de la librairie \og stdio \fg{} qui permet de
-lire l'entr\'ee standard, ne prend pas en compte les fl\`eches du clavier.
+et designs. La toute première version était une simple grille dans la console
+o\`u était affiché le score et les valeurs des tuiles. Dans cette version
+nous devions jouer avec les lettres Z, Q, S et D du clavier car dans le langage C, la
+fonction " scanf " de la librairie " stdio " qui permet de
+lire l'entrée standard, ne prend pas en compte les flèches du clavier.
 En annexe vous trouverez une capture d'écran de cette version.\par
-Dans une deuxi\`eme version, nous avions d\'ecid\'e de mettre des couleurs dans
-les tuiles en fonction de leurs valeurs. (\`a voir en annexe \ref{grille_couleur}).\par
-Enfin pour r\'epondre correctement au sujet, nous avons utilis\'e la librairie
-\og NCurses \fg{}. L'utilisation de cette librairie nous a permis de se
-lib\'erer de deux de nos difficult\'es. La premi\`ere \'etait que nous devions jouer
-avec des lettres et non les fl\`eches du clavier, la seconde \'etait que nous
-n'avions pas d'affichage dynamique de la grille \`a chaque coup. Pour \^etre plus
-clair, lorsqu'on jouais un coup avec les deux premi\`eres versions de
-l'affichage, la grille du coup pr\'ecédent \'etait toujours pr\'esente dans la
-console. D\'esormais, la console n'affiche plus qu'une grille et elle met-\`a-jour apr\`es chaque coup.\par
+Dans une deuxième version, nous avions décidé de mettre des couleurs dans
+les tuiles en fonction de leurs valeurs. (à voir en annexe \ref{grille_couleur}).\par
+Enfin pour répondre correctement au sujet, nous avons utilisé la librairie
+" NCurses ". L'utilisation de cette librairie nous a permis de se
+libérer de deux de nos difficultés. La première était que nous devions jouer
+avec des lettres et non les flèches du clavier, la seconde était que nous
+n'avions pas d'affichage dynamique de la grille à chaque coup. Pour être plus
+clair, lorsqu'on jouait un coup avec les deux premières versions de
+l'affichage, la grille du coup précédent était toujours présente dans la
+console. Désormais, la console n'affiche plus qu'une grille et elle met-à-jour après chaque coup.\par
 
-La version ncurses de notre projet n'a cependant pas été trés facile à implémenter.
+La version ncurses de notre projet n'a cependant pas été très facile à implémenter.
 Ce genre de librairie demande un grand nombre d'initialisations de variable qui rendent
-difficile la conservation d'un code propre mais aussi qui multiplie les risques de fuite memoire.
+difficile la conservation d'un code propre mais aussi qui multiplie les risques de fuite mémoire.
 
 \subsection{Les tests}
-Les Tests sont \'ecrits pour confronter une r\'ealisation \`a sa sp\'ecification.
-Le test d\'efinit un crit\`ere d’arr\^et (\'etat ou sorties \`a l’issue de
-l’ex\'ecution) et permet de statuer sur le succ\`es ou sur l’\'echec d’une
-v\'erification. Gr\^ace \`a la sp\'ecification, on est en mesure de faire
-correspondre un \'etat d’entr\'ee donn\'e \`a un r\'esultat ou \`a une sortie.
-Le test permet de v\'erifier que la relation d’entr\'ee / sortie donn\'ee par la
-sp\'ecification est bel et bien r\'ealis\'ee.
+Les Tests sont écrits pour confronter une réalisation à sa spécification.
+Le test définit un critère d’arrêt (état ou sorties à l’issue de
+l’exécution) et permet de statuer sur le succès ou sur l’échec d’une
+vérification. Gr\^ace à la spécification, on est en mesure de faire
+correspondre un état d’entrée donné à un résultat ou à une sortie.
+Le test permet de vérifier que la relation d’entrée / sortie donnée par la
+spécification est bel et bien réalisée.
 \cite{Test_unitaire}
 
-\par Sur ce principe nous avons r\'ealis\'e un test par fonction d\'ecrite dans
-le fichier \og grid.h \fg{} et un test sur la r\'ealisation de plusieurs parties
-qui s'ex\'ecutent avec une strat\'egie basique qui consiste \`a jouer à gauche
-si on le peut sinon \`a droite, sinon en haut et enfin en bas. Ainsi lorsqu'on fait
+\par Sur ce principe nous avons réalisé un test par fonction décrite dans
+le fichier " grid.h " et un test sur la réalisation de plusieurs parties
+qui s'exécutent avec une stratégie basique qui consiste à jouer à gauche
+si on le peut sinon à droite, sinon en haut et enfin en bas. Ainsi lorsqu'on fait
 des modifications de l'une de ces fonctions, nous nous assurons que cela n'a en
-rien chang\'e \`a la v\'eracit\'e des r\'esultats. L'ex\'ecution des tests
-s'\'effectue avec la commande \og make test \fg{}. L'utilisation de l'outil \og CMake \fg{} nous permet d'avoir un affichage complet \`a la fin des tests sur leurs r\'esultats pour savoir s'ils sont pass\'es avec succ\`es
+rien changé à la véracité des résultats. L'exécution des tests
+s'effectue avec la commande " make test ". L'utilisation de l'outil " CMake " nous permet d'avoir un affichage complet à la fin des tests sur leurs résultats pour savoir s'ils sont passés avec succès
 ou non (exemple en annexe \ref{test}).
 
-\par Comme dit pr\'ec\'edement, chaque test est sp\'ecifique \`a une fonction.
+\par Comme dit précédemment, chaque test est spécifique à une fonction.
 \begin{itemize}
-  \item La cr\'eation d'une grille et son initialisation correcte.
-  \item L'homog\'en\'eit\'e de la fonction add\_tile, c'est-\`a-dire que la
-  probabilit\'e que la tuile g\'en\'er\'ee soit bien de $
+  \item La création d'une grille et son initialisation correcte.
+  \item L'homogénéité de la fonction add\_tile, c'est-à-dire que la
+  probabilité que la tuile générée soit bien de $
   \frac{1}{le\ nombre\ de\ tuiles} $ avec une marge de 0.05\%.
-  \item La v\'eracit\'e des fonctions \og game\_over \fg{} et \og can\_move
-  \fg{}
-  \item La bonne ex\'ecution des mouvements dans chaque direction.
-  \item Enfin l'ex\'ecution sans erreur de 1000 parties.
+  \item La véracité des fonctions " game\_over " et " can\_move
+  "
+  \item La bonne exécution des mouvements dans chaque direction.
+  \item Enfin l'exécution sans erreur de 1000 parties.
 \end{itemize}
 
 \newpage
 \section{Relectures critiques}
-\`A l’issue de la premi\`ere phase de travail, chaque groupe ont d\^u relire le
-code produit par trois autres groupes. Pour chaque groupe \`a relire, on a
-rempli un formulaire d’\'ealuation. Ce formulaire d’\'ealuation nous a \'et\'e
-fourni par notre charg\'e de TD.
+à l’issue de la première phase de travail, chaque groupe ont dû relire le
+code produit par trois autres groupes. Pour chaque groupe à relire, on a
+rempli un formulaire d’évaluation. Ce formulaire d’évaluation nous a été
+fourni par notre chargé de TD.
 
-\par Cette feuille d'\'evaluation \'etait compos\'ee de 13 questions orient\'ees
-sur trois axes. Le point de vue utilisateur, qui pousse \`a v\'erifier
-principalement la propet\'e de l'archive, que la compilation ne g\'en\`ere pas
-d'erreur et qu'il y a un fichier \og README \fg{} pour expliquer l'utilisation
-du programme si ce n'est pas \'evident. Dans un deuxi\`eme temps, d'un point de
-vu fonctionnel, nous devions v\'erifier si le programme ne pr\'esente pas de
-bogue ou de fuite m\'emoire. Enfin, d'un point de vue programmation, nous
+\par Cette feuille d'évaluation était composée de 13 questions orientées
+sur trois axes. Le point de vue utilisateur, qui pousse à vérifier
+principalement la propreté de l'archive, que la compilation ne génère pas
+d'erreur et qu'il y a un fichier " README " pour expliquer l'utilisation
+du programme si ce n'est pas évident. Dans un deuxième temps, d'un point de
+vue fonctionnel, nous devions vérifier si le programme ne présente pas de
+bogue ou de fuite mémoire. Enfin, d'un point de vue programmation, nous
 devions porter notre attention sur les patrons de conception (ou \textit{design
 patterns} en anglais).
 
-\subsection{Les relectures que nous avons r\'ealis\'e}
-Nous avons eu \`a faire la relecture des groupes A, D et G. Comme nous sommes
-trois, nous nous sommes divis\'e le travail et avons \'evalu\'e un groupe
-chacun. Nous nous sommes ensuite concert\'e pour harmoniser nos commentaires.
-Cette relecture f\^ut tr\`es int\'eressente car elle nous a permis de mettre au
+\subsection{Les relectures que nous avons réalisé}
+Nous avons eu à faire la relecture des groupes A, D et G. Comme nous sommes
+trois, nous nous sommes divisé le travail et avons évalué un groupe
+chacun. Nous nous sommes ensuite concerté pour harmoniser nos commentaires.
+Cette relecture fût très intéressante car elle nous a permis de mettre au
 premier plan les points importants sur lesquels il faut insister lors du
-d\'eveloppement d'un projet. En plus de cela, comme chaque groupe à eu le choix
-sur la façon d'impl\'ementer son programme, nous avons vu les diff\'erentes
-possibilit\'es d'implementation parfois meilleure et plus \'efficace ou pas. Le
-but n'\'etait pas d'\^etre trop s\'ev\`ere ou au contraire laxiste sur nos
-commentaires car ceux que nous avons donn\'e sur chaque projet n'ont pas \'et\'e
-not\'e.
-\subsection{Les reslectures r\'ealis\'e par les autres groupes}
+développement d'un projet. En plus de cela, comme chaque groupe a eu le choix
+sur la façon d'implémenter son programme, nous avons vu les différentes
+possibilités d'implémentation parfois meilleure et plus efficace ou pas. Le
+but n'était pas d'être trop sévère ou au contraire laxiste sur nos
+commentaires car ceux que nous avons donné sur chaque projet n'ont pas été
+noté.
+\subsection{Les relectures réalisé par les autres groupes}
 \label{notre_etude}
-En ce qui concerne les commentaires qui ont \'et\'e faits par les autres groupes
-sur notre projet, nous les avons trouv\'e justifi\'e. Mem\^e si, il faut
-l'avouer, recevoir des \og critiques \fg{} sur le travail que nous avons
-r\'ealis\'e pendant pr\`es de trois ou quatre semaines fait un peu mal. Nous avons pris ces critiques en compte et en avons corrig\'e un
+En ce qui concerne les commentaires qui ont été faits par les autres groupes
+sur notre projet, nous les avons trouvé justifié. Même si, il faut
+l'avouer, recevoir des " critiques " sur le travail que nous avons
+réalisé pendant près de trois ou quatre semaines fait un peu mal. Nous avons pris ces critiques en compte et en avons corrigé un
 maximum avant le rendu final. 
-\par Nous avons principalement reçu des commentaires n\'egatifs sur la
-duplication de code dans l'implementation du moteur de jeu. Certaines fonctions
-qui sont utilis\'e dans les fonctions \og can\_move \fg{} et \og do\_move \fg{} se
-rensemble fortement. Un autre point \`a \'et\'e remarqu\'e, le nomage des
-variables et les commentaires dans le code source \'etaient certaines fois en
+\par Nous avons principalement reçu des commentaires négatifs sur la
+duplication de code dans l'implémentation du moteur de jeu. Certaines fonctions
+qui sont utilisé dans les fonctions " can\_move " et " do\_move " se
+ressemble fortement. Un autre point à été remarqué, le nommage des
+variables et les commentaires dans le code source étaient certaines fois en
 français et d'autre en anglais alors que les patrons de conceptions nous
-impos\'e de les mettre qu'en anglais. Il restait aussi une petite fuite memoire
-qui nous avait échapé.Hormis la factorisation de do\_move et can\_move tout est a l'heure actuel corriger. Nous n'avons malheuresement pas eu le temps de reprendre l'implementation de ces fonctions.
-
+imposé de les mettre qu'en anglais. Il restait aussi une petite fuite mémoire
+qui nous avait échappé. Hormis la factorisation de do\_move et can\_move tout
+est a l'heure actuel corrigé. Nous n'avons malheureusement pas eu le temps de
+reprendre l'implémentation de ces fonctions.
 
 \newpage
-\section{Les strat\'egies}
-Dans cette partie, chacun des groupes ont du mettre au points au minimum deux
-strat\'egies. Une strat\'egie rapide (capable de jouer une partie en moins de
-10s) et une strat\'egie plus gourmande (capable de jouer une partie en moins de
-2min). Une strat\'egie est une structure qui impl\'emente l’interface d\'ecrite
-dans strategy.h. Chaque strat\'egie sont de la forme d’une biblioth\`eque
-dynamique. Nous avons implementer quatre strat\'egies pour l'instant, deux
-plutot triviales qui sont basées sur la strat\'egie du coin, et deux autres sur
-la strat\'egies \og expected max \fg{}. 
+\section{Les stratégies}
+Dans cette partie, chacun des groupes ont dû mettre au point au minimum deux
+stratégies. Une stratégie rapide (capable de jouer une partie en moins de
+10s) et une stratégie plus gourmande (capable de jouer une partie en moins de
+2min). Une stratégie est une structure qui implémente l’interface décrite
+dans strategy.h. Chaque stratégie est de la forme d’une bibliothèque
+dynamique. Nous avons implémenté quatre stratégies pour l'instant, deux
+plutôt triviales qui sont basées sur la stratégie du coin, et deux autres sur
+la stratégie " expected max ". 
 
 \subsection{Stratégie du coin}
 La stratégie fonctionnelle choisie pour le rapport est la stratégie du coin.
 Pour cela, nous avions fait un premier algorithme qui se contente de jouer vers
 la gauche tant qu'on le peut, sinon il joue vers le bas encore une fois tant
-qu'on le peut, de même vers la droite puis vers le haut. Avec cet stratégie, sur
-48 parties nous avons un score moyen de 2475, avec 6x64, 20x128, 20x256 et
+qu'on le peut, de même vers la droite puis vers le haut. Avec cette stratégie,
+sur 48 parties nous avons un score moyen de 2475, avec 6x64, 20x128, 20x256 et
 2x512.
 
 Dans un seconds temps, nous avons fait un second algorithme qui est basé sur le
@@ -284,36 +285,36 @@ stratégie, sur 48 parties nous avons un score moyen de 2259, avec 1x32, 3x64,
 21x128 et 23x256.
 
 Les deux stratégies se valent à peu près, mais c'est bien la première qui est la
-meilleure. Biensur cette stratègie n'étais qu'un essai et ces résultats sont trés mauvais
-les vrais stratégie arrive aprés.
+meilleure. Bien sur cette stratègie n'était qu'un essai et ces résultats sont
+très mauvais les vraies stratégies arrivent après.
 
 \subsection{Implémentation d'expected max}
-\og Expected Max \fg{} est un algorithme qui consiste \`a retourner la direction
-optimale \`a jouer. Elle est bas\'ee sur l'algorithme \og minimax \fg{}. Le
+" Expected Max " est un algorithme qui consiste à retourner la direction
+optimale à jouer. Elle est basée sur l'algorithme " minimax ". Le
 principe est de donner une valeur à la grille en fonction de plusieurs critères
-(cf. \og \ref{eval_grid} Evaluation de la grille \fg{}) ainsi nous jouerons le
+(cf. " \ref{eval_grid} Evaluation de la grille ") ainsi nous jouerons le
 coup avec le maximum de chances de gagner combiné au coup avec le minimum de
 chances de perdre.
-\par L'une des limites de cette m\'ethode est qu'il faille jouer \`a deux
-joueurs, or au 2048 on joue tout seul. C'est pour cette raison qu'on utilisera pas le
-th\'eor\`eme du \og minimax \fg{} mais celui d'\og expected Max \fg{}. En effet
-ici on concid\`erera le second joueur comme l'ordinateur qui remplira de façon
-aléatoire une des tuilles vides apr\`es la direction choisie. Cela engage de
-calculer, pour chaque grille et pour toutes les possibilit\'es de remplissage
-d'une tile vide, la valeur de cette grille. Il faudra ensuite faire une moyenne
-de toutes les valeurs calculées pour chaque direction afin de déterminer laquel
-est la plus intéressante. Pour un algorithme encore plus performant il serait
-avantageux de pouvoir \'etendre notre arbre \`a une profondeur N choisie au
-d\'ebut du programme. Il parait évident qu'une telle technique va avoir un coût
+\par L'une des limites de cette méthode est qu'il faille jouer à deux
+joueurs, or au 2048 on joue tout seul. C'est pour cette raison qu'on n'utilisera
+pas le théorème du " minimax " mais celui d'" expected Max ". En effet
+ici on considèrera le second joueur comme l'ordinateur qui remplira de façon
+aléatoire une des tuiles vides après la direction choisie. Cela engage de
+calculer, pour chaque grille et pour toutes les possibilités de remplissage
+d'une tuile vide, la valeur de cette grille. Il faudra ensuite faire une moyenne
+de toutes les valeurs calculées pour chaque direction afin de déterminer
+laquelle est la plus intéressante. Pour un algorithme encore plus performant il serait
+avantageux de pouvoir étendre notre arbre à une profondeur N choisie au
+début du programme. Il parait évident qu'une telle technique va avoir un coût
 en mémoire et calcule important. Hors dans la mesure où des limitations en temps
-d'exécution nous sont imposés il faudra trouver un équilibre entre résultats et
+d'exécution nous sont imposées il faudra trouver un équilibre entre résultats et
 performances.
-\par Pour la strat\'egie courte nous n'allons qu'a une profondeur de 2 (nous
-avons deux sous arbres) et calculons avec une probabilit\'e de 100 \%
-d'avoir une tuile de valeur 2 qui apparait. Pour la strat\'egie plus
-\'efficiente, nous allons \`a une profondeur de trois et nous prenons en compte
-la probabilit\'e de 10 \% qu'il y est une tuille de valeur 4 qui soit
-g\'en\'er\'e.
+\par Pour la stratégie courte nous n'allons qu'a une profondeur de 2 (nous
+avons deux sous arbres) et calculons avec une probabilité de 100 \%
+d'avoir une tuile de valeur 2 qui apparait. Pour la stratégie plus
+efficiente, nous allons à une profondeur de trois et nous prenons en compte
+la probabilité de 10 \% qu'il y est une tuile de valeur 4 qui soit
+généré.
 
 \subsection{Evaluation de la grille}
 \label{eval_grid}
@@ -321,35 +322,35 @@ Pour évaluer la grille, nous avons pris en compte quatre paramètres, et à cha
 de ces paramètres nous leurs avons donné un coefficient pour leur donner plus ou
 moins d'importance. \cite{Eval}
 
-\subsubsection{Le nombre de tiles vides}
-On compte le nombre de tiles vides que l'on a après avoir joué.
-\subsubsection{La plus grande tile} 
-Est la valeur de la tile avec la plus grande valeur.
+\subsubsection{Le nombre de tuiles vides}
+On compte le nombre de tuiles vides que l'on a après avoir joué.
+\subsubsection{La plus grande tuile} 
+Est la valeur de la tuile avec la plus grande valeur.
 
 \subsubsection{La grille la plus progressive possible}
 Une grille est progressive lorsque la valeur des cases augmente ou descend
 quelle que soit la direction. Ainsi, 2 - 4 - 8 - 16 est acceptable, tout comme
-32 - 8 - 4 - 2. Mais 2 - 8 - 2 - 16 ne l'est pas (\`a cause de la 3eme case).
-\`A chaque mouvement on doit vérifier si  le mouvement d'apr\`es rendra la
-grille plus progressive. Si c'est le cas, le mouvement doit \^etre effectu\'e.
+32 - 8 - 4 - 2. Mais 2 - 8 - 2 - 16 ne l'est pas (à cause de la 3eme case).
+\`A chaque mouvement on doit vérifier si  le mouvement d'après rendra la
+grille plus progressive. Si c'est le cas, le mouvement doit être effectué.
 Si non, trouver un autre mouvement.
 
-\subsubsection{La grille la plus réguli\`ere possible}
+\subsubsection{La grille la plus régulière possible}
 Pour pouvoir fusionner, les cases doivent comporter des valeurs identiques.
-Ainsi une suite 2 - 16 - 64 - 256 respecte la r\`egle de progressivit\`e) mais
-aboutira à un \'echec car on ne pourra fusionner aucune case avec sa voisine. Il
-faut donc respecter un autre crit\`ere : la r\'egularit\'e. Et faire en sorte de
-ne pas avoir de cassure dans les s\'eries. Entre cr\'eer une série 2 - 4 - 8 -
-16 et cr\'eer une s\'erie 16 - 64 - 256 - 1024 on pr\'ef\'erera donc la
-premi\`ere, m\^eme si la possibilit\'e d'obtenir un nombre fort comme 1024 peut
-\^etre tentante a priori.
+Ainsi une suite 2 - 16 - 64 - 256 respecte la règle de progressivitè) mais
+aboutira à un échec car on ne pourra fusionner aucune case avec sa voisine. Il
+faut donc respecter un autre critère : la régularité. Et faire en sorte de
+ne pas avoir de cassure dans les séries. Entre créer une série 2 - 4 - 8 -
+16 et créer une série 16 - 64 - 256 - 1024 on préférera donc la
+première, même si la possibilité d'obtenir un nombre fort comme 1024 peut
+être tentante a priori.
 
-\subsection{Les problématique de éval}
-La fonction d'évaluation nous a poser un certain nombre de problème. Nous avions au début poser
-un premier jet de cette fonction qui étais imparfait (elle ne vérifier la régularité des ligne que
-dans un sens). Nous avons ensuite passé plusieurs soiré a tenter d’amélioré cette fonction qui été
-la seule chose qui limiter notre score mais nous n'avons jamais réussie a dépasser
-les score de la première version que nous avions. Qui plus est nous avons été disqualifier
+\subsection{Les problématique d'éval}
+La fonction d'évaluation nous a posé un certain nombre de problème. Nous avions
+au début posé un premier jet de cette fonction qui étais imparfait (elle ne vérifier la régularité des ligne que
+dans un sens). Nous avons ensuite passé plusieurs soirée à tenter d’amélioré
+cette fonction qui été la seule chose qui limiter notre score mais nous n'avons
+jamais réussie a dépasser les score de la première version que nous avions. Qui plus est nous avons été disqualifier
 du tournoi a cause d'un problème de compilation en 32 bit de la lib dynamique.
 \par Nous pensions suite au tournoi repartir de zéro sur cette fonction
 en utilisant un autre algorithme d'évaluation de la grille malheureusement
@@ -359,11 +360,10 @@ le temps nous a manqué pour nous lancer dans ce projet.
 \section{Une vrai interface graphique ?!}
 Pour cette dernière étape du projet les groupes devaient choisir une librairie graphique
 utilisable en c et implémenter une véritable interface graphique. Nous avons comme
-beaucoup d'autre choisit simplement la librairie sdl qui en plus d’être
-complète est très utilisé se qui signifie de bonne doc ou de bon tuto disponible
-dans plusieurs langues
-\par la librairie sdl fonctionne essentiellement sur le principe de génération de
-surface que l'on colle sur la fenêtre principale. Au fur et a mesure que nous apprenions a nous en servir
+beaucoup d'autre choisit simplement la librairie " SDL " \cite{SDL} qui en
+plus d’être complète est très utilisé se qui signifie de bonne documentation ou
+de bon tutorial disponible dans plusieurs langues.\par la librairie " SDL "
+fonctionne essentiellement sur le principe de génération de surface que l'on colle sur la fenêtre principale. Au fur et a mesure que nous apprenions a nous en servir
 deux possibilité d’implémentation nous sont apparus
 
 \subsection{Structure du programme}
@@ -372,19 +372,19 @@ Cette technique est certes simple a implémenter et peu être très jolie mais t
 car absolument par modifiable de manière simple.
 Nous avons donc choisit la deuxième option qui consiste a générer soit même au fur et a mesure
 l'apparence des surfaces correspondant au tuile de la partie en cour. Pour cela nous avons utiliser
-les capacité le la lib \og TTF \fg.
-\par Notre programme possède donc deux fonctions principale qui sont le \og main \fg qui contient la boucle
-principale des événements du programme et la fonction \og display \fg qui se charge a chaque tour de lire l'état
+les capacité le la lib " TTF ".
+\par Notre programme possède donc deux fonctions principale qui sont le " main " qui contient la boucle
+principale des événements du programme et la fonction " display " qui se charge a chaque tour de lire l'état
 de la grille en cour. Pour chaque tuile elle génère une surface carré d'une taille prédéfinit et d'une couleur
 correspondant a la valeur de la tuile. Puis on génère une surface de texte correspondant a la valeur de la tuile
 et on colle le texte au milieu de la surface de tuile que l'on colle a l’écran a la bonne position.
 \par Cette implémentation permet une bonne modularité du code, elle va nous permette de rendre compatibl
  notre interface graphique au changement de taille de grid.
 
-\subsection {Problématique de la librairie SDL}
+\subsection {Problématique de la librairie " SDL "}
 Si un certain niveau de modularité a été atteint par le biais de l’implémentation vu
 précédemment, un certain nombre de difficulté ont été beaucoup plus dur a gérer.
-\par Premièrement sdl demande l'utilisation de nombreuse variable, pointeur etc...
+\par Premièrement " SDL " demande l'utilisation de nombreuse variable, pointeur etc...
 Si il n'est pas très difficile de manipuler cette librairie il est par contre beaucoup plus
 dur de garder un code parfaitement propre dans ces conditions.
 Nous aurions sans doute pu pousser plus loin notre factorisation de code mais nous
@@ -394,7 +394,7 @@ nécessaire et la moindre erreur coûte très chère en fuite mémoire.
 Nous avons cependant pu réduire a son maximum ces fuite ne laissant que 50 octet
 perdu de manière constante quel que soit le temps de jeux ou le nombre de partie ce qui est
 un résultat certes imparfait mais correcte.
-\par Et pour finir le code de sdl peut être relativement problématique a corriger. A certain
+\par Et pour finir le code de " SDL " peut être relativement problématique a corriger. A certain
 moment du développement des erreurs de segmentation aléatoire sont survenue.
 Ce genre de soucis aurait pu être un calvaire a déboguer a l'aide de printf mais
 nous avons su faire une utilisation judicieuse de gdb se qui nous a permit résoudre
@@ -405,19 +405,37 @@ tel que gdb est parfaitement indispensable a un développer digne de se nom.
 
 \newpage
 \section{En bref}
-Bien que passionnant, le projet fu tr\`es long mais tr\`es enrichissant. Nous
-avons appris \`a travailler en groupe, utiliser des technologies nouvelles comme
-GIT, SDL, 
+Bien que passionnant, le projet fu très long mais très enrichissant. Nous
+avons appris à travailler en groupe, utiliser des technologies nouvelles comme
+GIT, SDL ou encore CMake. Le plus intéressant était de voir nous processus
+de développement évoluer au fur et à mesure des TP et des cours en amphi.
+On a notament utilisé " valgrind " pour les fuites mémoires, " gdb " pour tout
+pour les débugage su code, " eclipse " et " sublime text " pour
+tout ce qui est environement de développement.
+\par En ce qui concerne la globalité du projet, nous avons atteint la
+majorité des objectifs que nous nous étions fixé. Tout ce que nous avons
+développé est fonctionnel, que ce soit les interfaces graphique, le moteur
+de jeu ou les stratégies. Mais tout n'est pas parfait, dans le moteur du jeu
+nous avons implementé tous ce qui était dans gric.h mais sur les fonctions
+" do\_move " et " can\_move " nous n'avons pas réussit à
+factoriser le code comme espèré. Pour les stratégies, elles sont toutes
+fonctionnelles mais nous n'avons surement pas les meilleures, disons plutot que les fonctions
+d'évaluation de grille ne sont pas optimales  et avec plus de temps nous
+aurrions surement pu amélioré le programme. Et pour l'interface graphique
+sous " SDL " et " NCurses ", nous avons réussit à éliminé
+toutes les fuites mémoires.
 \newpage
 
 \begin{thebibliography}{1}
-  \bibitem{Test_unitaire} Wikip\'edia. Test unitaire.
+  \bibitem{Test_unitaire} Wikipédia. Test unitaire.
   \url{http://fr.wikipedia.org/wiki/Test_unitaire}. [Online; accessed
   19-April-2015].
 
   \bibitem{Eval} Le journal du Net. 2048 : la solution pour gagner (presque) à
   tous les coups.
   \url{http://www.journaldunet.com/ebusiness/internet-mobile/solution-2048.shtml}. [Online; accessed 19-April-2015].
+
+  \bibitem{SDL} Simple directmedia layer. \url{http://www.libsdl.org/}.
 \end{thebibliography}
 
 \newpage
@@ -429,12 +447,17 @@ GIT, SDL,
 \end{figure}
 
 \begin{figure}
-   \caption{\label{grille_couleur} Deuxi\`eme version d'affichage de la grille}
+   \caption{\label{grille_couleur} Deuxième version d'affichage de la grille}
    \includegraphics[width=7cm]{grille_couleur.png}
 \end{figure}
 
 \begin{figure}
-   \caption{\label{test} R\'esultat ex\'ecution des tests}
+   \caption{\label{test} Résultat exécution des tests}
    \includegraphics[scale=0.6]{test.png}
+\end{figure}
+
+\begin{figure}
+   \caption{\label{sdl} Interface graphique avec SDL}
+   \includegraphics[scale=0.15]{sdl.png}
 \end{figure}
 \end{document}
