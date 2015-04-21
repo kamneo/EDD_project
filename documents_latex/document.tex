@@ -245,16 +245,17 @@ not\'e.
 En ce qui concerne les commentaires qui ont \'et\'e faits par les autres groupes
 sur notre projet, nous les avons trouv\'e justifi\'e. Mem\^e si, il faut
 l'avouer, recevoir des \og critiques \fg{} sur le travail que nous avons
-r\'ealis\'e pendant pr\`es de trois ou quatre semaines fait un peu grincer des
-dents. Nous avons pris ces critiques en compte et en avons corrig\'e un
+r\'ealis\'e pendant pr\`es de trois ou quatre semaines fait un peu mal. Nous avons pris ces critiques en compte et en avons corrig\'e un
 maximum avant le rendu final. 
-\par Nous avons principalement reçu des commentaires n\'egatifs sur ma
+\par Nous avons principalement reçu des commentaires n\'egatifs sur la
 duplication de code dans l'implementation du moteur de jeu. Certaines fonctions
-dans utilis\'e dans les fonctions \og can\_move \fg{} et \og do\_move \fg{} se
+qui sont utilis\'e dans les fonctions \og can\_move \fg{} et \og do\_move \fg{} se
 rensemble fortement. Un autre point \`a \'et\'e remarqu\'e, le nomage des
 variables et les commentaires dans le code source \'etaient certaines fois en
 français et d'autre en anglais alors que les patrons de conceptions nous
-impos\'e de les mettre qu'en anglais.
+impos\'e de les mettre qu'en anglais. Il restait aussi une petite fuite memoire
+qui nous avait échapé.Hormis la factorisation de do_move et can_move tout est a l'heure actuel corriger. Nous n'avons malheuresement pas eu le temps de reprendre l'implementation de ces fonctions.
+
 
 \newpage
 \section{Les strat\'egies}
@@ -342,6 +343,17 @@ ne pas avoir de cassure dans les s\'eries. Entre cr\'eer une série 2 - 4 - 8 -
 16 et cr\'eer une s\'erie 16 - 64 - 256 - 1024 on pr\'ef\'erera donc la
 premi\`ere, m\^eme si la possibilit\'e d'obtenir un nombre fort comme 1024 peut
 \^etre tentante a priori.
+
+\subsection{Les problématique de éval}
+La fonction d'évaluation nous a poser un certain nombre de problème. Nous avions au début poser
+un premier jet de cette fonction qui étais imparfait (elle ne vérifier la régularité des ligne que
+dans un sens). Nous avons ensuite passé plusieurs soiré a tenter d’amélioré cette fonction qui été
+la seule chose qui limiter notre score mais nous n'avons jamais réussie a dépasser
+les score de la première version que nous avions. Qui plus est nous avons été disqualifier
+du tournoi a cause d'un problème de compilation en 32 bit de la lib dynamique.
+\par Nous pensions suite au tournoi repartir de zéro sur cette fonction
+en utilisant un autre algorithme d'évaluation de la grille malheureusement
+le temps nous a manqué pour nous lancer dans ce projet.
 
 \newpage
 \section{Une vrai interface graphique ?!}
