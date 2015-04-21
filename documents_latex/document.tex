@@ -29,8 +29,7 @@ puissance de 2, sur un plateau de 16 tuiles, jusqu'à ce que le plateau soit
 plein et qu'aucune addition ne soit possible. Le but du jeu est d’arriver \'a
 construire une brique de valeur la plus grande possible (2048, 4096,
 8192, \ldots)
-\par 
-\emph{\color{red}POURQUOI PAS AJOUTER UNE PHOTO EXEMPLE ?!}
+
 \subsection{Le sujet}
 Dans le projet nous avons eu à réaliser dans un premier temps l'ensemble du
 moteur du jeu et quelques tests qui nous garantissent au maximum la solidité de notre code 
@@ -61,8 +60,8 @@ Pour ça nous avons choisi le logiciel \href{http://git-scm.com/}{GIT}, et la pl
 au long du développement \href{http://github.com/kamneo/EDD_project}{ici}.\par
 
 En ce qui concerne l'arborescence de notre projet, nous avons décidé d'avoir
-une organisation bien précise pour qu'elle puisse être le plus possible
-générique, c'est-\`a-dire qu'elle s'adapte aux évolutions du projet.
+une organisation bien précise pour qu'elle puisse être le plus générique et le plus modulable possible
+, c'est-\`a-dire qu'elle s'adapte aux évolutions du projet ou au modification de constante tel que la taille.
 Mais surtout pour qu'elle soit la plus clair possible.
 
 \begin{alltt}
@@ -179,6 +178,8 @@ console. Désormais, la console n'affiche plus qu'une grille et elle met-à-jour
 La version ncurses de notre projet n'a cependant pas été très facile à implémenter.
 Ce genre de librairie demande un grand nombre d'initialisations de variable qui rendent
 difficile la conservation d'un code propre mais aussi qui multiplie les risques de fuite mémoire.
+Nous somme cepandant satisfait du resultat car a part une toute petite fuite
+découverte pendant l'évaluation des autre groupe (corriger depuis) aucun probleme n'a été relever.
 
 \subsection{Les tests}
 Les Tests sont écrits pour confronter une réalisation à sa spécification.
@@ -239,14 +240,15 @@ sur la façon d'implémenter son programme, nous avons vu les différentes
 possibilités d'implémentation parfois meilleure et plus efficace ou pas. Le
 but n'était pas d'être trop sévère ou au contraire laxiste sur nos
 commentaires car ceux que nous avons donné sur chaque projet n'ont pas été
-noté.
+noté. Mais d'avoir un esprit critique sur le code de nos camarade. Car s'il est plus facile
+de juger le travail d'un autre cela finit forcement pas remetre en question notre
+propre travail.
 \subsection{Les relectures réalisé par les autres groupes}
 \label{notre_etude}
 En ce qui concerne les commentaires qui ont été faits par les autres groupes
 sur notre projet, nous les avons trouvé justifié. Même si, il faut
 l'avouer, recevoir des " critiques " sur le travail que nous avons
-réalisé pendant près de trois ou quatre semaines fait un peu mal. Nous avons pris ces critiques en compte et en avons corrigé un
-maximum avant le rendu final. 
+réalisé pendant près de trois ou quatre semaines fait un peu mal. Nous avons pris ces critiques en compte et en avons corrigé un maximum avant le rendu final. 
 \par Nous avons principalement reçu des commentaires négatifs sur la
 duplication de code dans l'implémentation du moteur de jeu. Certaines fonctions
 qui sont utilisé dans les fonctions " can\_move " et " do\_move " se
@@ -254,9 +256,10 @@ ressemble fortement. Un autre point à été remarqué, le nommage des
 variables et les commentaires dans le code source étaient certaines fois en
 français et d'autre en anglais alors que les patrons de conceptions nous
 imposé de les mettre qu'en anglais. Il restait aussi une petite fuite mémoire
-qui nous avait échappé. Hormis la factorisation de do\_move et can\_move tout
+qui nous avait échappé dans ncurses. Hormis la factorisation de do\_move et can\_move tout
 est a l'heure actuel corrigé. Nous n'avons malheureusement pas eu le temps de
-reprendre l'implémentation de ces fonctions.
+reprendre l'implémentation de ces fonctions qui demanderait de reprendre
+leur algoritme de zero se qui n'est pas évident.
 
 \newpage
 \section{Les stratégies}
@@ -312,7 +315,7 @@ performances.
 \par Pour la stratégie courte nous n'allons qu'a une profondeur de 2 (nous
 avons deux sous arbres) et calculons avec une probabilité de 100 \%
 d'avoir une tuile de valeur 2 qui apparait. Pour la stratégie plus
-efficiente, nous allons à une profondeur de trois et nous prenons en compte
+efficase, nous allons à une profondeur de trois et nous prenons en compte
 la probabilité de 10 \% qu'il y est une tuile de valeur 4 qui soit
 généré.
 
@@ -350,10 +353,10 @@ La fonction d'évaluation nous a posé un certain nombre de problème. Nous avio
 au début posé un premier jet de cette fonction qui étais imparfait (elle ne vérifier la régularité des ligne que
 dans un sens). Nous avons ensuite passé plusieurs soirée à tenter d’amélioré
 cette fonction qui été la seule chose qui limiter notre score mais nous n'avons
-jamais réussie a dépasser les score de la première version que nous avions. Qui plus est nous avons été disqualifier
-du tournoi a cause d'un problème de compilation en 32 bit de la lib dynamique.
+jamais réussie a dépasser les score de la première version que nous avions.
 \par Nous pensions suite au tournoi repartir de zéro sur cette fonction
-en utilisant un autre algorithme d'évaluation de la grille malheureusement
+en utilisant un autre algorithme d'évaluation de la grille ainsi que optimiser
+expected pour quelle puisse réglé sa profondeur au fur et a mesur. Malheureusement
 le temps nous a manqué pour nous lancer dans ce projet.
 
 \newpage
@@ -369,7 +372,8 @@ deux possibilité d’implémentation nous sont apparus
 \subsection{Structure du programme}
 La première de ces solutions consistent a coller directement des images des tuiles de la grille en cour.
 Cette technique est certes simple a implémenter et peu être très jolie mais très limité
-car absolument par modifiable de manière simple.
+car absolument par modifiable de manière simple(on ne poura pas etendre le score max d'une tuile
+et donc on ne poura etendre la grille).
 Nous avons donc choisit la deuxième option qui consiste a générer soit même au fur et a mesure
 l'apparence des surfaces correspondant au tuile de la partie en cour. Pour cela nous avons utiliser
 les capacité le la lib " TTF ".
@@ -378,7 +382,7 @@ principale des événements du programme et la fonction " display " qui se charg
 de la grille en cour. Pour chaque tuile elle génère une surface carré d'une taille prédéfinit et d'une couleur
 correspondant a la valeur de la tuile. Puis on génère une surface de texte correspondant a la valeur de la tuile
 et on colle le texte au milieu de la surface de tuile que l'on colle a l’écran a la bonne position.
-\par Cette implémentation permet une bonne modularité du code, elle va nous permette de rendre compatibl
+\par Cette implémentation permet une bonne modularité du code, elle va nous permette de rendre compatible
  notre interface graphique au changement de taille de grid.
 
 \subsection {Problématique de la librairie " SDL "}
@@ -389,7 +393,7 @@ Si il n'est pas très difficile de manipuler cette librairie il est par contre b
 dur de garder un code parfaitement propre dans ces conditions.
 Nous aurions sans doute pu pousser plus loin notre factorisation de code mais nous
 avons manqué de temps.
-\par Deuxièmement dans la manipulation de tout ces variables de nombreuse allocation sont
+\par Deuxièmement dans la manipulation de toute ces variables de nombreuse allocation sont
 nécessaire et la moindre erreur coûte très chère en fuite mémoire.
 Nous avons cependant pu réduire a son maximum ces fuite ne laissant que 50 octet
 perdu de manière constante quel que soit le temps de jeux ou le nombre de partie ce qui est
@@ -399,31 +403,35 @@ moment du développement des erreurs de segmentation aléatoire sont survenue.
 Ce genre de soucis aurait pu être un calvaire a déboguer a l'aide de printf mais
 nous avons su faire une utilisation judicieuse de gdb se qui nous a permit résoudre
 ces soucis avec une grande facilité. Il est clair après se projet que l'utilisation d'un outil de débogage
-tel que gdb est parfaitement indispensable a un développer digne de se nom.
-
+tel que gdb est parfaitement indispensable si l'on veut etre un minimum efficase.
 
 
 \newpage
 \section{En bref}
-Bien que passionnant, le projet fu très long mais très enrichissant. Nous
+Bien que passionnant, le projet fut très long mais très enrichissant. Nous
 avons appris à travailler en groupe, utiliser des technologies nouvelles comme
-GIT, SDL ou encore CMake. Le plus intéressant était de voir nous processus
+GIT, SDL ou encore CMake. Le plus intéressant était de voir notre programme et nos capaciter
 de développement évoluer au fur et à mesure des TP et des cours en amphi.
-On a notament utilisé " valgrind " pour les fuites mémoires, " gdb " pour tout
-pour les débugage su code, " eclipse " et " sublime text " pour
-tout ce qui est environement de développement.
+On a notament appris a utilisé " valgrind " pour les fuites mémoires, " gdb " pour tout
+les débugage de code, " eclipse " et " sublime text " pour
+tout ce qui est environement de développement. Nos maniére de codé ont vraiment
+évoluer et nous somme clairement plus efficase que par le passé
 \par En ce qui concerne la globalité du projet, nous avons atteint la
 majorité des objectifs que nous nous étions fixé. Tout ce que nous avons
 développé est fonctionnel, que ce soit les interfaces graphique, le moteur
-de jeu ou les stratégies. Mais tout n'est pas parfait, dans le moteur du jeu
+de jeu ou les stratégies.Nous n'avons casiment aucune fuite memoire et nous ne
+ne trouvons plus aucun bug. 
+\ar Mais tout n'est pas parfait, dans le moteur du jeu
 nous avons implementé tous ce qui était dans gric.h mais sur les fonctions
 " do\_move " et " can\_move " nous n'avons pas réussit à
 factoriser le code comme espèré. Pour les stratégies, elles sont toutes
 fonctionnelles mais nous n'avons surement pas les meilleures, disons plutot que les fonctions
-d'évaluation de grille ne sont pas optimales  et avec plus de temps nous
-aurrions surement pu amélioré le programme. Et pour l'interface graphique
-sous " SDL " et " NCurses ", nous avons réussit à éliminé
-toutes les fuites mémoires.
+d'évaluation de grille ne sont pas optimales et avec plus de temps pour repartir sur un nouvel
+algorithme d'évaluation nous aurions surement pus améliorer les choses.
+Quand au interface graphique a part peut etre quelque factorisation de code qui aurait
+pus encore etre amélioré et une petite fuite memoire sous sdl, nous somme globalement satisfait
+du resultat.
+
 \newpage
 
 \begin{thebibliography}{1}
