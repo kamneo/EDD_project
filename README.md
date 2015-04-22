@@ -1,12 +1,6 @@
 # EDD_project
 Projet d'Environnement de Développement. Faculté de Bordeaux promotion 2015.
 
-Edit:
-Attention pour compiler la sdl les paquets suivants sont nécessaires:
-	- libsdl1.2-dev
-	- libsdl-mixer1.2-dev
-	- libsdl-ttf2.0-dev
-	- libfreetype6-dev
 
 En cas d'erreur à la génération des makefiles vérifier que les paquets g++ sont bien installés également.
 
@@ -38,4 +32,19 @@ L'exécutable "play_ncurses" permet de jouer au jeu en console.
 L'exécutable "play_sdl" permet de jouer au jeu en avec une interface graphique SDL.
 L'exécutable "play_fast_IA" est une IA qui joue à 2048 de façon complètement autonome pour atteindre le meilleur score possible en moins de 10 secondes.
 L'exécutable "play_efficient_IA" est une IA qui joue à 2048 de façon complètement autonome pour atteindre le meilleur score possible en moins de deux minutes.
+
+
+
+Edit:
+Attention pour compiler l'intégralité du projet, les paquets suivants sont nécessaires:
+
+Pour sdl:
+	- libsdl1.2-dev
+	- libsdl-mixer1.2-dev
+	- libsdl-ttf2.0-dev
+	- libfreetype6-dev
+
+Pour ncurses:
+	-ncurses-base
+
 
