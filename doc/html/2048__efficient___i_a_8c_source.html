@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>EDD_project:  Fichier source de src/2048/2048_efficient_IA.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Portée&nbsp;globale</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>src/2048/2048_efficient_IA.c</h1>  </div>
+</div>
+<div class="contents">
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#include &lt;math.h&gt;</span>
+<a name="l00002"></a>00002 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00003"></a>00003 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;time.h&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;<a class="code" href="strategy__efficient_8h.html" title="contient la stratégie longue">strategy_efficient.h</a>&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;<a class="code" href="grid_8h.html" title="Contains structures and functions needed to play 2048 game.">grid.h</a>&gt;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &quot;<a class="code" href="affichage_8h.html" title="Contient les fonctions nécessaires pour afficher la grille.">affichage.h</a>&quot;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;unistd.h&gt;</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="preprocessor">#define NEW_GAME 1</span>
+<a name="l00011"></a>00011 <span class="preprocessor"></span><span class="preprocessor">#define MAX_VALUE 12</span>
+<a name="l00012"></a>00012 <span class="preprocessor"></span><span class="preprocessor">#define ROUND 1</span>
+<a name="l00013"></a>00013 <span class="preprocessor"></span>
+<a name="l00014"></a>00014 <span class="keywordtype">long</span> <span class="keywordtype">int</span> top_chrono;
+<a name="l00015"></a>00015 <span class="keywordtype">int</span> verbose = 0; <span class="comment">// niveau de debuging</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="keywordtype">void</span> start_chrono() {
+<a name="l00018"></a>00018         top_chrono = clock();
+<a name="l00019"></a>00019 }
+<a name="l00020"></a>00020 
+<a name="l00021"></a>00021 <span class="keywordtype">void</span> stop_chrono() {
+<a name="l00022"></a>00022         <span class="keywordtype">long</span> <span class="keywordtype">int</span> end_chrono = clock();
+<a name="l00023"></a>00023         fprintf(stderr, <span class="stringliteral">&quot;Le calcul a pris %f secondes.\n&quot;</span>,
+<a name="l00024"></a>00024                 (<span class="keywordtype">float</span>)(end_chrono - top_chrono) / CLOCKS_PER_SEC);
+<a name="l00025"></a>00025 }
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="comment">/*</span>
+<a name="l00028"></a>00028 <span class="comment"> * MEMORY qui contient les scores cumulés des grilles jusqu&#39;à ce que</span>
+<a name="l00029"></a>00029 <span class="comment"> * l&#39;utilisateur quitte le programme et le nombre de fois que la valeur max</span>
+<a name="l00030"></a>00030 <span class="comment"> * est apparue</span>
+<a name="l00031"></a>00031 <span class="comment"> */</span>
+<a name="l00032"></a><a class="code" href="struct__memory.html">00032</a> <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct__memory.html">_memory</a> {
+<a name="l00033"></a>00033         <span class="keywordtype">int</span>* tab;
+<a name="l00034"></a>00034         <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span> score;
+<a name="l00035"></a>00035 } <a class="code" href="struct__memory.html">MEMORY</a>;
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="keywordtype">int</span> <a class="code" href="2048__fast___i_a_8c.html#a7dab5fa66cb07f2676f33ac05f58daf7" title="ferme la fenêtre créée par ncurses &amp;amp; supprime la grille">end_game</a>(<a class="code" href="structgrid__s.html">grid</a> g);
+<a name="l00038"></a>00038 <span class="keywordtype">int</span> <a class="code" href="2048__fast___i_a_8c.html#accfe5f53e06ae90fa811acc02df1ed5f" title="ferme la fenêtre créée par ncurses &amp;amp; supprime la grille &amp;amp; affiche les statistiques">end_game_stat</a>(<a class="code" href="struct__memory.html">MEMORY</a> m, <a class="code" href="structgrid__s.html">grid</a> g);
+<a name="l00039"></a>00039 <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span> pow_of_2(<a class="code" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0" title="Log_2-encoded tile : 0 is empty, i is 2**i.">tile</a> t);
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041 <span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {
+<a name="l00042"></a>00042         <span class="comment">// initialisation de time pour la génération aléatoire de tile</span>
+<a name="l00043"></a>00043         srand(time(NULL));
+<a name="l00044"></a>00044         <a class="code" href="struct__memory.html">MEMORY</a> m;
+<a name="l00045"></a>00045         m.score = 0;
+<a name="l00046"></a>00046         m.tab = malloc(<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>) * <a class="code" href="2048__fast___i_a_8c.html#a4ce3e2af80a76d816ab7f8567ec4a65a">MAX_VALUE</a>);
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048         <span class="keywordtype">bool</span> next_round;                <span class="comment">// valeur boolean est à vrai quand on veut recommencer une partie</span>
+<a name="l00049"></a>00049         <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> direction;                  <span class="comment">// contient la direction décrite dans grid.h</span>
+<a name="l00050"></a>00050         <a class="code" href="structgrid__s.html">grid</a> g;                                 <span class="comment">// instance de la grid</span>
+<a name="l00051"></a>00051         <a class="code" href="structstrategy__s.html">strategy</a> strat;                 <span class="comment">// instance de la stratégie</span>
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053         <span class="keywordtype">int</span> nb_round = ROUND;
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055         printf(<span class="stringliteral">&quot;1 - affiche la grille à chaque coup\n&quot;</span>);
+<a name="l00056"></a>00056         printf(<span class="stringliteral">&quot;2 - affiche juste la grille de fin\n&quot;</span>);
+<a name="l00057"></a>00057         <span class="keywordtype">int</span> key = getchar();
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059                 start_chrono();
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061         <span class="keywordflow">while</span> (<a class="code" href="2048__fast___i_a_8c.html#a58e1803e6011957aeca94db5c9304243">NEW_GAME</a>   &amp;&amp; nb_round != 0) {
+<a name="l00062"></a>00062                 g = <a class="code" href="grid_8c.html#ae372326b462fc49a3bce69369884670c" title="Initialise la structure de la grille.">new_grid</a>();
+<a name="l00063"></a>00063                 <a class="code" href="grid_8c.html#a9939eca64d174ed621bee7e69afa88b0" title="Randomly add a tile in the grid in a free space when a movement is finished. With probability 9/10 th...">add_tile</a>(g);
+<a name="l00064"></a>00064                 <a class="code" href="grid_8c.html#a9939eca64d174ed621bee7e69afa88b0" title="Randomly add a tile in the grid in a free space when a movement is finished. With probability 9/10 th...">add_tile</a>(g);
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066                 <span class="comment">// initialisation de la structure strategy</span>
+<a name="l00067"></a>00067                 strat = <a class="code" href="strategy__efficient_8c.html#afe9f3aaba0708df1c5387276d2a26ce3" title="stratégie capable de jouer au 2048 en moins de 2 minutes">A2_bonnet_borde_pinero_efficient</a>();
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069                 next_round = <span class="keyword">true</span>;
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071                 <span class="keywordflow">if</span>(key == <span class="charliteral">&#39;1&#39;</span>)
+<a name="l00072"></a>00072                         <a class="code" href="affichage_8c.html#a48085538580c63ea78b774e9714d2dbc" title="Affiche en console la grille avec des couleurs et la puissance des valeurs contenues dans les tuiles...">display_grid</a>(g);
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074                 <span class="keywordflow">while</span> (next_round) {
+<a name="l00075"></a>00075                         <span class="comment">// recherche de la meilleure direction</span>
+<a name="l00076"></a>00076                         direction = strat-&gt;<a class="code" href="structstrategy__s.html#ac4ec2cfabdd3e4b516c4164f83008809">play_move</a>(strat, g);
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079                         <span class="keywordflow">if</span>(direction != -1)
+<a name="l00080"></a>00080                         {
+<a name="l00081"></a>00081                                 <span class="comment">// Réalisation du coup dans la direction voulue</span>
+<a name="l00082"></a>00082                                 <a class="code" href="grid_8c.html#ac0bc5106648c25c41fd8cb2198cdd48c" title="Play a direction in the grid.">play</a>(g, direction);
+<a name="l00083"></a>00083                         }
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085                         <span class="keywordflow">if</span>(key == <span class="charliteral">&#39;1&#39;</span>)
+<a name="l00086"></a>00086                                 <a class="code" href="affichage_8c.html#a48085538580c63ea78b774e9714d2dbc" title="Affiche en console la grille avec des couleurs et la puissance des valeurs contenues dans les tuiles...">display_grid</a>(g);
+<a name="l00087"></a>00087                         <span class="comment">// dans le cas où la partie est terminée</span>
+<a name="l00088"></a>00088                         <span class="keywordflow">while</span> (<a class="code" href="grid_8c.html#a7583a3f5a003d36f244a785ef1ce9980" title="Verify game&amp;#39;s status, if no more movement is possible the game is over.">game_over</a>(g) &amp;&amp; next_round) {
+<a name="l00089"></a>00089                                 <span class="keywordflow">if</span>(key == <span class="charliteral">&#39;2&#39;</span>)
+<a name="l00090"></a>00090                                         <a class="code" href="affichage_8c.html#a48085538580c63ea78b774e9714d2dbc" title="Affiche en console la grille avec des couleurs et la puissance des valeurs contenues dans les tuiles...">display_grid</a>(g);
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092                                 <span class="comment">// Ceci ne sert que pour les stats</span>
+<a name="l00093"></a>00093                                 m.score += <a class="code" href="grid_8c.html#a9ec3abff37c58e19fb31199e3777cfe6" title="Obtient le score de la grille.">grid_score</a>(g);
+<a name="l00094"></a>00094                                 <span class="keywordtype">int</span> index = 0;
+<a name="l00095"></a>00095                                 <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; GRID_SIDE; ++x) {
+<a name="l00096"></a>00096                                         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; GRID_SIDE; ++y) {
+<a name="l00097"></a>00097                                                 <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y) &gt; index) {
+<a name="l00098"></a>00098                                                         index = <a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y);
+<a name="l00099"></a>00099                                                 }
+<a name="l00100"></a>00100                                         }
+<a name="l00101"></a>00101                                 }
+<a name="l00102"></a>00102                                 m.tab[index] += 1;
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104                                 next_round = <span class="keyword">false</span>;
+<a name="l00105"></a>00105                                 nb_round--;
+<a name="l00106"></a>00106                         }<span class="comment">// fin game_over</span>
+<a name="l00107"></a>00107                 } <span class="comment">// fin next_round</span>
+<a name="l00108"></a>00108         } <span class="comment">// fin NEW_GAME</span>
+<a name="l00109"></a>00109         stop_chrono();
+<a name="l00110"></a>00110         <span class="keywordflow">return</span> <a class="code" href="2048__fast___i_a_8c.html#accfe5f53e06ae90fa811acc02df1ed5f" title="ferme la fenêtre créée par ncurses &amp;amp; supprime la grille &amp;amp; affiche les statistiques">end_game_stat</a>(m, g);
+<a name="l00111"></a>00111 }
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113 <span class="comment">/*</span>
+<a name="l00114"></a>00114 <span class="comment"> * \ferme la fenêtre créée par ncurses &amp; supprime la grille</span>
+<a name="l00115"></a>00115 <span class="comment"> * \paramètre g, la grille</span>
+<a name="l00116"></a>00116 <span class="comment"> */</span>
+<a name="l00117"></a>00117 <span class="keywordtype">int</span> <a class="code" href="2048__fast___i_a_8c.html#a7dab5fa66cb07f2676f33ac05f58daf7" title="ferme la fenêtre créée par ncurses &amp;amp; supprime la grille">end_game</a>(<a class="code" href="structgrid__s.html">grid</a> g) {
+<a name="l00118"></a>00118         printf(<span class="stringliteral">&quot;Merci d&#39;avoir joue.\n&quot;</span>);
+<a name="l00119"></a>00119         <a class="code" href="grid_8c.html#afdaf914c5f299c3444682915369f32bd" title="Détruit la grille et libère la mémoire allouée.">delete_grid</a>(g);
+<a name="l00120"></a>00120         <span class="keywordflow">return</span> EXIT_SUCCESS;
+<a name="l00121"></a>00121 }
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123 <span class="comment">/*</span>
+<a name="l00124"></a>00124 <span class="comment"> * \ferme la fenêtre créée par ncurses &amp; supprime la grille &amp; affiche les statistiques</span>
+<a name="l00125"></a>00125 <span class="comment"> * \paramètre g, la grille</span>
+<a name="l00126"></a>00126 <span class="comment"> * \paramètre m mémoire</span>
+<a name="l00127"></a>00127 <span class="comment"> */</span>
+<a name="l00128"></a>00128 <span class="keywordtype">int</span> <a class="code" href="2048__fast___i_a_8c.html#accfe5f53e06ae90fa811acc02df1ed5f" title="ferme la fenêtre créée par ncurses &amp;amp; supprime la grille &amp;amp; affiche les statistiques">end_game_stat</a>(<a class="code" href="struct__memory.html">MEMORY</a> m, <a class="code" href="structgrid__s.html">grid</a> g) {
+<a name="l00129"></a>00129         <span class="keywordtype">int</span> total = 0;
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131         printf(<span class="stringliteral">&quot;Merci d&#39;avoir joue.\n&quot;</span>);
+<a name="l00132"></a>00132         <a class="code" href="grid_8c.html#afdaf914c5f299c3444682915369f32bd" title="Détruit la grille et libère la mémoire allouée.">delete_grid</a>(g);
+<a name="l00133"></a>00133         printf(<span class="stringliteral">&quot;score cumule : %lu \n&quot;</span>, m.score);
+<a name="l00134"></a>00134         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; MAX_VALUE; ++i) {
+<a name="l00135"></a>00135                 printf(<span class="stringliteral">&quot;%f = %d\n&quot;</span>, pow(2, i), m.tab[i]);
+<a name="l00136"></a>00136                 total += m.tab[i];
+<a name="l00137"></a>00137         }
+<a name="l00138"></a>00138         printf(<span class="stringliteral">&quot;score moyen : %lu \n&quot;</span>, m.score / total);
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140         free(m.tab);
+<a name="l00141"></a>00141         <span class="keywordflow">return</span> EXIT_SUCCESS;
+<a name="l00142"></a>00142 }
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145 <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span> pow_of_2(<a class="code" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0" title="Log_2-encoded tile : 0 is empty, i is 2**i.">tile</a> t) {
+<a name="l00146"></a>00146         <span class="keywordflow">if</span> (t == 0)
+<a name="l00147"></a>00147                 <span class="keywordflow">return</span> t;
+<a name="l00148"></a>00148         <span class="keywordflow">return</span> pow(2, t);
+<a name="l00149"></a>00149 }
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Wed Apr 22 2015 06:41:11 pour EDD_project par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

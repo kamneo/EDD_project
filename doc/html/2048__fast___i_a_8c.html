@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>EDD_project: Référence du fichier src/2048/2048_fast_IA.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Portée&nbsp;globale</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Structures de données</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Définition de type</a> &#124;
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle">
+<h1>Référence du fichier src/2048/2048_fast_IA.c</h1>  </div>
+</div>
+<div class="contents">
+
+<p>Implemente lutilisation de l'IA.  
+<a href="#_details">Plus de détails...</a></p>
+<code>#include &lt;math.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;time.h&gt;</code><br/>
+<code>#include &lt;<a class="el" href="strategy__fast_8h_source.html">strategy_fast.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="grid_8h_source.html">grid.h</a>&gt;</code><br/>
+<code>#include &quot;<a class="el" href="affichage_8h_source.html">affichage.h</a>&quot;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+
+<p><a href="2048__fast___i_a_8c_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Structures de données</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__memory.html">_memory</a></td></tr>
+<tr><td colspan="2"><h2><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__fast___i_a_8c.html#a58e1803e6011957aeca94db5c9304243">NEW_GAME</a>&nbsp;&nbsp;&nbsp;1</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__fast___i_a_8c.html#a4ce3e2af80a76d816ab7f8567ec4a65a">MAX_VALUE</a>&nbsp;&nbsp;&nbsp;12</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__fast___i_a_8c.html#af144c56be720021d0c3a8075b87ff9b5">ROUND</a>&nbsp;&nbsp;&nbsp;1</td></tr>
+<tr><td colspan="2"><h2><a name="typedef-members"></a>
+Définition de type</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="struct__memory.html">_memory</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__fast___i_a_8c.html#a47bf80f6eb1a71728d6e0f9a4cad1325">MEMORY</a></td></tr>
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1d5ccf7b4e165f5c807c7e5b8be500e"></a><!-- doxytag: member="2048_fast_IA.c::start_chrono" ref="ac1d5ccf7b4e165f5c807c7e5b8be500e" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>start_chrono</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acae3f88cc9b9f893194aa655e8024e74"></a><!-- doxytag: member="2048_fast_IA.c::stop_chrono" ref="acae3f88cc9b9f893194aa655e8024e74" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>stop_chrono</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__fast___i_a_8c.html#a7dab5fa66cb07f2676f33ac05f58daf7">end_game</a> (<a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">ferme la fenêtre créée par ncurses &amp; supprime la grille  <a href="#a7dab5fa66cb07f2676f33ac05f58daf7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__fast___i_a_8c.html#accfe5f53e06ae90fa811acc02df1ed5f">end_game_stat</a> (<a class="el" href="struct__memory.html">MEMORY</a> m, <a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">ferme la fenêtre créée par ncurses &amp; supprime la grille &amp; affiche les statistiques  <a href="#accfe5f53e06ae90fa811acc02df1ed5f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5525580860c265f914177628234b7b8f"></a><!-- doxytag: member="2048_fast_IA.c::pow_of_2" ref="a5525580860c265f914177628234b7b8f" args="(tile t)" -->
+unsigned long int&nbsp;</td><td class="memItemRight" valign="bottom"><b>pow_of_2</b> (<a class="el" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0">tile</a> t)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ddf1224851353fc92bfbff6f499fa97"></a><!-- doxytag: member="2048_fast_IA.c::main" ref="a0ddf1224851353fc92bfbff6f499fa97" args="(int argc, char *argv[])" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, char *argv[])</td></tr>
+<tr><td colspan="2"><h2><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2cdd8dee607f9aeaa304693e8c033f57"></a><!-- doxytag: member="2048_fast_IA.c::top_chrono" ref="a2cdd8dee607f9aeaa304693e8c033f57" args="" -->
+long int&nbsp;</td><td class="memItemRight" valign="bottom"><b>top_chrono</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b2caeb4b6f130be43e5a2f0267dd453"></a><!-- doxytag: member="2048_fast_IA.c::verbose" ref="a0b2caeb4b6f130be43e5a2f0267dd453" args="" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>verbose</b> = 0</td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Implemente lutilisation de l'IA. </p>
+<p>1.0 </p>
+
+<p>Définition dans le fichier <a class="el" href="2048__fast___i_a_8c_source.html">2048_fast_IA.c</a>.</p>
+<hr/><h2>Documentation des macros</h2>
+<a class="anchor" id="a4ce3e2af80a76d816ab7f8567ec4a65a"></a><!-- doxytag: member="2048_fast_IA.c::MAX_VALUE" ref="a4ce3e2af80a76d816ab7f8567ec4a65a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_VALUE&nbsp;&nbsp;&nbsp;12</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Taille de tableau de résultat </p>
+
+<p>Définition à la ligne <a class="el" href="2048__fast___i_a_8c_source.html#l00024">24</a> du fichier <a class="el" href="2048__fast___i_a_8c_source.html">2048_fast_IA.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a58e1803e6011957aeca94db5c9304243"></a><!-- doxytag: member="2048_fast_IA.c::NEW_GAME" ref="a58e1803e6011957aeca94db5c9304243" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NEW_GAME&nbsp;&nbsp;&nbsp;1</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>variable pour la boucle infinie </p>
+
+<p>Définition à la ligne <a class="el" href="2048__fast___i_a_8c_source.html#l00019">19</a> du fichier <a class="el" href="2048__fast___i_a_8c_source.html">2048_fast_IA.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af144c56be720021d0c3a8075b87ff9b5"></a><!-- doxytag: member="2048_fast_IA.c::ROUND" ref="af144c56be720021d0c3a8075b87ff9b5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ROUND&nbsp;&nbsp;&nbsp;1</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Nombre de partie </p>
+
+<p>Définition à la ligne <a class="el" href="2048__fast___i_a_8c_source.html#l00029">29</a> du fichier <a class="el" href="2048__fast___i_a_8c_source.html">2048_fast_IA.c</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des définitions de type</h2>
+<a class="anchor" id="a47bf80f6eb1a71728d6e0f9a4cad1325"></a><!-- doxytag: member="2048_fast_IA.c::MEMORY" ref="a47bf80f6eb1a71728d6e0f9a4cad1325" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="struct__memory.html">_memory</a>  <a class="el" href="struct__memory.html">MEMORY</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>MEMOIRE qui contient les scores cumulés des grilles jusqu'à ce que l'utilisateur quitte le programme et le nombre de fois que la valeur max est apparue </p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions</h2>
+<a class="anchor" id="a7dab5fa66cb07f2676f33ac05f58daf7"></a><!-- doxytag: member="2048_fast_IA.c::end_game" ref="a7dab5fa66cb07f2676f33ac05f58daf7" args="(grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int end_game </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>ferme la fenêtre créée par ncurses &amp; supprime la grille </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="2048__fast___i_a_8c_source.html#l00136">136</a> du fichier <a class="el" href="2048__fast___i_a_8c_source.html">2048_fast_IA.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="accfe5f53e06ae90fa811acc02df1ed5f"></a><!-- doxytag: member="2048_fast_IA.c::end_game_stat" ref="accfe5f53e06ae90fa811acc02df1ed5f" args="(MEMORY m, grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int end_game_stat </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct__memory.html">MEMORY</a>&nbsp;</td>
+          <td class="paramname"> <em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>ferme la fenêtre créée par ncurses &amp; supprime la grille &amp; affiche les statistiques </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>m</em>&nbsp;</td><td>mémoire </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="2048__fast___i_a_8c_source.html#l00147">147</a> du fichier <a class="el" href="2048__fast___i_a_8c_source.html">2048_fast_IA.c</a>.</p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Wed Apr 22 2015 06:41:11 pour EDD_project par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

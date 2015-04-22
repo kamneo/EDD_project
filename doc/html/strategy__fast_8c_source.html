@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>EDD_project:  Fichier source de src/strategy/strategy_fast.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Portée&nbsp;globale</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>src/strategy/strategy_fast.c</h1>  </div>
+</div>
+<div class="contents">
+<a href="strategy__fast_8c.html">Aller à la documentation de ce fichier.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<a name="l00007"></a>00007 <span class="preprocessor">#include &quot;<a class="code" href="strategy__fast_8h.html" title="contient la stratégie rapide">strategy_fast.h</a>&quot;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;assert.h&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;stdbool.h&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;math.h&gt;</span>
+<a name="l00013"></a>00013 
+<a name="l00017"></a><a class="code" href="strategy__fast_8c.html#a50267d552ca6f788254032e40046b770">00017</a> <span class="preprocessor">#define DEPTH 2</span>
+<a name="l00018"></a>00018 <span class="preprocessor"></span>
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020 <span class="keyword">struct </span><a class="code" href="structs__result.html">s_result</a> {
+<a name="l00021"></a>00021         <span class="keywordtype">double</span> score;
+<a name="l00022"></a>00022         <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> direction;
+<a name="l00023"></a>00023 };
+<a name="l00024"></a>00024 
+<a name="l00025"></a>00025 <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structs__result.html">s_result</a> <a class="code" href="structs__result.html">result</a>;
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> <a class="code" href="strategy__fast_8c.html#a2f80a663bafed21627abb207210ad96c" title="première stratégie appelée stratégie du coin">corner_strategy_1</a>(<a class="code" href="structstrategy__s.html">strategy</a> s, <a class="code" href="structgrid__s.html">grid</a> g);
+<a name="l00028"></a>00028 <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> <a class="code" href="strategy__fast_8c.html#aa2df432d8e64dfb8e9fbf16ff130285b" title="deuxième stratégie qui reprend la stratégie du coin mais qui un tour sur deux changera l&amp;#39;ordre de...">corner_strategy_2</a>(<a class="code" href="structstrategy__s.html">strategy</a> s, <a class="code" href="structgrid__s.html">grid</a> g);
+<a name="l00029"></a>00029 <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> <a class="code" href="strategy__efficient_8c.html#ac5f27f5e09e8dd0965001e7c8866c5f4" title="stratégie basée sur expected max qui retourne la direction optimale à jouer">strategy_fast</a>(<a class="code" href="structstrategy__s.html">strategy</a> s, <a class="code" href="structgrid__s.html">grid</a> g);
+<a name="l00030"></a>00030 <a class="code" href="structs__result.html">result</a> max(<a class="code" href="structgrid__s.html">grid</a> g, <span class="keywordtype">int</span> depth);
+<a name="l00031"></a>00031 <span class="keywordtype">double</span> <a class="code" href="strategy__efficient_8c.html#a5af63cedf69db3405e1e27939817b7b4" title="fonction qui évalue le poids de la grille">eval</a>(<a class="code" href="structgrid__s.html">grid</a> g);
+<a name="l00032"></a>00032 <span class="keywordtype">double</span> <a class="code" href="strategy__efficient_8c.html#a85d81733ea3f4787157dc51da2c1c9b7" title="fonction qui donne une note comprise entre 1 et 0 sur la progressivité de la grille C&amp;#39;est-à-dire ...">progressive</a>(<a class="code" href="structgrid__s.html">grid</a> g);
+<a name="l00033"></a>00033 <span class="keywordtype">double</span> <a class="code" href="strategy__efficient_8c.html#a5eb8d4f08a65e5192d314a54fe20dc9f" title="fonction qui donne une note comprise entre 1 et 0 sur sur la régularité de la grille. c&amp;#39;est-à-dire si les valeurs se suivent, on préfèrera avoir une suite 2 - 4 - 8 - 16, plutôt que 2 - 16 - 64 - 128">regular</a>(<a class="code" href="structgrid__s.html">grid</a> g);
+<a name="l00034"></a>00034 <span class="keywordtype">void</span> <a class="code" href="strategy__efficient_8c.html#a52c0bb596f45f00971509f248cb7bb43" title="fonction qui pour une direction calcule la valeur moyenne de toutes les grilles possibles et si le ré...">do_expected</a>(<a class="code" href="structgrid__s.html">grid</a> g, <a class="code" href="structs__result.html">result</a>* res, <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> direction, <span class="keywordtype">int</span> depth);
+<a name="l00035"></a>00035 <span class="keywordtype">double</span> <a class="code" href="strategy__efficient_8c.html#a156d3217d29c33a433d9f46ff51ff4a8" title="fonction qui calcule la valeur de chaque grille qui peuvent être générées pour une direction et retou...">expected</a>(<a class="code" href="structgrid__s.html">grid</a> g, <span class="keywordtype">int</span> depth);
+<a name="l00036"></a>00036 
+<a name="l00037"></a><a class="code" href="strategy__fast_8c.html#a6c1d996bbf6f49123a46d9b88454d0ab">00037</a> <span class="keywordtype">void</span> <a class="code" href="strategy_8h.html#a6c1d996bbf6f49123a46d9b88454d0ab">free_memless_strat</a>(<a class="code" href="structstrategy__s.html">strategy</a> strat) {
+<a name="l00038"></a>00038         free(strat-&gt;mem);
+<a name="l00039"></a>00039         free(strat);
+<a name="l00040"></a>00040 }
+<a name="l00041"></a>00041 
+<a name="l00042"></a><a class="code" href="strategy__fast_8h.html#ad1694220c538e60e4283248293fafaa4">00042</a> <a class="code" href="structstrategy__s.html">strategy</a> <a class="code" href="strategy__fast_8c.html#ad1694220c538e60e4283248293fafaa4" title="stratégie capable de jouer au 2048 en moins de 10 secondes">A2_bonnet_borde_pinero_fast</a>() {
+<a name="l00043"></a>00043         <a class="code" href="structstrategy__s.html">strategy</a> strat = malloc(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> <a class="code" href="structstrategy__s.html">strategy_s</a>)); <span class="comment">//initialisation de notre structure strategy</span>
+<a name="l00044"></a>00044         strat-&gt;<a class="code" href="structstrategy__s.html#a5ac083a645d964373f022d03df4849c8">name</a> = <span class="stringliteral">&quot;Strategie du fast&quot;</span>;                              <span class="comment">// Nom de la strategie</span>
+<a name="l00045"></a>00045         strat-&gt;<a class="code" href="structstrategy__s.html#ac4ec2cfabdd3e4b516c4164f83008809">play_move</a> = strategy_fast;                               <span class="comment">//cf strategy.c</span>
+<a name="l00046"></a>00046         strat-&gt;mem = malloc(<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>));
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048         *(<span class="keywordtype">int</span>*) (strat-&gt;mem) = 0; <span class="comment">// on pointe sur un int qui sera un compteur de tour jouer(pour certaine strat)</span>
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050         strat-&gt;<a class="code" href="structstrategy__s.html#a03f512455d12943d000c8287d130ac09">free_strategy</a> = free_memless_strat;
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052         <span class="keywordflow">return</span> strat;
+<a name="l00053"></a>00053 }
+<a name="l00054"></a>00054 
+<a name="l00061"></a><a class="code" href="strategy__fast_8c.html#a2f80a663bafed21627abb207210ad96c">00061</a> <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> <a class="code" href="strategy__fast_8c.html#a2f80a663bafed21627abb207210ad96c" title="première stratégie appelée stratégie du coin">corner_strategy_1</a>(<a class="code" href="structstrategy__s.html">strategy</a> s, <a class="code" href="structgrid__s.html">grid</a> g) {
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063         <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(g, LEFT)) {
+<a name="l00064"></a>00064                 <span class="keywordflow">return</span> LEFT;
+<a name="l00065"></a>00065         } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(g, DOWN)) {
+<a name="l00066"></a>00066                 <span class="keywordflow">return</span> DOWN;
+<a name="l00067"></a>00067         } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(g, RIGHT)) {
+<a name="l00068"></a>00068                 <span class="keywordflow">return</span> RIGHT;
+<a name="l00069"></a>00069         } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(g, UP)) {
+<a name="l00070"></a>00070                 <span class="keywordflow">return</span> UP;
+<a name="l00071"></a>00071         }
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073         <span class="keywordflow">return</span> -1;
+<a name="l00074"></a>00074 }
+<a name="l00075"></a>00075 
+<a name="l00083"></a><a class="code" href="strategy__fast_8c.html#aa2df432d8e64dfb8e9fbf16ff130285b">00083</a> <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> <a class="code" href="strategy__fast_8c.html#aa2df432d8e64dfb8e9fbf16ff130285b" title="deuxième stratégie qui reprend la stratégie du coin mais qui un tour sur deux changera l&amp;#39;ordre de...">corner_strategy_2</a>(<a class="code" href="structstrategy__s.html">strategy</a> s, <a class="code" href="structgrid__s.html">grid</a> g) {
+<a name="l00084"></a>00084         <span class="keywordtype">int</span>* val = s-&gt;mem;
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086         (*val)++;
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088         <span class="keywordflow">if</span> ((*val) % 2 == 0) {
+<a name="l00089"></a>00089                 <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(g, LEFT)) {
+<a name="l00090"></a>00090                         <span class="keywordflow">return</span> LEFT;
+<a name="l00091"></a>00091                 } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(g, DOWN)) {
+<a name="l00092"></a>00092                         <span class="keywordflow">return</span> DOWN;
+<a name="l00093"></a>00093                 }
+<a name="l00094"></a>00094         } <span class="keywordflow">else</span> {
+<a name="l00095"></a>00095                 <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(g, DOWN)) {
+<a name="l00096"></a>00096                         <span class="keywordflow">return</span> DOWN;
+<a name="l00097"></a>00097                 } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(g, LEFT))
+<a name="l00098"></a>00098                         <span class="keywordflow">return</span> LEFT;
+<a name="l00099"></a>00099         }
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101         <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(g, RIGHT)) {
+<a name="l00102"></a>00102                 <span class="keywordflow">return</span> RIGHT;
+<a name="l00103"></a>00103         } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(g, UP)) {
+<a name="l00104"></a>00104                 <span class="keywordflow">return</span> UP;
+<a name="l00105"></a>00105         } <span class="keywordflow">else</span>
+<a name="l00106"></a>00106                 <span class="keywordflow">return</span> -1;
+<a name="l00107"></a>00107 }
+<a name="l00108"></a>00108 
+<a name="l00115"></a><a class="code" href="strategy__fast_8c.html#ac5f27f5e09e8dd0965001e7c8866c5f4">00115</a> <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> <a class="code" href="strategy__efficient_8c.html#ac5f27f5e09e8dd0965001e7c8866c5f4" title="stratégie basée sur expected max qui retourne la direction optimale à jouer">strategy_fast</a>(<a class="code" href="structstrategy__s.html">strategy</a> strat, <a class="code" href="structgrid__s.html">grid</a> g) {
+<a name="l00116"></a>00116         <span class="comment">// initialisation de la structure résultat</span>
+<a name="l00117"></a>00117         <a class="code" href="structs__result.html">result</a> res;
+<a name="l00118"></a>00118         res.score = 0;
+<a name="l00119"></a>00119         res.direction = -1;
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121         res = max(g, <a class="code" href="strategy__fast_8c.html#a50267d552ca6f788254032e40046b770">DEPTH</a>);
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123         <span class="keywordflow">return</span> res.direction;
+<a name="l00124"></a>00124 }
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126 <a class="code" href="structs__result.html">result</a> max(<a class="code" href="structgrid__s.html">grid</a> g, <span class="keywordtype">int</span> depth)
+<a name="l00127"></a>00127 {
+<a name="l00128"></a>00128         <a class="code" href="structs__result.html">result</a> bestRes;
+<a name="l00129"></a>00129 
+<a name="l00130"></a>00130         <span class="comment">// pour chaque direction possible ont fait le traitement expected();</span>
+<a name="l00131"></a>00131         <a class="code" href="strategy__efficient_8c.html#a52c0bb596f45f00971509f248cb7bb43" title="fonction qui pour une direction calcule la valeur moyenne de toutes les grilles possibles et si le ré...">do_expected</a>(g, &amp;bestRes, LEFT, depth);
+<a name="l00132"></a>00132         <a class="code" href="strategy__efficient_8c.html#a52c0bb596f45f00971509f248cb7bb43" title="fonction qui pour une direction calcule la valeur moyenne de toutes les grilles possibles et si le ré...">do_expected</a>(g, &amp;bestRes, RIGHT, depth);
+<a name="l00133"></a>00133         <a class="code" href="strategy__efficient_8c.html#a52c0bb596f45f00971509f248cb7bb43" title="fonction qui pour une direction calcule la valeur moyenne de toutes les grilles possibles et si le ré...">do_expected</a>(g, &amp;bestRes, DOWN, depth);
+<a name="l00134"></a>00134         <a class="code" href="strategy__efficient_8c.html#a52c0bb596f45f00971509f248cb7bb43" title="fonction qui pour une direction calcule la valeur moyenne de toutes les grilles possibles et si le ré...">do_expected</a>(g, &amp;bestRes, UP, depth);
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136         <span class="keywordflow">return</span> bestRes;
+<a name="l00137"></a>00137 }
+<a name="l00138"></a>00138 
+<a name="l00147"></a><a class="code" href="strategy__fast_8c.html#a52c0bb596f45f00971509f248cb7bb43">00147</a> <span class="keywordtype">void</span> <a class="code" href="strategy__efficient_8c.html#a52c0bb596f45f00971509f248cb7bb43" title="fonction qui pour une direction calcule la valeur moyenne de toutes les grilles possibles et si le ré...">do_expected</a>(<a class="code" href="structgrid__s.html">grid</a> g, <a class="code" href="structs__result.html">result</a>* bestRes, <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> direction, <span class="keywordtype">int</span> depth)
+<a name="l00148"></a>00148 {
+<a name="l00149"></a>00149         <span class="keywordtype">double</span> expect = 0;
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151         <span class="comment">// création d&#39;une nouvelle grille sur laquelle on fera les statistiques</span>
+<a name="l00152"></a>00152         <a class="code" href="structgrid__s.html">grid</a> ng = <a class="code" href="grid_8c.html#ae372326b462fc49a3bce69369884670c" title="Initialise la structure de la grille.">new_grid</a>();
+<a name="l00153"></a>00153         <a class="code" href="grid_8c.html#a5ecc973ee0f89f27e7862250a60065ac" title="Clone la grille.">copy_grid</a>(g, ng);
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155         <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#a608b211341c2a77ddb0895a2cd19356b" title="Verify if a given movement is possible.">can_move</a>(ng, direction)) {
+<a name="l00156"></a>00156 
+<a name="l00157"></a>00157                 <a class="code" href="grid_8c.html#a78df69c4dd158308707969d0b0ea8e60" title="Move every tiles of the grid in the direction specified by the user.">do_move</a>(ng, direction);
+<a name="l00158"></a>00158                 expect = <a class="code" href="strategy__efficient_8c.html#a156d3217d29c33a433d9f46ff51ff4a8" title="fonction qui calcule la valeur de chaque grille qui peuvent être générées pour une direction et retou...">expected</a>(ng, depth);
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160                 <span class="keywordflow">if</span>(expect &gt;= bestRes-&gt;score)
+<a name="l00161"></a>00161                 {
+<a name="l00162"></a>00162                         bestRes-&gt;score = expect;
+<a name="l00163"></a>00163                         bestRes-&gt;direction = direction;
+<a name="l00164"></a>00164                 }
+<a name="l00165"></a>00165         }
+<a name="l00166"></a>00166 
+<a name="l00167"></a>00167         <a class="code" href="grid_8c.html#afdaf914c5f299c3444682915369f32bd" title="Détruit la grille et libère la mémoire allouée.">delete_grid</a>(ng);
+<a name="l00168"></a>00168 }
+<a name="l00169"></a>00169 
+<a name="l00177"></a><a class="code" href="strategy__fast_8c.html#a156d3217d29c33a433d9f46ff51ff4a8">00177</a> <span class="keywordtype">double</span> <a class="code" href="strategy__efficient_8c.html#a156d3217d29c33a433d9f46ff51ff4a8" title="fonction qui calcule la valeur de chaque grille qui peuvent être générées pour une direction et retou...">expected</a>(<a class="code" href="structgrid__s.html">grid</a> g, <span class="keywordtype">int</span> depth)
+<a name="l00178"></a>00178 {
+<a name="l00179"></a>00179         <span class="comment">// création du pointeur de fonction sur la fonction d&#39;évaluation de la grille</span>
+<a name="l00180"></a>00180         double (*evaluation)(<a class="code" href="structgrid__s.html">grid</a>);
+<a name="l00181"></a>00181         evaluation = eval;
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183         <span class="keywordtype">int</span> emptyCells = 0;             <span class="comment">// nombre de tuile vides</span>
+<a name="l00184"></a>00184         <span class="keywordtype">double</span> score_2 = 0.;    <span class="comment">//somme des scores si la tuile introduite est un 2</span>
+<a name="l00185"></a>00185         <a class="code" href="structs__result.html">result</a> res;
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187         <span class="comment">// pour chaque tuile vide on évalue la grille</span>
+<a name="l00188"></a>00188         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; GRID_SIDE; ++x) {
+<a name="l00189"></a>00189                 <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; GRID_SIDE; ++y) {
+<a name="l00190"></a>00190                         <span class="keywordflow">if</span>(<a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y) == 0){
+<a name="l00191"></a>00191                                 emptyCells++;
+<a name="l00192"></a>00192                                 <span class="comment">// si la tuile est vide on y met la valeur 1 et on fait eval()</span>
+<a name="l00193"></a>00193                                 <a class="code" href="grid_8c.html#a7f40efb6f37537ab76017b21e0af230b" title="Change tile&amp;#39;s value.">set_tile</a>(g, x, y, 1);
+<a name="l00194"></a>00194                                 score_2 += evaluation(g);
+<a name="l00195"></a>00195                                 <span class="comment">//</span>
+<a name="l00196"></a>00196                                 <span class="keywordflow">if</span>(depth &gt; 0)
+<a name="l00197"></a>00197                                 {
+<a name="l00198"></a>00198                                         res = max(g, depth - 1);
+<a name="l00199"></a>00199                                         score_2 += res.score;
+<a name="l00200"></a>00200                                 }
+<a name="l00201"></a>00201 
+<a name="l00202"></a>00202                                 <span class="comment">// on remet la tuile à 0</span>
+<a name="l00203"></a>00203                                 <a class="code" href="grid_8c.html#a7f40efb6f37537ab76017b21e0af230b" title="Change tile&amp;#39;s value.">set_tile</a>(g, x, y, 0);
+<a name="l00204"></a>00204                         }
+<a name="l00205"></a>00205                 }
+<a name="l00206"></a>00206         }
+<a name="l00207"></a>00207 
+<a name="l00208"></a>00208         <span class="comment">// on retourne le score moyen de la grille pour cette direction</span>
+<a name="l00209"></a>00209         <span class="keywordtype">double</span> score = (score_2) / emptyCells;
+<a name="l00210"></a>00210 
+<a name="l00211"></a>00211         <span class="keywordflow">return</span> score;
+<a name="l00212"></a>00212 }
+<a name="l00213"></a>00213 
+<a name="l00219"></a><a class="code" href="strategy__fast_8c.html#a5af63cedf69db3405e1e27939817b7b4">00219</a> <span class="keywordtype">double</span> <a class="code" href="strategy__efficient_8c.html#a5af63cedf69db3405e1e27939817b7b4" title="fonction qui évalue le poids de la grille">eval</a>(<a class="code" href="structgrid__s.html">grid</a> g) {
+<a name="l00220"></a>00220         <span class="comment">// emptyCells qui compte le nombre de tuiles vides</span>
+<a name="l00221"></a>00221         <span class="comment">// maxValue qui contient la plus grande valeur de la grille</span>
+<a name="l00222"></a>00222         <span class="keywordtype">int</span> emptyCells = 0, maxValue = 0;
+<a name="l00223"></a>00223 
+<a name="l00224"></a>00224         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; GRID_SIDE; ++x) {
+<a name="l00225"></a>00225                 <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; GRID_SIDE; ++y) {
+<a name="l00226"></a>00226                         <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y) == 0)
+<a name="l00227"></a>00227                                 emptyCells++;
+<a name="l00228"></a>00228                         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y) &gt; maxValue)
+<a name="l00229"></a>00229                                 maxValue = <a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y);
+<a name="l00230"></a>00230                 }
+<a name="l00231"></a>00231         }
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233         <span class="comment">// Coefficient d&#39;importance par rapport à la grille</span>
+<a name="l00234"></a>00234         <span class="keywordtype">double</span>  smoothWeight =  1.,
+<a name="l00235"></a>00235                         monoWeight = 2.,
+<a name="l00236"></a>00236                         emptyWeight = 1.,
+<a name="l00237"></a>00237                         maxWeight = 2.;
+<a name="l00238"></a>00238 
+<a name="l00239"></a>00239         <span class="keywordflow">return</span> <a class="code" href="strategy__efficient_8c.html#a85d81733ea3f4787157dc51da2c1c9b7" title="fonction qui donne une note comprise entre 1 et 0 sur la progressivité de la grille C&amp;#39;est-à-dire ...">progressive</a>(g) * smoothWeight + <a class="code" href="strategy__efficient_8c.html#a5eb8d4f08a65e5192d314a54fe20dc9f" title="fonction qui donne une note comprise entre 1 et 0 sur sur la régularité de la grille. c&amp;#39;est-à-dire si les valeurs se suivent, on préfèrera avoir une suite 2 - 4 - 8 - 16, plutôt que 2 - 16 - 64 - 128">regular</a>(g) * monoWeight
+<a name="l00240"></a>00240                         + emptyCells * emptyWeight + maxValue * maxWeight;
+<a name="l00241"></a>00241 }
+<a name="l00242"></a>00242 
+<a name="l00250"></a><a class="code" href="strategy__fast_8c.html#a5eb8d4f08a65e5192d314a54fe20dc9f">00250</a> <span class="keywordtype">double</span> <a class="code" href="strategy__efficient_8c.html#a5eb8d4f08a65e5192d314a54fe20dc9f" title="fonction qui donne une note comprise entre 1 et 0 sur sur la régularité de la grille. c&amp;#39;est-à-dire si les valeurs se suivent, on préfèrera avoir une suite 2 - 4 - 8 - 16, plutôt que 2 - 16 - 64 - 128">regular</a>(<a class="code" href="structgrid__s.html">grid</a> g) {
+<a name="l00251"></a>00251         <span class="keywordtype">double</span> bareme = 1. / (<a class="code" href="grid_8h.html#a11a5c4dfb9111e9a171cc4e8853f5663">GRID_SIDE</a> * GRID_SIDE);
+<a name="l00252"></a>00252         <span class="keywordtype">double</span> score = 1.;
+<a name="l00253"></a>00253 
+<a name="l00254"></a>00254         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; GRID_SIDE; ++x) {
+<a name="l00255"></a>00255                 <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; GRID_SIDE; ++y) {
+<a name="l00256"></a>00256                         <span class="comment">// on vérifie que la tuile ne soit pas nulle</span>
+<a name="l00257"></a>00257                         <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y) != 0) {
+<a name="l00258"></a>00258                                 <span class="comment">// la tuile sous la tuile courante doit être superieure de 1</span>
+<a name="l00259"></a>00259                                 <span class="keywordflow">if</span> (y &lt; GRID_SIDE - 1 &amp;&amp; <a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y + 1) != 0
+<a name="l00260"></a>00260                                                 &amp;&amp; (<a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y) + 1) != <a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y + 1))
+<a name="l00261"></a>00261                                         score -= bareme / 2.;
+<a name="l00262"></a>00262                                 <span class="comment">// la tuile à gauche de la tile courante doit être superieure de 1</span>
+<a name="l00263"></a>00263                                 <span class="keywordflow">if</span> (x &gt; 0 &amp;&amp; <a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x - 1, y) != 0
+<a name="l00264"></a>00264                                                 &amp;&amp; (<a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y) + 1) != <a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x - 1, y))
+<a name="l00265"></a>00265                                         score -= bareme / 2.;
+<a name="l00266"></a>00266                         }
+<a name="l00267"></a>00267                 }
+<a name="l00268"></a>00268         }
+<a name="l00269"></a>00269 
+<a name="l00270"></a>00270         <span class="keywordflow">return</span> score;
+<a name="l00271"></a>00271 }
+<a name="l00272"></a>00272 
+<a name="l00281"></a><a class="code" href="strategy__fast_8c.html#a85d81733ea3f4787157dc51da2c1c9b7">00281</a> <span class="keywordtype">double</span> <a class="code" href="strategy__efficient_8c.html#a85d81733ea3f4787157dc51da2c1c9b7" title="fonction qui donne une note comprise entre 1 et 0 sur la progressivité de la grille C&amp;#39;est-à-dire ...">progressive</a>(<a class="code" href="structgrid__s.html">grid</a> g) {
+<a name="l00282"></a>00282         <span class="keywordtype">double</span> bareme = 1. / (<a class="code" href="grid_8h.html#a11a5c4dfb9111e9a171cc4e8853f5663">GRID_SIDE</a> * 2);
+<a name="l00283"></a>00283         <span class="keywordtype">double</span> score = 1.;
+<a name="l00284"></a>00284 
+<a name="l00285"></a>00285         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; GRID_SIDE; ++x) {
+<a name="l00286"></a>00286                 <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; GRID_SIDE; ++y) {
+<a name="l00287"></a>00287                         <span class="comment">// on vérifie que la tuile ne soit pas nulle</span>
+<a name="l00288"></a>00288                         <span class="keywordflow">if</span> (<a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y) != 0) {
+<a name="l00289"></a>00289                                 <span class="comment">// la tuile sous la tuile courante doit être supérieure</span>
+<a name="l00290"></a>00290                                 <span class="keywordflow">if</span> (y &lt; GRID_SIDE - 1
+<a name="l00291"></a>00291                                                 &amp;&amp; <a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y) &gt; <a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y + 1))
+<a name="l00292"></a>00292                                         score -= bareme;
+<a name="l00293"></a>00293                                 <span class="comment">// la tuile à gauche de la tuile courante doit être supérieure</span>
+<a name="l00294"></a>00294                                 <span class="keywordflow">if</span> (x &gt; 0 &amp;&amp; <a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x, y) &gt; <a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g, x - 1, y))
+<a name="l00295"></a>00295                                         score -= bareme;
+<a name="l00296"></a>00296                         }
+<a name="l00297"></a>00297                 }
+<a name="l00298"></a>00298         }
+<a name="l00299"></a>00299 
+<a name="l00300"></a>00300         <span class="keywordflow">return</span> score;
+<a name="l00301"></a>00301 }
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Wed Apr 22 2015 06:41:11 pour EDD_project par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

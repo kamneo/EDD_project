@@ -1,0 +1,147 @@
+\hypertarget{2048__ncurses_8c}{
+\section{Référence du fichier src/2048/2048\_\-ncurses.c}
+\label{2048__ncurses_8c}\index{src/2048/2048\_\-ncurses.c@{src/2048/2048\_\-ncurses.c}}
+}
+
+
+Implemente l'affichage en console.  
+
+
+{\ttfamily \#include $<$ncurses.h$>$}\par
+{\ttfamily \#include $<$math.h$>$}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$time.h$>$}\par
+{\ttfamily \#include $<$grid.h$>$}\par
+\subsection*{Structures de données}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct__box__border__struct}{\_\-box\_\-border\_\-struct}
+\item 
+struct \hyperlink{struct___b_o_x__struct}{\_\-BOX\_\-struct}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{2048__ncurses_8c_a58e1803e6011957aeca94db5c9304243}{
+\#define {\bfseries NEW\_\-GAME}~1}
+\label{2048__ncurses_8c_a58e1803e6011957aeca94db5c9304243}
+
+\item 
+\hypertarget{2048__ncurses_8c_aaa04152359cdef02bb32141f7076df7a}{
+\#define {\bfseries TO\_\-CLEAR}~10}
+\label{2048__ncurses_8c_aaa04152359cdef02bb32141f7076df7a}
+
+\end{DoxyCompactItemize}
+\subsection*{Définition de type}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{2048__ncurses_8c_abcf001fc1d2c9a3c1846b2c78f6a6ae6}{
+typedef struct \hyperlink{struct__box__border__struct}{\_\-box\_\-border\_\-struct} {\bfseries BOX\_\-BORDER}}
+\label{2048__ncurses_8c_abcf001fc1d2c9a3c1846b2c78f6a6ae6}
+
+\item 
+\hypertarget{2048__ncurses_8c_a9516e261f7977e30eea4ba435bbf5a5a}{
+typedef struct \hyperlink{struct___b_o_x__struct}{\_\-BOX\_\-struct} {\bfseries BOX}}
+\label{2048__ncurses_8c_a9516e261f7977e30eea4ba435bbf5a5a}
+
+\end{DoxyCompactItemize}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{2048__ncurses_8c_ae04f96be964a2422a5111a6598e67d2a}{
+void \hyperlink{2048__ncurses_8c_ae04f96be964a2422a5111a6598e67d2a}{init\_\-win} ()}
+\label{2048__ncurses_8c_ae04f96be964a2422a5111a6598e67d2a}
+
+\begin{DoxyCompactList}\small\item\em initialise la fenêtre ncurses \item\end{DoxyCompactList}\item 
+\hypertarget{2048__ncurses_8c_a0e30680a2100fb961fcaa49903ec8b39}{
+void \hyperlink{2048__ncurses_8c_a0e30680a2100fb961fcaa49903ec8b39}{init\_\-box\_\-params} (\hyperlink{struct___b_o_x__struct}{BOX} $\ast$p\_\-box)}
+\label{2048__ncurses_8c_a0e30680a2100fb961fcaa49903ec8b39}
+
+\begin{DoxyCompactList}\small\item\em initialise les propriétés des box \item\end{DoxyCompactList}\item 
+void \hyperlink{2048__ncurses_8c_a675ce9079c4f93faacb06aa137b66f23}{create\_\-boxes} (\hyperlink{struct___b_o_x__struct}{BOX} $\ast$p\_\-box)
+\begin{DoxyCompactList}\small\item\em Créé la grille dans la fenêtre et tous les utilitaires d'arrière-\/plan. \item\end{DoxyCompactList}\item 
+void \hyperlink{2048__ncurses_8c_a6fd591d301ec14e9ea38df5c13237f41}{update\_\-boxes} (\hyperlink{struct___b_o_x__struct}{BOX} $\ast$p\_\-box, \hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em Met à jour le contenu de la grille affiché dans la fenêtre et supprime l'aide pour les utilisateurs. \item\end{DoxyCompactList}\item 
+int \hyperlink{2048__ncurses_8c_a7dab5fa66cb07f2676f33ac05f58daf7}{end\_\-game} (\hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em ferme la fenêtre créée par ncurses \& supprimes la grille \item\end{DoxyCompactList}\item 
+\hypertarget{2048__ncurses_8c_a5525580860c265f914177628234b7b8f}{
+unsigned long int {\bfseries pow\_\-of\_\-2} (\hyperlink{grid_8h_a9a1fe03e260de47d12663efab5b0eec0}{tile} t)}
+\label{2048__ncurses_8c_a5525580860c265f914177628234b7b8f}
+
+\item 
+\hypertarget{2048__ncurses_8c_a0ddf1224851353fc92bfbff6f499fa97}{
+int {\bfseries main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})}
+\label{2048__ncurses_8c_a0ddf1224851353fc92bfbff6f499fa97}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Implemente l'affichage en console. 1.0 
+
+Définition dans le fichier \hyperlink{2048__ncurses_8c_source}{2048\_\-ncurses.c}.
+
+
+
+\subsection{Documentation des fonctions}
+\hypertarget{2048__ncurses_8c_a675ce9079c4f93faacb06aa137b66f23}{
+\index{2048\_\-ncurses.c@{2048\_\-ncurses.c}!create\_\-boxes@{create\_\-boxes}}
+\index{create\_\-boxes@{create\_\-boxes}!2048_ncurses.c@{2048\_\-ncurses.c}}
+\subsubsection[{create\_\-boxes}]{\setlength{\rightskip}{0pt plus 5cm}void create\_\-boxes (
+\begin{DoxyParamCaption}
+\item[{{\bf BOX} $\ast$}]{ p\_\-box}
+\end{DoxyParamCaption}
+)}}
+\label{2048__ncurses_8c_a675ce9079c4f93faacb06aa137b66f23}
+
+
+Créé la grille dans la fenêtre et tous les utilitaires d'arrière-\/plan. 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em p\_\-box}]les propriétés des box de ncurses \end{DoxyParams}
+
+
+Définition à la ligne 156 du fichier 2048\_\-ncurses.c.
+
+\hypertarget{2048__ncurses_8c_a7dab5fa66cb07f2676f33ac05f58daf7}{
+\index{2048\_\-ncurses.c@{2048\_\-ncurses.c}!end\_\-game@{end\_\-game}}
+\index{end\_\-game@{end\_\-game}!2048_ncurses.c@{2048\_\-ncurses.c}}
+\subsubsection[{end\_\-game}]{\setlength{\rightskip}{0pt plus 5cm}int end\_\-game (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{2048__ncurses_8c_a7dab5fa66cb07f2676f33ac05f58daf7}
+
+
+ferme la fenêtre créée par ncurses \& supprimes la grille 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,la}]grille \end{DoxyParams}
+
+
+Définition à la ligne 236 du fichier 2048\_\-ncurses.c.
+
+\hypertarget{2048__ncurses_8c_a6fd591d301ec14e9ea38df5c13237f41}{
+\index{2048\_\-ncurses.c@{2048\_\-ncurses.c}!update\_\-boxes@{update\_\-boxes}}
+\index{update\_\-boxes@{update\_\-boxes}!2048_ncurses.c@{2048\_\-ncurses.c}}
+\subsubsection[{update\_\-boxes}]{\setlength{\rightskip}{0pt plus 5cm}void update\_\-boxes (
+\begin{DoxyParamCaption}
+\item[{{\bf BOX} $\ast$}]{ p\_\-box, }
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{2048__ncurses_8c_a6fd591d301ec14e9ea38df5c13237f41}
+
+
+Met à jour le contenu de la grille affiché dans la fenêtre et supprime l'aide pour les utilisateurs. 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em p\_\-box}]les porpriétés des box de ncurses \item[{\em g,la}]grille \end{DoxyParams}
+
+
+Définition à la ligne 194 du fichier 2048\_\-ncurses.c.
+

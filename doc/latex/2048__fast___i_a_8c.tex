@@ -1,0 +1,165 @@
+\hypertarget{2048__fast___i_a_8c}{
+\section{Référence du fichier src/2048/2048\_\-fast\_\-IA.c}
+\label{2048__fast___i_a_8c}\index{src/2048/2048\_\-fast\_\-IA.c@{src/2048/2048\_\-fast\_\-IA.c}}
+}
+
+
+Implemente lutilisation de l'IA.  
+
+
+{\ttfamily \#include $<$math.h$>$}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$stdio.h$>$}\par
+{\ttfamily \#include $<$time.h$>$}\par
+{\ttfamily \#include $<$strategy\_\-fast.h$>$}\par
+{\ttfamily \#include $<$grid.h$>$}\par
+{\ttfamily \#include \char`\"{}affichage.h\char`\"{}}\par
+{\ttfamily \#include $<$unistd.h$>$}\par
+\subsection*{Structures de données}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct__memory}{\_\-memory}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{2048__fast___i_a_8c_a58e1803e6011957aeca94db5c9304243}{NEW\_\-GAME}~1
+\item 
+\#define \hyperlink{2048__fast___i_a_8c_a4ce3e2af80a76d816ab7f8567ec4a65a}{MAX\_\-VALUE}~12
+\item 
+\#define \hyperlink{2048__fast___i_a_8c_af144c56be720021d0c3a8075b87ff9b5}{ROUND}~1
+\end{DoxyCompactItemize}
+\subsection*{Définition de type}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct__memory}{\_\-memory} \hyperlink{2048__fast___i_a_8c_a47bf80f6eb1a71728d6e0f9a4cad1325}{MEMORY}
+\end{DoxyCompactItemize}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{2048__fast___i_a_8c_ac1d5ccf7b4e165f5c807c7e5b8be500e}{
+void {\bfseries start\_\-chrono} ()}
+\label{2048__fast___i_a_8c_ac1d5ccf7b4e165f5c807c7e5b8be500e}
+
+\item 
+\hypertarget{2048__fast___i_a_8c_acae3f88cc9b9f893194aa655e8024e74}{
+void {\bfseries stop\_\-chrono} ()}
+\label{2048__fast___i_a_8c_acae3f88cc9b9f893194aa655e8024e74}
+
+\item 
+int \hyperlink{2048__fast___i_a_8c_a7dab5fa66cb07f2676f33ac05f58daf7}{end\_\-game} (\hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em ferme la fenêtre créée par ncurses \& supprime la grille \item\end{DoxyCompactList}\item 
+int \hyperlink{2048__fast___i_a_8c_accfe5f53e06ae90fa811acc02df1ed5f}{end\_\-game\_\-stat} (\hyperlink{struct__memory}{MEMORY} m, \hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em ferme la fenêtre créée par ncurses \& supprime la grille \& affiche les statistiques \item\end{DoxyCompactList}\item 
+\hypertarget{2048__fast___i_a_8c_a5525580860c265f914177628234b7b8f}{
+unsigned long int {\bfseries pow\_\-of\_\-2} (\hyperlink{grid_8h_a9a1fe03e260de47d12663efab5b0eec0}{tile} t)}
+\label{2048__fast___i_a_8c_a5525580860c265f914177628234b7b8f}
+
+\item 
+\hypertarget{2048__fast___i_a_8c_a0ddf1224851353fc92bfbff6f499fa97}{
+int {\bfseries main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})}
+\label{2048__fast___i_a_8c_a0ddf1224851353fc92bfbff6f499fa97}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{2048__fast___i_a_8c_a2cdd8dee607f9aeaa304693e8c033f57}{
+long int {\bfseries top\_\-chrono}}
+\label{2048__fast___i_a_8c_a2cdd8dee607f9aeaa304693e8c033f57}
+
+\item 
+\hypertarget{2048__fast___i_a_8c_a0b2caeb4b6f130be43e5a2f0267dd453}{
+int {\bfseries verbose} = 0}
+\label{2048__fast___i_a_8c_a0b2caeb4b6f130be43e5a2f0267dd453}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Implemente lutilisation de l'IA. 1.0 
+
+Définition dans le fichier \hyperlink{2048__fast___i_a_8c_source}{2048\_\-fast\_\-IA.c}.
+
+
+
+\subsection{Documentation des macros}
+\hypertarget{2048__fast___i_a_8c_a4ce3e2af80a76d816ab7f8567ec4a65a}{
+\index{2048\_\-fast\_\-IA.c@{2048\_\-fast\_\-IA.c}!MAX\_\-VALUE@{MAX\_\-VALUE}}
+\index{MAX\_\-VALUE@{MAX\_\-VALUE}!2048_fast_IA.c@{2048\_\-fast\_\-IA.c}}
+\subsubsection[{MAX\_\-VALUE}]{\setlength{\rightskip}{0pt plus 5cm}\#define MAX\_\-VALUE~12}}
+\label{2048__fast___i_a_8c_a4ce3e2af80a76d816ab7f8567ec4a65a}
+Taille de tableau de résultat 
+
+Définition à la ligne 24 du fichier 2048\_\-fast\_\-IA.c.
+
+\hypertarget{2048__fast___i_a_8c_a58e1803e6011957aeca94db5c9304243}{
+\index{2048\_\-fast\_\-IA.c@{2048\_\-fast\_\-IA.c}!NEW\_\-GAME@{NEW\_\-GAME}}
+\index{NEW\_\-GAME@{NEW\_\-GAME}!2048_fast_IA.c@{2048\_\-fast\_\-IA.c}}
+\subsubsection[{NEW\_\-GAME}]{\setlength{\rightskip}{0pt plus 5cm}\#define NEW\_\-GAME~1}}
+\label{2048__fast___i_a_8c_a58e1803e6011957aeca94db5c9304243}
+variable pour la boucle infinie 
+
+Définition à la ligne 19 du fichier 2048\_\-fast\_\-IA.c.
+
+\hypertarget{2048__fast___i_a_8c_af144c56be720021d0c3a8075b87ff9b5}{
+\index{2048\_\-fast\_\-IA.c@{2048\_\-fast\_\-IA.c}!ROUND@{ROUND}}
+\index{ROUND@{ROUND}!2048_fast_IA.c@{2048\_\-fast\_\-IA.c}}
+\subsubsection[{ROUND}]{\setlength{\rightskip}{0pt plus 5cm}\#define ROUND~1}}
+\label{2048__fast___i_a_8c_af144c56be720021d0c3a8075b87ff9b5}
+Nombre de partie 
+
+Définition à la ligne 29 du fichier 2048\_\-fast\_\-IA.c.
+
+
+
+\subsection{Documentation des définitions de type}
+\hypertarget{2048__fast___i_a_8c_a47bf80f6eb1a71728d6e0f9a4cad1325}{
+\index{2048\_\-fast\_\-IA.c@{2048\_\-fast\_\-IA.c}!MEMORY@{MEMORY}}
+\index{MEMORY@{MEMORY}!2048_fast_IA.c@{2048\_\-fast\_\-IA.c}}
+\subsubsection[{MEMORY}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \_\-memory}  {\bf MEMORY}}}
+\label{2048__fast___i_a_8c_a47bf80f6eb1a71728d6e0f9a4cad1325}
+MEMOIRE qui contient les scores cumulés des grilles jusqu'à ce que l'utilisateur quitte le programme et le nombre de fois que la valeur max est apparue 
+
+\subsection{Documentation des fonctions}
+\hypertarget{2048__fast___i_a_8c_a7dab5fa66cb07f2676f33ac05f58daf7}{
+\index{2048\_\-fast\_\-IA.c@{2048\_\-fast\_\-IA.c}!end\_\-game@{end\_\-game}}
+\index{end\_\-game@{end\_\-game}!2048_fast_IA.c@{2048\_\-fast\_\-IA.c}}
+\subsubsection[{end\_\-game}]{\setlength{\rightskip}{0pt plus 5cm}int end\_\-game (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{2048__fast___i_a_8c_a7dab5fa66cb07f2676f33ac05f58daf7}
+
+
+ferme la fenêtre créée par ncurses \& supprime la grille 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,la}]grille \end{DoxyParams}
+
+
+Définition à la ligne 136 du fichier 2048\_\-fast\_\-IA.c.
+
+\hypertarget{2048__fast___i_a_8c_accfe5f53e06ae90fa811acc02df1ed5f}{
+\index{2048\_\-fast\_\-IA.c@{2048\_\-fast\_\-IA.c}!end\_\-game\_\-stat@{end\_\-game\_\-stat}}
+\index{end\_\-game\_\-stat@{end\_\-game\_\-stat}!2048_fast_IA.c@{2048\_\-fast\_\-IA.c}}
+\subsubsection[{end\_\-game\_\-stat}]{\setlength{\rightskip}{0pt plus 5cm}int end\_\-game\_\-stat (
+\begin{DoxyParamCaption}
+\item[{{\bf MEMORY}}]{ m, }
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{2048__fast___i_a_8c_accfe5f53e06ae90fa811acc02df1ed5f}
+
+
+ferme la fenêtre créée par ncurses \& supprime la grille \& affiche les statistiques 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,la}]grille \item[{\em m}]mémoire \end{DoxyParams}
+
+
+Définition à la ligne 147 du fichier 2048\_\-fast\_\-IA.c.
+

@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>EDD_project: Référence du fichier src/2048/2048_sdl.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Portée&nbsp;globale</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<h1>Référence du fichier src/2048/2048_sdl.c</h1>  </div>
+</div>
+<div class="contents">
+
+<p>Implemente l'interface graphique.  
+<a href="#_details">Plus de détails...</a></p>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;math.h&gt;</code><br/>
+<code>#include &lt;<a class="el" href="grid_8h_source.html">grid.h</a>&gt;</code><br/>
+<code>#include &lt;time.h&gt;</code><br/>
+<code>#include &lt;<a class="el" href="sdl_8h_source.html">sdl.h</a>&gt;</code><br/>
+<code>#include &lt;SDL/SDL.h&gt;</code><br/>
+<code>#include &lt;SDL/SDL_ttf.h&gt;</code><br/>
+
+<p><a href="2048__sdl_8c_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ddf1224851353fc92bfbff6f499fa97"></a><!-- doxytag: member="2048_sdl.c::main" ref="a0ddf1224851353fc92bfbff6f499fa97" args="(int argc, char *argv[])" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, char *argv[])</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__sdl_8c.html#a2bc107134b93e6a64bd863d3c79fdd67">display</a> (<a class="el" href="structgrid__s.html">grid</a> g, TTF_Font *character_Font, SDL_Surface *screen, int heigth, int width)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fonction qui affiche la grille tout au long du jeux  <a href="#a2bc107134b93e6a64bd863d3c79fdd67"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__sdl_8c.html#afe346905dff37ced1efaf2b9a8fca9d0">endGame</a> (SDL_Surface *screen, int heigth, int width)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Fonction qui affiche un game over en plein milieu de l'écran.  <a href="#afe346905dff37ced1efaf2b9a8fca9d0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5525580860c265f914177628234b7b8f"></a><!-- doxytag: member="2048_sdl.c::pow_of_2" ref="a5525580860c265f914177628234b7b8f" args="(tile t)" -->
+unsigned long int&nbsp;</td><td class="memItemRight" valign="bottom"><b>pow_of_2</b> (<a class="el" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0">tile</a> t)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__sdl_8c.html#a5b81e43561c94735b5a5c6f5463225ab">blitSurface</a> (SDL_Surface *surface1, SDL_Surface *surface2, SDL_Rect pos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factorisation de code.  <a href="#a5b81e43561c94735b5a5c6f5463225ab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__sdl_8c.html#aaaccfe7d551151b0d00b91a5345379a1">initTabColor</a> (SDL_Surface *screen)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialisation du tableau, place des couleurs dans le format des couleurs sdl et le format choisit pour l'écran.  <a href="#aaaccfe7d551151b0d00b91a5345379a1"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Implemente l'interface graphique. </p>
+<p>1.0 </p>
+
+<p>Définition dans le fichier <a class="el" href="2048__sdl_8c_source.html">2048_sdl.c</a>.</p>
+<hr/><h2>Documentation des fonctions</h2>
+<a class="anchor" id="a5b81e43561c94735b5a5c6f5463225ab"></a><!-- doxytag: member="2048_sdl.c::blitSurface" ref="a5b81e43561c94735b5a5c6f5463225ab" args="(SDL_Surface *surface1, SDL_Surface *surface2, SDL_Rect pos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void blitSurface </td>
+          <td>(</td>
+          <td class="paramtype">SDL_Surface *&nbsp;</td>
+          <td class="paramname"> <em>surface1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Surface *&nbsp;</td>
+          <td class="paramname"> <em>surface2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Rect&nbsp;</td>
+          <td class="paramname"> <em>pos</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factorisation de code. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>surface1,surface</em>&nbsp;</td><td>sdl </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>surface2,surface</em>&nbsp;</td><td>sdl </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>pos,position</em>&nbsp;</td><td>ou coller </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="2048__sdl_8c_source.html#l00283">283</a> du fichier <a class="el" href="2048__sdl_8c_source.html">2048_sdl.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2bc107134b93e6a64bd863d3c79fdd67"></a><!-- doxytag: member="2048_sdl.c::display" ref="a2bc107134b93e6a64bd863d3c79fdd67" args="(grid g, TTF_Font *character_Font, SDL_Surface *screen, int heigth, int width)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void display </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TTF_Font *&nbsp;</td>
+          <td class="paramname"> <em>character_Font</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Surface *&nbsp;</td>
+          <td class="paramname"> <em>screen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>heigth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>width</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>fonction qui affiche la grille tout au long du jeux </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>character_Font,la</em>&nbsp;</td><td>police de caractere </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>screen,écrans</em>&nbsp;</td><td>principale </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>heigth,longueur</em>&nbsp;</td><td>de la fenetre </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>width,largeur</em>&nbsp;</td><td>de la fenetre </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="2048__sdl_8c_source.html#l00177">177</a> du fichier <a class="el" href="2048__sdl_8c_source.html">2048_sdl.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afe346905dff37ced1efaf2b9a8fca9d0"></a><!-- doxytag: member="2048_sdl.c::endGame" ref="afe346905dff37ced1efaf2b9a8fca9d0" args="(SDL_Surface *screen, int heigth, int width)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void endGame </td>
+          <td>(</td>
+          <td class="paramtype">SDL_Surface *&nbsp;</td>
+          <td class="paramname"> <em>screen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>heigth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>width</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Fonction qui affiche un game over en plein milieu de l'écran. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>screen,ecran</em>&nbsp;</td><td>principale </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>heigth,hauteur</em>&nbsp;</td><td>de l'écrans prncipale </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>width,largeur</em>&nbsp;</td><td>de l'ecrans principale </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="2048__sdl_8c_source.html#l00251">251</a> du fichier <a class="el" href="2048__sdl_8c_source.html">2048_sdl.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaaccfe7d551151b0d00b91a5345379a1"></a><!-- doxytag: member="2048_sdl.c::initTabColor" ref="aaaccfe7d551151b0d00b91a5345379a1" args="(SDL_Surface *screen)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void initTabColor </td>
+          <td>(</td>
+          <td class="paramtype">SDL_Surface *&nbsp;</td>
+          <td class="paramname"> <em>screen</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Initialisation du tableau, place des couleurs dans le format des couleurs sdl et le format choisit pour l'écran. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>screen</em>&nbsp;</td><td>ecrans principale </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="2048__sdl_8c_source.html#l00293">293</a> du fichier <a class="el" href="2048__sdl_8c_source.html">2048_sdl.c</a>.</p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Wed Apr 22 2015 06:41:11 pour EDD_project par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

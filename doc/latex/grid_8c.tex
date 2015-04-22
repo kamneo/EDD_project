@@ -1,0 +1,322 @@
+\hypertarget{grid_8c}{
+\section{Référence du fichier src/grid/grid.c}
+\label{grid_8c}\index{src/grid/grid.c@{src/grid/grid.c}}
+}
+
+
+Contient les stuctures du jeu 2048.  
+
+
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$stdio.h$>$}\par
+{\ttfamily \#include $<$math.h$>$}\par
+{\ttfamily \#include $<$time.h$>$}\par
+{\ttfamily \#include \char`\"{}grid.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}utilities.h\char`\"{}}\par
+\subsection*{Structures de données}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structgrid__s}{grid\_\-s}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{grid_8c_a5673f9e590f6403e3c98192ee6cb544d}{
+\#define {\bfseries NEGATIVE\_\-DIR}~-\/1}
+\label{grid_8c_a5673f9e590f6403e3c98192ee6cb544d}
+
+\item 
+\hypertarget{grid_8c_a1c068df4e6dc157011b52ed65f0ecaff}{
+\#define {\bfseries POSITIVE\_\-DIR}~1}
+\label{grid_8c_a1c068df4e6dc157011b52ed65f0ecaff}
+
+\end{DoxyCompactItemize}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structgrid__s}{grid} \hyperlink{grid_8c_ae372326b462fc49a3bce69369884670c}{new\_\-grid} ()
+\begin{DoxyCompactList}\small\item\em Initialise la structure de la grille. \item\end{DoxyCompactList}\item 
+void \hyperlink{grid_8c_afdaf914c5f299c3444682915369f32bd}{delete\_\-grid} (\hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em Détruit la grille et libère la mémoire allouée. \item\end{DoxyCompactList}\item 
+void \hyperlink{grid_8c_a5ecc973ee0f89f27e7862250a60065ac}{copy\_\-grid} (\hyperlink{structgrid__s}{grid} src, \hyperlink{structgrid__s}{grid} dst)
+\begin{DoxyCompactList}\small\item\em Clone la grille. \item\end{DoxyCompactList}\item 
+unsigned long int \hyperlink{grid_8c_a9ec3abff37c58e19fb31199e3777cfe6}{grid\_\-score} (\hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em Obtient le score de la grille. \item\end{DoxyCompactList}\item 
+\hyperlink{grid_8h_a9a1fe03e260de47d12663efab5b0eec0}{tile} \hyperlink{grid_8c_afb1c4ccf103d16fb4af6bddf0c77f1e9}{get\_\-tile} (\hyperlink{structgrid__s}{grid} g, int x, int y)
+\begin{DoxyCompactList}\small\item\em Obtient une tuile de la grille grâce aux coordonnées spécifiées. \item\end{DoxyCompactList}\item 
+void \hyperlink{grid_8c_a7f40efb6f37537ab76017b21e0af230b}{set\_\-tile} (\hyperlink{structgrid__s}{grid} g, int x, int y, \hyperlink{grid_8h_a9a1fe03e260de47d12663efab5b0eec0}{tile} t)
+\begin{DoxyCompactList}\small\item\em Change tile's value. \item\end{DoxyCompactList}\item 
+bool \hyperlink{grid_8c_a608b211341c2a77ddb0895a2cd19356b}{can\_\-move} (\hyperlink{structgrid__s}{grid} g, \hyperlink{grid_8h_a862c63b15eab5b0d2781cea356e5d935}{dir} d)
+\begin{DoxyCompactList}\small\item\em Verify if a given movement is possible. \item\end{DoxyCompactList}\item 
+bool \hyperlink{grid_8c_a7583a3f5a003d36f244a785ef1ce9980}{game\_\-over} (\hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em Verify game's status, if no more movement is possible the game is over. \item\end{DoxyCompactList}\item 
+void \hyperlink{grid_8c_a78df69c4dd158308707969d0b0ea8e60}{do\_\-move} (\hyperlink{structgrid__s}{grid} g, \hyperlink{grid_8h_a862c63b15eab5b0d2781cea356e5d935}{dir} d)
+\begin{DoxyCompactList}\small\item\em Move every tiles of the grid in the direction specified by the user. \item\end{DoxyCompactList}\item 
+void \hyperlink{grid_8c_a9939eca64d174ed621bee7e69afa88b0}{add\_\-tile} (\hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em Randomly add a tile in the grid in a free space when a movement is finished. With probability 9/10 the new tile has value 2 and with probability 1/10 the new tile has value 4. \item\end{DoxyCompactList}\item 
+void \hyperlink{grid_8c_ac0bc5106648c25c41fd8cb2198cdd48c}{play} (\hyperlink{structgrid__s}{grid} g, \hyperlink{grid_8h_a862c63b15eab5b0d2781cea356e5d935}{dir} d)
+\begin{DoxyCompactList}\small\item\em Play a direction in the grid. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Contient les stuctures du jeu 2048. 
+
+Définition dans le fichier \hyperlink{grid_8c_source}{grid.c}.
+
+
+
+\subsection{Documentation des fonctions}
+\hypertarget{grid_8c_a9939eca64d174ed621bee7e69afa88b0}{
+\index{grid.c@{grid.c}!add\_\-tile@{add\_\-tile}}
+\index{add\_\-tile@{add\_\-tile}!grid.c@{grid.c}}
+\subsubsection[{add\_\-tile}]{\setlength{\rightskip}{0pt plus 5cm}void add\_\-tile (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_a9939eca64d174ed621bee7e69afa88b0}
+
+
+Randomly add a tile in the grid in a free space when a movement is finished. With probability 9/10 the new tile has value 2 and with probability 1/10 the new tile has value 4. 
+
+aléatoirement une tuile dans la grille à un espace libre dont la valeur sera 2 ou 4 
+\begin{DoxyParams}{Paramètres}
+\item[{\em }]g, la grille  grille doit contenir au moins une tuile vide \end{DoxyParams}
+
+
+Définition à la ligne 205 du fichier grid.c.
+
+\hypertarget{grid_8c_a608b211341c2a77ddb0895a2cd19356b}{
+\index{grid.c@{grid.c}!can\_\-move@{can\_\-move}}
+\index{can\_\-move@{can\_\-move}!grid.c@{grid.c}}
+\subsubsection[{can\_\-move}]{\setlength{\rightskip}{0pt plus 5cm}bool can\_\-move (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{{\bf dir}}]{ d}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_a608b211341c2a77ddb0895a2cd19356b}
+
+
+Verify if a given movement is possible. 
+
+érifie si un mouvement donné est possible 
+\begin{DoxyParams}{Paramètres}
+\item[{\em }]g, la grille \item[{\em }]d, la direction \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+vrai si le mouvement est possible, faux sinon 
+\end{DoxyReturn}
+
+
+Définition à la ligne 121 du fichier grid.c.
+
+\hypertarget{grid_8c_a5ecc973ee0f89f27e7862250a60065ac}{
+\index{grid.c@{grid.c}!copy\_\-grid@{copy\_\-grid}}
+\index{copy\_\-grid@{copy\_\-grid}!grid.c@{grid.c}}
+\subsubsection[{copy\_\-grid}]{\setlength{\rightskip}{0pt plus 5cm}void copy\_\-grid (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ src, }
+\item[{{\bf grid}}]{ dst}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_a5ecc973ee0f89f27e7862250a60065ac}
+
+
+Clone la grille. 
+
+Clone the grid.
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em src}]la grille à copier (source) \item[{\em dst}]la grille copiée (destination) \end{DoxyParams}
+
+
+Définition à la ligne 78 du fichier grid.c.
+
+\hypertarget{grid_8c_afdaf914c5f299c3444682915369f32bd}{
+\index{grid.c@{grid.c}!delete\_\-grid@{delete\_\-grid}}
+\index{delete\_\-grid@{delete\_\-grid}!grid.c@{grid.c}}
+\subsubsection[{delete\_\-grid}]{\setlength{\rightskip}{0pt plus 5cm}void delete\_\-grid (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_afdaf914c5f299c3444682915369f32bd}
+
+
+Détruit la grille et libère la mémoire allouée. 
+
+Destroy the grid and free allocated memory.
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,la}]grille à détruire \end{DoxyParams}
+
+
+Définition à la ligne 66 du fichier grid.c.
+
+\hypertarget{grid_8c_a78df69c4dd158308707969d0b0ea8e60}{
+\index{grid.c@{grid.c}!do\_\-move@{do\_\-move}}
+\index{do\_\-move@{do\_\-move}!grid.c@{grid.c}}
+\subsubsection[{do\_\-move}]{\setlength{\rightskip}{0pt plus 5cm}void do\_\-move (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{{\bf dir}}]{ d}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_a78df69c4dd158308707969d0b0ea8e60}
+
+
+Move every tiles of the grid in the direction specified by the user. 
+
+éplace toutes les tuiles de la grille dans la direction spécifiée par l'utilisateur 
+\begin{DoxyParams}{Paramètres}
+\item[{\em g}]the grid \item[{\em d}]the chosen direction \end{DoxyParams}
+\begin{DoxyPrecond}{Précondition}
+the movement d must be possible (i.e. can\_\-move(g,d) == true). 
+\end{DoxyPrecond}
+
+
+Définition à la ligne 174 du fichier grid.c.
+
+\hypertarget{grid_8c_a7583a3f5a003d36f244a785ef1ce9980}{
+\index{grid.c@{grid.c}!game\_\-over@{game\_\-over}}
+\index{game\_\-over@{game\_\-over}!grid.c@{grid.c}}
+\subsubsection[{game\_\-over}]{\setlength{\rightskip}{0pt plus 5cm}bool game\_\-over (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_a7583a3f5a003d36f244a785ef1ce9980}
+
+
+Verify game's status, if no more movement is possible the game is over. 
+
+érifie le statut du jeu, s'il n'y a plus de mouvement possible, le jeu est perdu 
+\begin{DoxyParams}{Paramètres}
+\item[{\em }]g, la grille \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+vrai s'il n'y a plus de mouvement possible, faux sinon 
+\end{DoxyReturn}
+
+
+Définition à la ligne 163 du fichier grid.c.
+
+\hypertarget{grid_8c_afb1c4ccf103d16fb4af6bddf0c77f1e9}{
+\index{grid.c@{grid.c}!get\_\-tile@{get\_\-tile}}
+\index{get\_\-tile@{get\_\-tile}!grid.c@{grid.c}}
+\subsubsection[{get\_\-tile}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tile} get\_\-tile (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{int}]{ x, }
+\item[{int}]{ y}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_afb1c4ccf103d16fb4af6bddf0c77f1e9}
+
+
+Obtient une tuile de la grille grâce aux coordonnées spécifiées. 
+
+Get tile (log\_\-2-\/encoded) from the grid by specifying his coordinates.
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,la}]grille \item[{\em x}]et y, les coordonnées de la tile \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la tuile 
+\end{DoxyReturn}
+
+
+Définition à la ligne 101 du fichier grid.c.
+
+\hypertarget{grid_8c_a9ec3abff37c58e19fb31199e3777cfe6}{
+\index{grid.c@{grid.c}!grid\_\-score@{grid\_\-score}}
+\index{grid\_\-score@{grid\_\-score}!grid.c@{grid.c}}
+\subsubsection[{grid\_\-score}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long int grid\_\-score (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_a9ec3abff37c58e19fb31199e3777cfe6}
+
+
+Obtient le score de la grille. 
+
+Get game's score.
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,la}]grille \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+le score calculé pendant le jeu 
+\end{DoxyReturn}
+
+
+Définition à la ligne 91 du fichier grid.c.
+
+\hypertarget{grid_8c_ae372326b462fc49a3bce69369884670c}{
+\index{grid.c@{grid.c}!new\_\-grid@{new\_\-grid}}
+\index{new\_\-grid@{new\_\-grid}!grid.c@{grid.c}}
+\subsubsection[{new\_\-grid}]{\setlength{\rightskip}{0pt plus 5cm}{\bf grid} new\_\-grid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_ae372326b462fc49a3bce69369884670c}
+
+
+Initialise la structure de la grille. 
+
+Initialize grid structure.
+
+\begin{DoxyReturn}{Renvoie}
+une grille vide avec un score de 0 
+\end{DoxyReturn}
+
+
+Définition à la ligne 46 du fichier grid.c.
+
+\hypertarget{grid_8c_ac0bc5106648c25c41fd8cb2198cdd48c}{
+\index{grid.c@{grid.c}!play@{play}}
+\index{play@{play}!grid.c@{grid.c}}
+\subsubsection[{play}]{\setlength{\rightskip}{0pt plus 5cm}void play (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{{\bf dir}}]{ d}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_ac0bc5106648c25c41fd8cb2198cdd48c}
+
+
+Play a direction in the grid. 
+
+une direction dans la grille 
+\begin{DoxyParams}{Paramètres}
+\item[{\em }]g, la grille \item[{\em }]d, la direction  mouvement d doit être possible (c-\/à-\/d, can\_\-move(g,d) == true) \end{DoxyParams}
+
+
+Définition à la ligne 242 du fichier grid.c.
+
+\hypertarget{grid_8c_a7f40efb6f37537ab76017b21e0af230b}{
+\index{grid.c@{grid.c}!set\_\-tile@{set\_\-tile}}
+\index{set\_\-tile@{set\_\-tile}!grid.c@{grid.c}}
+\subsubsection[{set\_\-tile}]{\setlength{\rightskip}{0pt plus 5cm}void set\_\-tile (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{int}]{ x, }
+\item[{int}]{ y, }
+\item[{{\bf tile}}]{ t}
+\end{DoxyParamCaption}
+)}}
+\label{grid_8c_a7f40efb6f37537ab76017b21e0af230b}
+
+
+Change tile's value. 
+
+la valeure de la tuile 
+\begin{DoxyParams}{Paramètres}
+\item[{\em }]g, la grille \item[{\em x}]et y, les coordonnées de la tuile \item[{\em }]t, la nouvelle valeur de la tuile \end{DoxyParams}
+
+
+Définition à la ligne 111 du fichier grid.c.
+

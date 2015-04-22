@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>EDD_project: Référence du fichier src/2048/2048_ncurses.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Portée&nbsp;globale</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Structures de données</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Définition de type</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<h1>Référence du fichier src/2048/2048_ncurses.c</h1>  </div>
+</div>
+<div class="contents">
+
+<p>Implemente l'affichage en console.  
+<a href="#_details">Plus de détails...</a></p>
+<code>#include &lt;ncurses.h&gt;</code><br/>
+<code>#include &lt;math.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;time.h&gt;</code><br/>
+<code>#include &lt;<a class="el" href="grid_8h_source.html">grid.h</a>&gt;</code><br/>
+
+<p><a href="2048__ncurses_8c_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Structures de données</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__box__border__struct.html">_box_border_struct</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct___b_o_x__struct.html">_BOX_struct</a></td></tr>
+<tr><td colspan="2"><h2><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58e1803e6011957aeca94db5c9304243"></a><!-- doxytag: member="2048_ncurses.c::NEW_GAME" ref="a58e1803e6011957aeca94db5c9304243" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><b>NEW_GAME</b>&nbsp;&nbsp;&nbsp;1</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa04152359cdef02bb32141f7076df7a"></a><!-- doxytag: member="2048_ncurses.c::TO_CLEAR" ref="aaa04152359cdef02bb32141f7076df7a" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><b>TO_CLEAR</b>&nbsp;&nbsp;&nbsp;10</td></tr>
+<tr><td colspan="2"><h2><a name="typedef-members"></a>
+Définition de type</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcf001fc1d2c9a3c1846b2c78f6a6ae6"></a><!-- doxytag: member="2048_ncurses.c::BOX_BORDER" ref="abcf001fc1d2c9a3c1846b2c78f6a6ae6" args="" -->
+typedef struct <a class="el" href="struct__box__border__struct.html">_box_border_struct</a>&nbsp;</td><td class="memItemRight" valign="bottom"><b>BOX_BORDER</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9516e261f7977e30eea4ba435bbf5a5a"></a><!-- doxytag: member="2048_ncurses.c::BOX" ref="a9516e261f7977e30eea4ba435bbf5a5a" args="" -->
+typedef struct <a class="el" href="struct___b_o_x__struct.html">_BOX_struct</a>&nbsp;</td><td class="memItemRight" valign="bottom"><b>BOX</b></td></tr>
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae04f96be964a2422a5111a6598e67d2a"></a><!-- doxytag: member="2048_ncurses.c::init_win" ref="ae04f96be964a2422a5111a6598e67d2a" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__ncurses_8c.html#ae04f96be964a2422a5111a6598e67d2a">init_win</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">initialise la fenêtre ncurses <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e30680a2100fb961fcaa49903ec8b39"></a><!-- doxytag: member="2048_ncurses.c::init_box_params" ref="a0e30680a2100fb961fcaa49903ec8b39" args="(BOX *p_box)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__ncurses_8c.html#a0e30680a2100fb961fcaa49903ec8b39">init_box_params</a> (<a class="el" href="struct___b_o_x__struct.html">BOX</a> *p_box)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">initialise les propriétés des box <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__ncurses_8c.html#a675ce9079c4f93faacb06aa137b66f23">create_boxes</a> (<a class="el" href="struct___b_o_x__struct.html">BOX</a> *p_box)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Créé la grille dans la fenêtre et tous les utilitaires d'arrière-plan.  <a href="#a675ce9079c4f93faacb06aa137b66f23"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__ncurses_8c.html#a6fd591d301ec14e9ea38df5c13237f41">update_boxes</a> (<a class="el" href="struct___b_o_x__struct.html">BOX</a> *p_box, <a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Met à jour le contenu de la grille affiché dans la fenêtre et supprime l'aide pour les utilisateurs.  <a href="#a6fd591d301ec14e9ea38df5c13237f41"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="2048__ncurses_8c.html#a7dab5fa66cb07f2676f33ac05f58daf7">end_game</a> (<a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">ferme la fenêtre créée par ncurses &amp; supprimes la grille  <a href="#a7dab5fa66cb07f2676f33ac05f58daf7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5525580860c265f914177628234b7b8f"></a><!-- doxytag: member="2048_ncurses.c::pow_of_2" ref="a5525580860c265f914177628234b7b8f" args="(tile t)" -->
+unsigned long int&nbsp;</td><td class="memItemRight" valign="bottom"><b>pow_of_2</b> (<a class="el" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0">tile</a> t)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ddf1224851353fc92bfbff6f499fa97"></a><!-- doxytag: member="2048_ncurses.c::main" ref="a0ddf1224851353fc92bfbff6f499fa97" args="(int argc, char *argv[])" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, char *argv[])</td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Implemente l'affichage en console. </p>
+<p>1.0 </p>
+
+<p>Définition dans le fichier <a class="el" href="2048__ncurses_8c_source.html">2048_ncurses.c</a>.</p>
+<hr/><h2>Documentation des fonctions</h2>
+<a class="anchor" id="a675ce9079c4f93faacb06aa137b66f23"></a><!-- doxytag: member="2048_ncurses.c::create_boxes" ref="a675ce9079c4f93faacb06aa137b66f23" args="(BOX *p_box)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void create_boxes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct___b_o_x__struct.html">BOX</a> *&nbsp;</td>
+          <td class="paramname"> <em>p_box</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Créé la grille dans la fenêtre et tous les utilitaires d'arrière-plan. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p_box</em>&nbsp;</td><td>les propriétés des box de ncurses </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="2048__ncurses_8c_source.html#l00156">156</a> du fichier <a class="el" href="2048__ncurses_8c_source.html">2048_ncurses.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7dab5fa66cb07f2676f33ac05f58daf7"></a><!-- doxytag: member="2048_ncurses.c::end_game" ref="a7dab5fa66cb07f2676f33ac05f58daf7" args="(grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int end_game </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>ferme la fenêtre créée par ncurses &amp; supprimes la grille </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="2048__ncurses_8c_source.html#l00236">236</a> du fichier <a class="el" href="2048__ncurses_8c_source.html">2048_ncurses.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6fd591d301ec14e9ea38df5c13237f41"></a><!-- doxytag: member="2048_ncurses.c::update_boxes" ref="a6fd591d301ec14e9ea38df5c13237f41" args="(BOX *p_box, grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void update_boxes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct___b_o_x__struct.html">BOX</a> *&nbsp;</td>
+          <td class="paramname"> <em>p_box</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Met à jour le contenu de la grille affiché dans la fenêtre et supprime l'aide pour les utilisateurs. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>p_box</em>&nbsp;</td><td>les porpriétés des box de ncurses </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="2048__ncurses_8c_source.html#l00194">194</a> du fichier <a class="el" href="2048__ncurses_8c_source.html">2048_ncurses.c</a>.</p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Wed Apr 22 2015 06:41:11 pour EDD_project par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

@@ -1,0 +1,609 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>EDD_project: Référence du fichier src/grid/grid.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Portée&nbsp;globale</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Définition de type</a> &#124;
+<a href="#enum-members">Énumérations</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<h1>Référence du fichier src/grid/grid.h</h1>  </div>
+</div>
+<div class="contents">
+
+<p>Contains structures and functions needed to play 2048 game.  
+<a href="#_details">Plus de détails...</a></p>
+<code>#include &lt;stdbool.h&gt;</code><br/>
+
+<p><a href="grid_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a11a5c4dfb9111e9a171cc4e8853f5663">GRID_SIDE</a>&nbsp;&nbsp;&nbsp;4</td></tr>
+<tr><td colspan="2"><h2><a name="typedef-members"></a>
+Définition de type</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structgrid__s.html">grid_s</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a1de57b3be5a7cf6542078fcb2fd1e042">grid</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Contain game's status: tiles and current score.  <a href="#a1de57b3be5a7cf6542078fcb2fd1e042"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a1fe03e260de47d12663efab5b0eec0"></a><!-- doxytag: member="grid.h::tile" ref="a9a1fe03e260de47d12663efab5b0eec0" args="" -->
+typedef unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0">tile</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Log_2-encoded tile : 0 is empty, i is 2**i. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a862c63b15eab5b0d2781cea356e5d935"></a><!-- doxytag: member="grid.h::dir" ref="a862c63b15eab5b0d2781cea356e5d935" args="" -->
+typedef enum <a class="el" href="grid_8h.html#a5b6e2218bf53919bb521ce6a0bc95e80">dir_e</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">List of accepted movement in the game. <br/></td></tr>
+<tr><td colspan="2"><h2><a name="enum-members"></a>
+Énumérations</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a5b6e2218bf53919bb521ce6a0bc95e80">dir_e</a> { <b>UP</b>, 
+<b>LEFT</b>, 
+<b>DOWN</b>, 
+<b>RIGHT</b>
+ }</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>List of accepted movement in the game. </p>
+<br/></td></tr>
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#ae372326b462fc49a3bce69369884670c">new_grid</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialize grid structure.  <a href="#ae372326b462fc49a3bce69369884670c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#afdaf914c5f299c3444682915369f32bd">delete_grid</a> (<a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destroy the grid and free allocated memory.  <a href="#afdaf914c5f299c3444682915369f32bd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a5ecc973ee0f89f27e7862250a60065ac">copy_grid</a> (<a class="el" href="structgrid__s.html">grid</a> src, <a class="el" href="structgrid__s.html">grid</a> dst)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Clone the grid.  <a href="#a5ecc973ee0f89f27e7862250a60065ac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned long int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a9ec3abff37c58e19fb31199e3777cfe6">grid_score</a> (<a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get game's score.  <a href="#a9ec3abff37c58e19fb31199e3777cfe6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0">tile</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#afb1c4ccf103d16fb4af6bddf0c77f1e9">get_tile</a> (<a class="el" href="structgrid__s.html">grid</a> g, int x, int y)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get tile (log_2-encoded) from the grid by specifying his coordinates.  <a href="#afb1c4ccf103d16fb4af6bddf0c77f1e9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a7f40efb6f37537ab76017b21e0af230b">set_tile</a> (<a class="el" href="structgrid__s.html">grid</a> g, int x, int y, <a class="el" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0">tile</a> t)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Change tile's value.  <a href="#a7f40efb6f37537ab76017b21e0af230b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a608b211341c2a77ddb0895a2cd19356b">can_move</a> (<a class="el" href="structgrid__s.html">grid</a> g, <a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a> d)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Verify if a given movement is possible.  <a href="#a608b211341c2a77ddb0895a2cd19356b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a7583a3f5a003d36f244a785ef1ce9980">game_over</a> (<a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Verify game's status, if no more movement is possible the game is over.  <a href="#a7583a3f5a003d36f244a785ef1ce9980"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a78df69c4dd158308707969d0b0ea8e60">do_move</a> (<a class="el" href="structgrid__s.html">grid</a> g, <a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a> d)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Move every tiles of the grid in the direction specified by the user.  <a href="#a78df69c4dd158308707969d0b0ea8e60"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#a9939eca64d174ed621bee7e69afa88b0">add_tile</a> (<a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Randomly add a tile in the grid in a free space when a movement is finished. With probability 9/10 the new tile has value 2 and with probability 1/10 the new tile has value 4.  <a href="#a9939eca64d174ed621bee7e69afa88b0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="grid_8h.html#ac0bc5106648c25c41fd8cb2198cdd48c">play</a> (<a class="el" href="structgrid__s.html">grid</a> g, <a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a> d)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Play a direction in the grid.  <a href="#ac0bc5106648c25c41fd8cb2198cdd48c"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Contains structures and functions needed to play 2048 game. </p>
+
+<p>Définition dans le fichier <a class="el" href="grid_8h_source.html">grid.h</a>.</p>
+<hr/><h2>Documentation des macros</h2>
+<a class="anchor" id="a11a5c4dfb9111e9a171cc4e8853f5663"></a><!-- doxytag: member="grid.h::GRID_SIDE" ref="a11a5c4dfb9111e9a171cc4e8853f5663" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GRID_SIDE&nbsp;&nbsp;&nbsp;4</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Grid dimension </p>
+
+<p>Définition à la ligne <a class="el" href="grid_8h_source.html#l00012">12</a> du fichier <a class="el" href="grid_8h_source.html">grid.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des définitions de type</h2>
+<a class="anchor" id="a1de57b3be5a7cf6542078fcb2fd1e042"></a><!-- doxytag: member="grid.h::grid" ref="a1de57b3be5a7cf6542078fcb2fd1e042" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structgrid__s.html">grid_s</a>* <a class="el" href="structgrid__s.html">grid</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Contain game's status: tiles and current score. </p>
+<p>X 0 1 ... GRID_SIDE-1 +--+--+- ... -+--+ | | | ... + | 0 +--+--+- ... -+--+ | | | ... | | 1 +--+--+- ... -+--+ Y ... ... ... +--+--+- ... -+--+ | | | ... | | GRID_SIDE-1 +--+--+- ... -+--+ </p>
+
+<p>Définition à la ligne <a class="el" href="grid_8h_source.html#l00030">30</a> du fichier <a class="el" href="grid_8h_source.html">grid.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions</h2>
+<a class="anchor" id="a9939eca64d174ed621bee7e69afa88b0"></a><!-- doxytag: member="grid.h::add_tile" ref="a9939eca64d174ed621bee7e69afa88b0" args="(grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void add_tile </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Randomly add a tile in the grid in a free space when a movement is finished. With probability 9/10 the new tile has value 2 and with probability 1/10 the new tile has value 4. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>the grid </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Précondition:</b></dt><dd>grid g must contain at least one empty tile.</dd></dl>
+<p>aléatoirement une tuile dans la grille à un espace libre dont la valeur sera 2 ou 4 </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em></em>&nbsp;</td><td>g, la grille  grille doit contenir au moins une tuile vide </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00205">205</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a608b211341c2a77ddb0895a2cd19356b"></a><!-- doxytag: member="grid.h::can_move" ref="a608b211341c2a77ddb0895a2cd19356b" args="(grid g, dir d)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool can_move </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a>&nbsp;</td>
+          <td class="paramname"> <em>d</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verify if a given movement is possible. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>the grid </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>d</em>&nbsp;</td><td>movement's direction </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>true if the movement is possible, false else</dd></dl>
+<p>érifie si un mouvement donné est possible </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em></em>&nbsp;</td><td>g, la grille </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em></em>&nbsp;</td><td>d, la direction </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>vrai si le mouvement est possible, faux sinon </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00121">121</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5ecc973ee0f89f27e7862250a60065ac"></a><!-- doxytag: member="grid.h::copy_grid" ref="a5ecc973ee0f89f27e7862250a60065ac" args="(grid src, grid dst)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void copy_grid </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>dst</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Clone the grid. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>src</em>&nbsp;</td><td>the grid to copy </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>dst</em>&nbsp;</td><td>the copied grid</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Clone the grid.</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>src</em>&nbsp;</td><td>la grille à copier (source) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>dst</em>&nbsp;</td><td>la grille copiée (destination) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00078">78</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afdaf914c5f299c3444682915369f32bd"></a><!-- doxytag: member="grid.h::delete_grid" ref="afdaf914c5f299c3444682915369f32bd" args="(grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void delete_grid </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Destroy the grid and free allocated memory. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>the grid to destroy</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Destroy the grid and free allocated memory.</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille à détruire </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00066">66</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a78df69c4dd158308707969d0b0ea8e60"></a><!-- doxytag: member="grid.h::do_move" ref="a78df69c4dd158308707969d0b0ea8e60" args="(grid g, dir d)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void do_move </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a>&nbsp;</td>
+          <td class="paramname"> <em>d</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Move every tiles of the grid in the direction specified by the user. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>the grid </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>d</em>&nbsp;</td><td>the chosen direction </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Précondition:</b></dt><dd>the movement d must be possible (i.e. can_move(g,d) == true).</dd></dl>
+<p>éplace toutes les tuiles de la grille dans la direction spécifiée par l'utilisateur </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>the grid </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>d</em>&nbsp;</td><td>the chosen direction </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Précondition:</b></dt><dd>the movement d must be possible (i.e. can_move(g,d) == true). </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00174">174</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7583a3f5a003d36f244a785ef1ce9980"></a><!-- doxytag: member="grid.h::game_over" ref="a7583a3f5a003d36f244a785ef1ce9980" args="(grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool game_over </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verify game's status, if no more movement is possible the game is over. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>the grid </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>true if there is no more possible movements, false else</dd></dl>
+<p>érifie le statut du jeu, s'il n'y a plus de mouvement possible, le jeu est perdu </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em></em>&nbsp;</td><td>g, la grille </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>vrai s'il n'y a plus de mouvement possible, faux sinon </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00163">163</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afb1c4ccf103d16fb4af6bddf0c77f1e9"></a><!-- doxytag: member="grid.h::get_tile" ref="afb1c4ccf103d16fb4af6bddf0c77f1e9" args="(grid g, int x, int y)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0">tile</a> get_tile </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get tile (log_2-encoded) from the grid by specifying his coordinates. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>the grid </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>x</em>&nbsp;</td><td>and y tile's coordinates </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>the tile </dd></dl>
+<dl class="pre"><dt><b>Précondition:</b></dt><dd>0 &lt;= x &lt; GRID_SIDE and 0 &lt;= y &lt; GRID_SIDE</dd></dl>
+<p>Get tile (log_2-encoded) from the grid by specifying his coordinates.</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>x</em>&nbsp;</td><td>et y, les coordonnées de la tile </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>la tuile </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00101">101</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9ec3abff37c58e19fb31199e3777cfe6"></a><!-- doxytag: member="grid.h::grid_score" ref="a9ec3abff37c58e19fb31199e3777cfe6" args="(grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long int grid_score </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get game's score. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>the grid </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>the computed score during the game</dd></dl>
+<p>Get game's score.</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>le score calculé pendant le jeu </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00091">91</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae372326b462fc49a3bce69369884670c"></a><!-- doxytag: member="grid.h::new_grid" ref="ae372326b462fc49a3bce69369884670c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgrid__s.html">grid</a> new_grid </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Initialize grid structure. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>created an empty grid with score equal to 0</dd></dl>
+<p>Initialize grid structure.</p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>une grille vide avec un score de 0 </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00046">46</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac0bc5106648c25c41fd8cb2198cdd48c"></a><!-- doxytag: member="grid.h::play" ref="ac0bc5106648c25c41fd8cb2198cdd48c" args="(grid g, dir d)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void play </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a>&nbsp;</td>
+          <td class="paramname"> <em>d</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Play a direction in the grid. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>the grid </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>d</em>&nbsp;</td><td>the direction </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Précondition:</b></dt><dd>the movement d must be possible (i.e. can_move(g,d) == true).</dd></dl>
+<p>une direction dans la grille </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em></em>&nbsp;</td><td>g, la grille </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em></em>&nbsp;</td><td>d, la direction  mouvement d doit être possible (c-à-d, can_move(g,d) == true) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00242">242</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7f40efb6f37537ab76017b21e0af230b"></a><!-- doxytag: member="grid.h::set_tile" ref="a7f40efb6f37537ab76017b21e0af230b" args="(grid g, int x, int y, tile t)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void set_tile </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0">tile</a>&nbsp;</td>
+          <td class="paramname"> <em>t</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Change tile's value. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>the grid </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>x</em>&nbsp;</td><td>and y tile's coordinates </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>t</em>&nbsp;</td><td>new tile's value</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>la valeure de la tuile </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em></em>&nbsp;</td><td>g, la grille </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>x</em>&nbsp;</td><td>et y, les coordonnées de la tuile </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em></em>&nbsp;</td><td>t, la nouvelle valeur de la tuile </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="grid_8c_source.html#l00111">111</a> du fichier <a class="el" href="grid_8c_source.html">grid.c</a>.</p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Wed Apr 22 2015 06:41:11 pour EDD_project par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

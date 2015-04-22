@@ -1,0 +1,275 @@
+\hypertarget{strategy__efficient_8c}{
+\section{Référence du fichier src/strategy/strategy\_\-efficient.c}
+\label{strategy__efficient_8c}\index{src/strategy/strategy\_\-efficient.c@{src/strategy/strategy\_\-efficient.c}}
+}
+
+
+contient la stratégie longue  
+
+
+{\ttfamily \#include \char`\"{}strategy\_\-efficient.h\char`\"{}}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$assert.h$>$}\par
+{\ttfamily \#include $<$stdbool.h$>$}\par
+{\ttfamily \#include $<$stdio.h$>$}\par
+{\ttfamily \#include $<$math.h$>$}\par
+\subsection*{Structures de données}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structs__result}{s\_\-result}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{strategy__efficient_8c_a50267d552ca6f788254032e40046b770}{DEPTH}~2
+\end{DoxyCompactItemize}
+\subsection*{Définition de type}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{strategy__efficient_8c_a6216d3685b16cb6d2a7ffe76514a6eca}{
+typedef struct \hyperlink{structs__result}{s\_\-result} {\bfseries result}}
+\label{strategy__efficient_8c_a6216d3685b16cb6d2a7ffe76514a6eca}
+
+\end{DoxyCompactItemize}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{grid_8h_a862c63b15eab5b0d2781cea356e5d935}{dir} \hyperlink{strategy__efficient_8c_ac5f27f5e09e8dd0965001e7c8866c5f4}{strategy\_\-fast} (\hyperlink{structstrategy__s}{strategy} strat, \hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em stratégie basée sur expected max qui retourne la direction optimale à jouer \item\end{DoxyCompactList}\item 
+\hypertarget{strategy__efficient_8c_ab2706560ec2f4fad9b87f21b441c4380}{
+\hyperlink{structs__result}{result} {\bfseries max} (\hyperlink{structgrid__s}{grid} g, int depth)}
+\label{strategy__efficient_8c_ab2706560ec2f4fad9b87f21b441c4380}
+
+\item 
+double \hyperlink{strategy__efficient_8c_a5af63cedf69db3405e1e27939817b7b4}{eval} (\hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em fonction qui évalue le poids de la grille \item\end{DoxyCompactList}\item 
+double \hyperlink{strategy__efficient_8c_a85d81733ea3f4787157dc51da2c1c9b7}{progressive} (\hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em fonction qui donne une note comprise entre 1 et 0 sur la progressivité de la grille C'est-\/à-\/dire lorsque la valeur des cases augmente ou descend quelque soit la direction Ainsi, 2 -\/ 4 -\/ 8 -\/ 16 est acceptable, tout comme 32 -\/ 8 -\/ 4 -\/2. Mais 2 -\/ 8 -\/ 2 -\/ 16 ne l'est pas \item\end{DoxyCompactList}\item 
+double \hyperlink{strategy__efficient_8c_a5eb8d4f08a65e5192d314a54fe20dc9f}{regular} (\hyperlink{structgrid__s}{grid} g)
+\begin{DoxyCompactList}\small\item\em fonction qui donne une note comprise entre 1 et 0 sur sur la régularité de la grille. c'est-\/à-\/dire si les valeurs se suivent, on préfèrera avoir une suite 2 -\/ 4 -\/ 8 -\/ 16, plutôt que 2 -\/ 16 -\/ 64 -\/ 128 \item\end{DoxyCompactList}\item 
+void \hyperlink{strategy__efficient_8c_a52c0bb596f45f00971509f248cb7bb43}{do\_\-expected} (\hyperlink{structgrid__s}{grid} g, \hyperlink{structs__result}{result} $\ast$bestRes, \hyperlink{grid_8h_a862c63b15eab5b0d2781cea356e5d935}{dir} direction, int depth)
+\begin{DoxyCompactList}\small\item\em fonction qui pour une direction calcule la valeur moyenne de toutes les grilles possibles et si le résultat est plus grand que celui contenu dans la structure résultat modifie les champs de la structure avec les nouvelles valeurs (direction, score) \item\end{DoxyCompactList}\item 
+double \hyperlink{strategy__efficient_8c_a156d3217d29c33a433d9f46ff51ff4a8}{expected} (\hyperlink{structgrid__s}{grid} g, int depth)
+\begin{DoxyCompactList}\small\item\em fonction qui calcule la valeur de chaque grille qui peuvent être générées pour une direction et retourne le score moyen de toute ces grilles \item\end{DoxyCompactList}\item 
+void \hyperlink{strategy__efficient_8c_a6c1d996bbf6f49123a46d9b88454d0ab}{free\_\-memless\_\-strat} (\hyperlink{structstrategy__s}{strategy} strat)
+\item 
+\hyperlink{structstrategy__s}{strategy} \hyperlink{strategy__efficient_8c_afe9f3aaba0708df1c5387276d2a26ce3}{A2\_\-bonnet\_\-borde\_\-pinero\_\-efficient} ()
+\begin{DoxyCompactList}\small\item\em stratégie capable de jouer au 2048 en moins de 2 minutes \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+contient la stratégie longue 
+
+Définition dans le fichier \hyperlink{strategy__efficient_8c_source}{strategy\_\-efficient.c}.
+
+
+
+\subsection{Documentation des macros}
+\hypertarget{strategy__efficient_8c_a50267d552ca6f788254032e40046b770}{
+\index{strategy\_\-efficient.c@{strategy\_\-efficient.c}!DEPTH@{DEPTH}}
+\index{DEPTH@{DEPTH}!strategy_efficient.c@{strategy\_\-efficient.c}}
+\subsubsection[{DEPTH}]{\setlength{\rightskip}{0pt plus 5cm}\#define DEPTH~2}}
+\label{strategy__efficient_8c_a50267d552ca6f788254032e40046b770}
+brief la profondeur de calcul 
+
+Définition à la ligne 16 du fichier strategy\_\-efficient.c.
+
+
+
+\subsection{Documentation des fonctions}
+\hypertarget{strategy__efficient_8c_afe9f3aaba0708df1c5387276d2a26ce3}{
+\index{strategy\_\-efficient.c@{strategy\_\-efficient.c}!A2\_\-bonnet\_\-borde\_\-pinero\_\-efficient@{A2\_\-bonnet\_\-borde\_\-pinero\_\-efficient}}
+\index{A2\_\-bonnet\_\-borde\_\-pinero\_\-efficient@{A2\_\-bonnet\_\-borde\_\-pinero\_\-efficient}!strategy_efficient.c@{strategy\_\-efficient.c}}
+\subsubsection[{A2\_\-bonnet\_\-borde\_\-pinero\_\-efficient}]{\setlength{\rightskip}{0pt plus 5cm}{\bf strategy} A2\_\-bonnet\_\-borde\_\-pinero\_\-efficient (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{strategy__efficient_8c_afe9f3aaba0708df1c5387276d2a26ce3}
+
+
+stratégie capable de jouer au 2048 en moins de 2 minutes 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em s}]la structure stratégie \item[{\em g,la}]grille \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la direction optimale à jouer qui a été calculée par cette stratégie 
+\end{DoxyReturn}
+
+
+Définition à la ligne 39 du fichier strategy\_\-efficient.c.
+
+\hypertarget{strategy__efficient_8c_a52c0bb596f45f00971509f248cb7bb43}{
+\index{strategy\_\-efficient.c@{strategy\_\-efficient.c}!do\_\-expected@{do\_\-expected}}
+\index{do\_\-expected@{do\_\-expected}!strategy_efficient.c@{strategy\_\-efficient.c}}
+\subsubsection[{do\_\-expected}]{\setlength{\rightskip}{0pt plus 5cm}void do\_\-expected (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{{\bf result} $\ast$}]{ bestRes, }
+\item[{{\bf dir}}]{ direction, }
+\item[{int}]{ depth}
+\end{DoxyParamCaption}
+)}}
+\label{strategy__efficient_8c_a52c0bb596f45f00971509f248cb7bb43}
+
+
+fonction qui pour une direction calcule la valeur moyenne de toutes les grilles possibles et si le résultat est plus grand que celui contenu dans la structure résultat modifie les champs de la structure avec les nouvelles valeurs (direction, score) 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,la}]grille \item[{\em bestRes,un}]pointeur sur la structure resultat \item[{\em direction,la}]direction choisie\item[{\em g}]la grille \item[{\em bestRes}]un pointeur sur la structure résultat \item[{\em direction,la}]direction choisi \end{DoxyParams}
+
+
+Définition à la ligne 90 du fichier strategy\_\-efficient.c.
+
+\hypertarget{strategy__efficient_8c_a5af63cedf69db3405e1e27939817b7b4}{
+\index{strategy\_\-efficient.c@{strategy\_\-efficient.c}!eval@{eval}}
+\index{eval@{eval}!strategy_efficient.c@{strategy\_\-efficient.c}}
+\subsubsection[{eval}]{\setlength{\rightskip}{0pt plus 5cm}double eval (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{strategy__efficient_8c_a5af63cedf69db3405e1e27939817b7b4}
+
+
+fonction qui évalue le poids de la grille 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,qui}]est la grille à évaluer \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la valeur de la grille
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g}]qui est la grille à évaluer \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la valeur de la grille 
+\end{DoxyReturn}
+
+
+Définition à la ligne 170 du fichier strategy\_\-efficient.c.
+
+\hypertarget{strategy__efficient_8c_a156d3217d29c33a433d9f46ff51ff4a8}{
+\index{strategy\_\-efficient.c@{strategy\_\-efficient.c}!expected@{expected}}
+\index{expected@{expected}!strategy_efficient.c@{strategy\_\-efficient.c}}
+\subsubsection[{expected}]{\setlength{\rightskip}{0pt plus 5cm}double expected (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{int}]{ depth}
+\end{DoxyParamCaption}
+)}}
+\label{strategy__efficient_8c_a156d3217d29c33a433d9f46ff51ff4a8}
+
+
+fonction qui calcule la valeur de chaque grille qui peuvent être générées pour une direction et retourne le score moyen de toute ces grilles 
+
+fonction qui calcule la valeur de chaque grille qui peuvent etre générées pour une direction et retourne le score moyen de toutes ces grilles
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,la}]grille \item[{\em direction,la}]direction choisie \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la valeur moyenne de chaque grille dans une direction
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,la}]grille \item[{\em direction,la}]direction choisi \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la valeur moyenne de chaque grille dans une direction 
+\end{DoxyReturn}
+
+
+Définition à la ligne 120 du fichier strategy\_\-efficient.c.
+
+\hypertarget{strategy__efficient_8c_a6c1d996bbf6f49123a46d9b88454d0ab}{
+\index{strategy\_\-efficient.c@{strategy\_\-efficient.c}!free\_\-memless\_\-strat@{free\_\-memless\_\-strat}}
+\index{free\_\-memless\_\-strat@{free\_\-memless\_\-strat}!strategy_efficient.c@{strategy\_\-efficient.c}}
+\subsubsection[{free\_\-memless\_\-strat}]{\setlength{\rightskip}{0pt plus 5cm}void free\_\-memless\_\-strat (
+\begin{DoxyParamCaption}
+\item[{{\bf strategy}}]{ strat}
+\end{DoxyParamCaption}
+)}}
+\label{strategy__efficient_8c_a6c1d996bbf6f49123a46d9b88454d0ab}
+Naively frees the $<$strat$>$ pointer. 
+
+Définition à la ligne 34 du fichier strategy\_\-efficient.c.
+
+\hypertarget{strategy__efficient_8c_a85d81733ea3f4787157dc51da2c1c9b7}{
+\index{strategy\_\-efficient.c@{strategy\_\-efficient.c}!progressive@{progressive}}
+\index{progressive@{progressive}!strategy_efficient.c@{strategy\_\-efficient.c}}
+\subsubsection[{progressive}]{\setlength{\rightskip}{0pt plus 5cm}double progressive (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{strategy__efficient_8c_a85d81733ea3f4787157dc51da2c1c9b7}
+
+
+fonction qui donne une note comprise entre 1 et 0 sur la progressivité de la grille C'est-\/à-\/dire lorsque la valeur des cases augmente ou descend quelque soit la direction Ainsi, 2 -\/ 4 -\/ 8 -\/ 16 est acceptable, tout comme 32 -\/ 8 -\/ 4 -\/2. Mais 2 -\/ 8 -\/ 2 -\/ 16 ne l'est pas 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,qui}]est la grille à évaluer \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+le score quelle a obtenu
+\end{DoxyReturn}
+fonction qui donne une note comprise entre 1 et 0 sur sur la progressivité de la grille C'est-\/à-\/dire lorsque la valeur des cases augmente ou descend quelque soit la direction Ainsi, 2 -\/ 4 -\/ 8 -\/ 16 est acceptable, tout comme 32 -\/ 8 -\/ 4 -\/2. Mais 2 -\/ 8 -\/ 2 -\/ 16 ne l'est pas paramètre g, qui est la grille à évaluer retourne le score quelle a obtenu 
+
+Définition à la ligne 232 du fichier strategy\_\-efficient.c.
+
+\hypertarget{strategy__efficient_8c_a5eb8d4f08a65e5192d314a54fe20dc9f}{
+\index{strategy\_\-efficient.c@{strategy\_\-efficient.c}!regular@{regular}}
+\index{regular@{regular}!strategy_efficient.c@{strategy\_\-efficient.c}}
+\subsubsection[{regular}]{\setlength{\rightskip}{0pt plus 5cm}double regular (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{strategy__efficient_8c_a5eb8d4f08a65e5192d314a54fe20dc9f}
+
+
+fonction qui donne une note comprise entre 1 et 0 sur sur la régularité de la grille. c'est-\/à-\/dire si les valeurs se suivent, on préfèrera avoir une suite 2 -\/ 4 -\/ 8 -\/ 16, plutôt que 2 -\/ 16 -\/ 64 -\/ 128 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,qui}]est la grille à évaluer \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+le score qu'elle a obtenu
+\end{DoxyReturn}
+fonction qui donne une note comprise entre 1 et 0 sur sur la régularité de la grille c'est-\/à-\/dire si les valeurs se suivent, on préfèrera avoir une suite 2 -\/ 4 -\/ 8 -\/ 16, plutôt que 2 -\/ 16 -\/ 64 -\/ 128 paramètre g, qui est la grille à évaluer retourne le score qu'elle a obtenu 
+
+Définition à la ligne 201 du fichier strategy\_\-efficient.c.
+
+\hypertarget{strategy__efficient_8c_ac5f27f5e09e8dd0965001e7c8866c5f4}{
+\index{strategy\_\-efficient.c@{strategy\_\-efficient.c}!strategy\_\-fast@{strategy\_\-fast}}
+\index{strategy\_\-fast@{strategy\_\-fast}!strategy_efficient.c@{strategy\_\-efficient.c}}
+\subsubsection[{strategy\_\-fast}]{\setlength{\rightskip}{0pt plus 5cm}{\bf dir} strategy\_\-fast (
+\begin{DoxyParamCaption}
+\item[{{\bf strategy}}]{ strat, }
+\item[{{\bf grid}}]{ g}
+\end{DoxyParamCaption}
+)}}
+\label{strategy__efficient_8c_ac5f27f5e09e8dd0965001e7c8866c5f4}
+
+
+stratégie basée sur expected max qui retourne la direction optimale à jouer 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em strat}]la sutructure stratégie \item[{\em g,la}]grille \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la direction optimale à jouer qui a été calculée par cette stratégie
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em s,la}]sutructure stratégie \item[{\em g,la}]grille \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+la direction optimale à jouer qui a été calculée par cette stratégie 
+\end{DoxyReturn}
+
+
+Définition à la ligne 58 du fichier strategy\_\-efficient.c.
+

@@ -1,0 +1,187 @@
+\hypertarget{sdl_8h}{
+\section{Référence du fichier src/2048/sdl.h}
+\label{sdl_8h}\index{src/2048/sdl.h@{src/2048/sdl.h}}
+}
+
+
+Implemente l'interface graphique.  
+
+
+{\ttfamily \#include $<$SDL/SDL.h$>$}\par
+{\ttfamily \#include $<$SDL/SDL\_\-ttf.h$>$}\par
+{\ttfamily \#include $<$math.h$>$}\par
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{sdl_8h_ab5405bef50d9d47930710114064b7e5a}{NB\_\-COLOR}~13
+\item 
+\#define \hyperlink{sdl_8h_a62ecd70800687eb2d625af180c4210d7}{TILE\_\-SIZE}~130
+\item 
+\#define \hyperlink{sdl_8h_ac243bfa96aa2c28014159ff098bd2324}{EDGE}~10
+\item 
+\#define \hyperlink{sdl_8h_ac92dd7b91c9f204cfc5ad2c3f24cc6b0}{MAX\_\-CARACTERE}~50
+\item 
+\#define \hyperlink{sdl_8h_a1b20dd63f1feec45defaf76a9e5654cf}{CHARACTER\_\-SIZE}~40
+\end{DoxyCompactItemize}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{sdl_8h_aaaccfe7d551151b0d00b91a5345379a1}{initTabColor} (SDL\_\-Surface $\ast$screen)
+\begin{DoxyCompactList}\small\item\em Initialisation du tableau, place des couleurs dans le format des couleurs sdl et le format choisit pour l'écran. \item\end{DoxyCompactList}\item 
+\hypertarget{sdl_8h_a5525580860c265f914177628234b7b8f}{
+unsigned long int {\bfseries pow\_\-of\_\-2} (\hyperlink{grid_8h_a9a1fe03e260de47d12663efab5b0eec0}{tile} t)}
+\label{sdl_8h_a5525580860c265f914177628234b7b8f}
+
+\item 
+void \hyperlink{sdl_8h_a5b81e43561c94735b5a5c6f5463225ab}{blitSurface} (SDL\_\-Surface $\ast$surface1, SDL\_\-Surface $\ast$surface2, SDL\_\-Rect pos)
+\begin{DoxyCompactList}\small\item\em Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factorisation de code. \item\end{DoxyCompactList}\item 
+void \hyperlink{sdl_8h_a2bc107134b93e6a64bd863d3c79fdd67}{display} (\hyperlink{structgrid__s}{grid} g, TTF\_\-Font $\ast$character\_\-Font, SDL\_\-Surface $\ast$screen, int heigth, int width)
+\begin{DoxyCompactList}\small\item\em fonction qui affiche la grille tout au long du jeux \item\end{DoxyCompactList}\item 
+void \hyperlink{sdl_8h_afe346905dff37ced1efaf2b9a8fca9d0}{endGame} (SDL\_\-Surface $\ast$screen, int heigth, int width)
+\begin{DoxyCompactList}\small\item\em Fonction qui affiche un game over en plein milieu de l'écran. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Implemente l'interface graphique. 1.0 
+
+Définition dans le fichier \hyperlink{sdl_8h_source}{sdl.h}.
+
+
+
+\subsection{Documentation des macros}
+\hypertarget{sdl_8h_a1b20dd63f1feec45defaf76a9e5654cf}{
+\index{sdl.h@{sdl.h}!CHARACTER\_\-SIZE@{CHARACTER\_\-SIZE}}
+\index{CHARACTER\_\-SIZE@{CHARACTER\_\-SIZE}!sdl.h@{sdl.h}}
+\subsubsection[{CHARACTER\_\-SIZE}]{\setlength{\rightskip}{0pt plus 5cm}\#define CHARACTER\_\-SIZE~40}}
+\label{sdl_8h_a1b20dd63f1feec45defaf76a9e5654cf}
+taille de la police de caractere 
+
+Définition à la ligne 69 du fichier sdl.h.
+
+\hypertarget{sdl_8h_ac243bfa96aa2c28014159ff098bd2324}{
+\index{sdl.h@{sdl.h}!EDGE@{EDGE}}
+\index{EDGE@{EDGE}!sdl.h@{sdl.h}}
+\subsubsection[{EDGE}]{\setlength{\rightskip}{0pt plus 5cm}\#define EDGE~10}}
+\label{sdl_8h_ac243bfa96aa2c28014159ff098bd2324}
+nombre de pixels entre les tuiles 
+
+Définition à la ligne 59 du fichier sdl.h.
+
+\hypertarget{sdl_8h_ac92dd7b91c9f204cfc5ad2c3f24cc6b0}{
+\index{sdl.h@{sdl.h}!MAX\_\-CARACTERE@{MAX\_\-CARACTERE}}
+\index{MAX\_\-CARACTERE@{MAX\_\-CARACTERE}!sdl.h@{sdl.h}}
+\subsubsection[{MAX\_\-CARACTERE}]{\setlength{\rightskip}{0pt plus 5cm}\#define MAX\_\-CARACTERE~50}}
+\label{sdl_8h_ac92dd7b91c9f204cfc5ad2c3f24cc6b0}
+taille de la chaine de caractères des messages à afficher 
+
+Définition à la ligne 64 du fichier sdl.h.
+
+\hypertarget{sdl_8h_ab5405bef50d9d47930710114064b7e5a}{
+\index{sdl.h@{sdl.h}!NB\_\-COLOR@{NB\_\-COLOR}}
+\index{NB\_\-COLOR@{NB\_\-COLOR}!sdl.h@{sdl.h}}
+\subsubsection[{NB\_\-COLOR}]{\setlength{\rightskip}{0pt plus 5cm}\#define NB\_\-COLOR~13}}
+\label{sdl_8h_ab5405bef50d9d47930710114064b7e5a}
+nombre de couleurs disponibles 
+
+Définition à la ligne 49 du fichier sdl.h.
+
+\hypertarget{sdl_8h_a62ecd70800687eb2d625af180c4210d7}{
+\index{sdl.h@{sdl.h}!TILE\_\-SIZE@{TILE\_\-SIZE}}
+\index{TILE\_\-SIZE@{TILE\_\-SIZE}!sdl.h@{sdl.h}}
+\subsubsection[{TILE\_\-SIZE}]{\setlength{\rightskip}{0pt plus 5cm}\#define TILE\_\-SIZE~130}}
+\label{sdl_8h_a62ecd70800687eb2d625af180c4210d7}
+taille en pixels d'un côté d'une tuile 
+
+Définition à la ligne 54 du fichier sdl.h.
+
+
+
+\subsection{Documentation des fonctions}
+\hypertarget{sdl_8h_a5b81e43561c94735b5a5c6f5463225ab}{
+\index{sdl.h@{sdl.h}!blitSurface@{blitSurface}}
+\index{blitSurface@{blitSurface}!sdl.h@{sdl.h}}
+\subsubsection[{blitSurface}]{\setlength{\rightskip}{0pt plus 5cm}void blitSurface (
+\begin{DoxyParamCaption}
+\item[{SDL\_\-Surface $\ast$}]{ surface1, }
+\item[{SDL\_\-Surface $\ast$}]{ surface2, }
+\item[{SDL\_\-Rect}]{ pos}
+\end{DoxyParamCaption}
+)}}
+\label{sdl_8h_a5b81e43561c94735b5a5c6f5463225ab}
+
+
+Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factorisation de code. 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em surface1,surface}]sdl \item[{\em surface2,surface}]sdl \item[{\em pos,position}]ou coller \end{DoxyParams}
+
+
+Définition à la ligne 283 du fichier 2048\_\-sdl.c.
+
+\hypertarget{sdl_8h_a2bc107134b93e6a64bd863d3c79fdd67}{
+\index{sdl.h@{sdl.h}!display@{display}}
+\index{display@{display}!sdl.h@{sdl.h}}
+\subsubsection[{display}]{\setlength{\rightskip}{0pt plus 5cm}void display (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{TTF\_\-Font $\ast$}]{ character\_\-Font, }
+\item[{SDL\_\-Surface $\ast$}]{ screen, }
+\item[{int}]{ heigth, }
+\item[{int}]{ width}
+\end{DoxyParamCaption}
+)}}
+\label{sdl_8h_a2bc107134b93e6a64bd863d3c79fdd67}
+
+
+fonction qui affiche la grille tout au long du jeux 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em g,la}]grille \item[{\em character\_\-Font,la}]police de caractere \item[{\em screen,écrans}]principale \item[{\em heigth,longueur}]de la fenetre \item[{\em width,largeur}]de la fenetre \end{DoxyParams}
+
+
+Définition à la ligne 177 du fichier 2048\_\-sdl.c.
+
+\hypertarget{sdl_8h_afe346905dff37ced1efaf2b9a8fca9d0}{
+\index{sdl.h@{sdl.h}!endGame@{endGame}}
+\index{endGame@{endGame}!sdl.h@{sdl.h}}
+\subsubsection[{endGame}]{\setlength{\rightskip}{0pt plus 5cm}void endGame (
+\begin{DoxyParamCaption}
+\item[{SDL\_\-Surface $\ast$}]{ screen, }
+\item[{int}]{ heigth, }
+\item[{int}]{ width}
+\end{DoxyParamCaption}
+)}}
+\label{sdl_8h_afe346905dff37ced1efaf2b9a8fca9d0}
+
+
+Fonction qui affiche un game over en plein milieu de l'écran. 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em screen,ecran}]principale \item[{\em heigth,hauteur}]de l'écrans prncipale \item[{\em width,largeur}]de l'ecrans principale \end{DoxyParams}
+
+
+Définition à la ligne 251 du fichier 2048\_\-sdl.c.
+
+\hypertarget{sdl_8h_aaaccfe7d551151b0d00b91a5345379a1}{
+\index{sdl.h@{sdl.h}!initTabColor@{initTabColor}}
+\index{initTabColor@{initTabColor}!sdl.h@{sdl.h}}
+\subsubsection[{initTabColor}]{\setlength{\rightskip}{0pt plus 5cm}void initTabColor (
+\begin{DoxyParamCaption}
+\item[{SDL\_\-Surface $\ast$}]{ screen}
+\end{DoxyParamCaption}
+)}}
+\label{sdl_8h_aaaccfe7d551151b0d00b91a5345379a1}
+
+
+Initialisation du tableau, place des couleurs dans le format des couleurs sdl et le format choisit pour l'écran. 
+
+
+\begin{DoxyParams}{Paramètres}
+\item[{\em screen}]ecrans principale \end{DoxyParams}
+
+
+Définition à la ligne 293 du fichier 2048\_\-sdl.c.
+

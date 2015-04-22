@@ -1,0 +1,400 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>EDD_project: Référence du fichier src/strategy/strategy_efficient.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Portée&nbsp;globale</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Structures de données</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Définition de type</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<h1>Référence du fichier src/strategy/strategy_efficient.c</h1>  </div>
+</div>
+<div class="contents">
+
+<p>contient la stratégie longue  
+<a href="#_details">Plus de détails...</a></p>
+<code>#include &quot;<a class="el" href="strategy__efficient_8h_source.html">strategy_efficient.h</a>&quot;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;assert.h&gt;</code><br/>
+<code>#include &lt;stdbool.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;math.h&gt;</code><br/>
+
+<p><a href="strategy__efficient_8c_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="nested-classes"></a>
+Structures de données</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs__result.html">s_result</a></td></tr>
+<tr><td colspan="2"><h2><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="strategy__efficient_8c.html#a50267d552ca6f788254032e40046b770">DEPTH</a>&nbsp;&nbsp;&nbsp;2</td></tr>
+<tr><td colspan="2"><h2><a name="typedef-members"></a>
+Définition de type</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6216d3685b16cb6d2a7ffe76514a6eca"></a><!-- doxytag: member="strategy_efficient.c::result" ref="a6216d3685b16cb6d2a7ffe76514a6eca" args="" -->
+typedef struct <a class="el" href="structs__result.html">s_result</a>&nbsp;</td><td class="memItemRight" valign="bottom"><b>result</b></td></tr>
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="strategy__efficient_8c.html#ac5f27f5e09e8dd0965001e7c8866c5f4">strategy_fast</a> (<a class="el" href="structstrategy__s.html">strategy</a> strat, <a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">stratégie basée sur expected max qui retourne la direction optimale à jouer  <a href="#ac5f27f5e09e8dd0965001e7c8866c5f4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2706560ec2f4fad9b87f21b441c4380"></a><!-- doxytag: member="strategy_efficient.c::max" ref="ab2706560ec2f4fad9b87f21b441c4380" args="(grid g, int depth)" -->
+<a class="el" href="structs__result.html">result</a>&nbsp;</td><td class="memItemRight" valign="bottom"><b>max</b> (<a class="el" href="structgrid__s.html">grid</a> g, int depth)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="strategy__efficient_8c.html#a5af63cedf69db3405e1e27939817b7b4">eval</a> (<a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fonction qui évalue le poids de la grille  <a href="#a5af63cedf69db3405e1e27939817b7b4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="strategy__efficient_8c.html#a85d81733ea3f4787157dc51da2c1c9b7">progressive</a> (<a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fonction qui donne une note comprise entre 1 et 0 sur la progressivité de la grille C'est-à-dire lorsque la valeur des cases augmente ou descend quelque soit la direction Ainsi, 2 - 4 - 8 - 16 est acceptable, tout comme 32 - 8 - 4 -2. Mais 2 - 8 - 2 - 16 ne l'est pas  <a href="#a85d81733ea3f4787157dc51da2c1c9b7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="strategy__efficient_8c.html#a5eb8d4f08a65e5192d314a54fe20dc9f">regular</a> (<a class="el" href="structgrid__s.html">grid</a> g)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fonction qui donne une note comprise entre 1 et 0 sur sur la régularité de la grille. c'est-à-dire si les valeurs se suivent, on préfèrera avoir une suite 2 - 4 - 8 - 16, plutôt que 2 - 16 - 64 - 128  <a href="#a5eb8d4f08a65e5192d314a54fe20dc9f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="strategy__efficient_8c.html#a52c0bb596f45f00971509f248cb7bb43">do_expected</a> (<a class="el" href="structgrid__s.html">grid</a> g, <a class="el" href="structs__result.html">result</a> *bestRes, <a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a> direction, int depth)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fonction qui pour une direction calcule la valeur moyenne de toutes les grilles possibles et si le résultat est plus grand que celui contenu dans la structure résultat modifie les champs de la structure avec les nouvelles valeurs (direction, score)  <a href="#a52c0bb596f45f00971509f248cb7bb43"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="strategy__efficient_8c.html#a156d3217d29c33a433d9f46ff51ff4a8">expected</a> (<a class="el" href="structgrid__s.html">grid</a> g, int depth)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fonction qui calcule la valeur de chaque grille qui peuvent être générées pour une direction et retourne le score moyen de toute ces grilles  <a href="#a156d3217d29c33a433d9f46ff51ff4a8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="strategy__efficient_8c.html#a6c1d996bbf6f49123a46d9b88454d0ab">free_memless_strat</a> (<a class="el" href="structstrategy__s.html">strategy</a> strat)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structstrategy__s.html">strategy</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="strategy__efficient_8c.html#afe9f3aaba0708df1c5387276d2a26ce3">A2_bonnet_borde_pinero_efficient</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">stratégie capable de jouer au 2048 en moins de 2 minutes  <a href="#afe9f3aaba0708df1c5387276d2a26ce3"></a><br/></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>contient la stratégie longue </p>
+
+<p>Définition dans le fichier <a class="el" href="strategy__efficient_8c_source.html">strategy_efficient.c</a>.</p>
+<hr/><h2>Documentation des macros</h2>
+<a class="anchor" id="a50267d552ca6f788254032e40046b770"></a><!-- doxytag: member="strategy_efficient.c::DEPTH" ref="a50267d552ca6f788254032e40046b770" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEPTH&nbsp;&nbsp;&nbsp;2</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>brief la profondeur de calcul </p>
+
+<p>Définition à la ligne <a class="el" href="strategy__efficient_8c_source.html#l00016">16</a> du fichier <a class="el" href="strategy__efficient_8c_source.html">strategy_efficient.c</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions</h2>
+<a class="anchor" id="afe9f3aaba0708df1c5387276d2a26ce3"></a><!-- doxytag: member="strategy_efficient.c::A2_bonnet_borde_pinero_efficient" ref="afe9f3aaba0708df1c5387276d2a26ce3" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structstrategy__s.html">strategy</a> A2_bonnet_borde_pinero_efficient </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>stratégie capable de jouer au 2048 en moins de 2 minutes </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>s</em>&nbsp;</td><td>la structure stratégie </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>la direction optimale à jouer qui a été calculée par cette stratégie </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="strategy__efficient_8c_source.html#l00039">39</a> du fichier <a class="el" href="strategy__efficient_8c_source.html">strategy_efficient.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a52c0bb596f45f00971509f248cb7bb43"></a><!-- doxytag: member="strategy_efficient.c::do_expected" ref="a52c0bb596f45f00971509f248cb7bb43" args="(grid g, result *bestRes, dir direction, int depth)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void do_expected </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structs__result.html">result</a> *&nbsp;</td>
+          <td class="paramname"> <em>bestRes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a>&nbsp;</td>
+          <td class="paramname"> <em>direction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>depth</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>fonction qui pour une direction calcule la valeur moyenne de toutes les grilles possibles et si le résultat est plus grand que celui contenu dans la structure résultat modifie les champs de la structure avec les nouvelles valeurs (direction, score) </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bestRes,un</em>&nbsp;</td><td>pointeur sur la structure resultat </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>direction,la</em>&nbsp;</td><td>direction choisie</td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>la grille </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bestRes</em>&nbsp;</td><td>un pointeur sur la structure résultat </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>direction,la</em>&nbsp;</td><td>direction choisi </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="strategy__efficient_8c_source.html#l00090">90</a> du fichier <a class="el" href="strategy__efficient_8c_source.html">strategy_efficient.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5af63cedf69db3405e1e27939817b7b4"></a><!-- doxytag: member="strategy_efficient.c::eval" ref="a5af63cedf69db3405e1e27939817b7b4" args="(grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double eval </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>fonction qui évalue le poids de la grille </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,qui</em>&nbsp;</td><td>est la grille à évaluer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>la valeur de la grille</dd></dl>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g</em>&nbsp;</td><td>qui est la grille à évaluer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>la valeur de la grille </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="strategy__efficient_8c_source.html#l00170">170</a> du fichier <a class="el" href="strategy__efficient_8c_source.html">strategy_efficient.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a156d3217d29c33a433d9f46ff51ff4a8"></a><!-- doxytag: member="strategy_efficient.c::expected" ref="a156d3217d29c33a433d9f46ff51ff4a8" args="(grid g, int depth)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double expected </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>depth</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>fonction qui calcule la valeur de chaque grille qui peuvent être générées pour une direction et retourne le score moyen de toute ces grilles </p>
+<p>fonction qui calcule la valeur de chaque grille qui peuvent etre générées pour une direction et retourne le score moyen de toutes ces grilles</p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>direction,la</em>&nbsp;</td><td>direction choisie </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>la valeur moyenne de chaque grille dans une direction</dd></dl>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>direction,la</em>&nbsp;</td><td>direction choisi </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>la valeur moyenne de chaque grille dans une direction </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="strategy__efficient_8c_source.html#l00120">120</a> du fichier <a class="el" href="strategy__efficient_8c_source.html">strategy_efficient.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6c1d996bbf6f49123a46d9b88454d0ab"></a><!-- doxytag: member="strategy_efficient.c::free_memless_strat" ref="a6c1d996bbf6f49123a46d9b88454d0ab" args="(strategy strat)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void free_memless_strat </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structstrategy__s.html">strategy</a>&nbsp;</td>
+          <td class="paramname"> <em>strat</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Naively frees the &lt;strat&gt; pointer. </p>
+
+<p>Définition à la ligne <a class="el" href="strategy__efficient_8c_source.html#l00034">34</a> du fichier <a class="el" href="strategy__efficient_8c_source.html">strategy_efficient.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a85d81733ea3f4787157dc51da2c1c9b7"></a><!-- doxytag: member="strategy_efficient.c::progressive" ref="a85d81733ea3f4787157dc51da2c1c9b7" args="(grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double progressive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>fonction qui donne une note comprise entre 1 et 0 sur la progressivité de la grille C'est-à-dire lorsque la valeur des cases augmente ou descend quelque soit la direction Ainsi, 2 - 4 - 8 - 16 est acceptable, tout comme 32 - 8 - 4 -2. Mais 2 - 8 - 2 - 16 ne l'est pas </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,qui</em>&nbsp;</td><td>est la grille à évaluer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>le score quelle a obtenu</dd></dl>
+<p>fonction qui donne une note comprise entre 1 et 0 sur sur la progressivité de la grille C'est-à-dire lorsque la valeur des cases augmente ou descend quelque soit la direction Ainsi, 2 - 4 - 8 - 16 est acceptable, tout comme 32 - 8 - 4 -2. Mais 2 - 8 - 2 - 16 ne l'est pas paramètre g, qui est la grille à évaluer retourne le score quelle a obtenu </p>
+
+<p>Définition à la ligne <a class="el" href="strategy__efficient_8c_source.html#l00232">232</a> du fichier <a class="el" href="strategy__efficient_8c_source.html">strategy_efficient.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5eb8d4f08a65e5192d314a54fe20dc9f"></a><!-- doxytag: member="strategy_efficient.c::regular" ref="a5eb8d4f08a65e5192d314a54fe20dc9f" args="(grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double regular </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>fonction qui donne une note comprise entre 1 et 0 sur sur la régularité de la grille. c'est-à-dire si les valeurs se suivent, on préfèrera avoir une suite 2 - 4 - 8 - 16, plutôt que 2 - 16 - 64 - 128 </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>g,qui</em>&nbsp;</td><td>est la grille à évaluer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>le score qu'elle a obtenu</dd></dl>
+<p>fonction qui donne une note comprise entre 1 et 0 sur sur la régularité de la grille c'est-à-dire si les valeurs se suivent, on préfèrera avoir une suite 2 - 4 - 8 - 16, plutôt que 2 - 16 - 64 - 128 paramètre g, qui est la grille à évaluer retourne le score qu'elle a obtenu </p>
+
+<p>Définition à la ligne <a class="el" href="strategy__efficient_8c_source.html#l00201">201</a> du fichier <a class="el" href="strategy__efficient_8c_source.html">strategy_efficient.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac5f27f5e09e8dd0965001e7c8866c5f4"></a><!-- doxytag: member="strategy_efficient.c::strategy_fast" ref="ac5f27f5e09e8dd0965001e7c8866c5f4" args="(strategy strat, grid g)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935">dir</a> strategy_fast </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structstrategy__s.html">strategy</a>&nbsp;</td>
+          <td class="paramname"> <em>strat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structgrid__s.html">grid</a>&nbsp;</td>
+          <td class="paramname"> <em>g</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>stratégie basée sur expected max qui retourne la direction optimale à jouer </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>strat</em>&nbsp;</td><td>la sutructure stratégie </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>la direction optimale à jouer qui a été calculée par cette stratégie</dd></dl>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>s,la</em>&nbsp;</td><td>sutructure stratégie </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>g,la</em>&nbsp;</td><td>grille </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>la direction optimale à jouer qui a été calculée par cette stratégie </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="strategy__efficient_8c_source.html#l00058">58</a> du fichier <a class="el" href="strategy__efficient_8c_source.html">strategy_efficient.c</a>.</p>
+
+</div>
+</div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Wed Apr 22 2015 06:41:11 pour EDD_project par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

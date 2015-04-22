@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>EDD_project:  Fichier source de src/2048/2048_sdl_IA.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- Généré par Doxygen 1.7.1 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul class="tablist">
+      <li><a href="main.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Portée&nbsp;globale</span></a></li>
+    </ul>
+  </div>
+<div class="header">
+  <div class="headertitle">
+<h1>src/2048/2048_sdl_IA.c</h1>  </div>
+</div>
+<div class="contents">
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00002"></a>00002 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00003"></a>00003 <span class="preprocessor">#include &lt;math.h&gt;</span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;<a class="code" href="grid_8h.html" title="Contains structures and functions needed to play 2048 game.">grid.h</a>&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;time.h&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;<a class="code" href="strategy__fast_8h.html" title="contient la stratégie rapide">strategy_fast.h</a>&gt;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;<a class="code" href="sdl_8h.html" title="Implemente l&amp;#39;interface graphique.">sdl.h</a>&gt;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;SDL/SDL.h&gt;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;SDL/SDL_ttf.h&gt;</span>
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012         <span class="comment">/*Déclaration des variables*/</span>
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 <span class="keyword">static</span> <span class="keywordtype">char</span> s[MAX_CARACTERE];           <span class="comment">// créé la chaine de caractères qui accueillera les messages à afficher</span>
+<a name="l00015"></a>00015 <span class="keyword">static</span> Uint32 ColorsTab[NB_COLOR];      <span class="comment">// tableau de couleurs </span>
+<a name="l00016"></a>00016 <span class="keyword">static</span> SDL_Color blackColor = {0, 0, 0};                        <span class="comment">// couleur de police</span>
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018 <span class="comment">/* Main*/</span>
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020 <span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])
+<a name="l00021"></a>00021 {
+<a name="l00022"></a>00022         srand(time(NULL));                      <span class="comment">// on initialise srand</span>
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024         <span class="keywordtype">bool</span> game=<span class="keyword">true</span>;                         <span class="comment">// variable pour la boucle principale de la sdl</span>
+<a name="l00025"></a>00025         <span class="keywordtype">bool</span> next_round;                        <span class="comment">// valeur boolean est à vrai quand on veut continuer la partie</span>
+<a name="l00026"></a>00026         <a class="code" href="grid_8h.html#a862c63b15eab5b0d2781cea356e5d935" title="List of accepted movement in the game.">dir</a> direction;                          
+<a name="l00027"></a>00027         <a class="code" href="structstrategy__s.html">strategy</a> strat;                 <span class="comment">// instance de la stratégie// contient la direction à jouer pour chaque tour</span>
+<a name="l00028"></a>00028         <a class="code" href="structgrid__s.html">grid</a> g;
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030         <span class="keywordtype">int</span> width = (<a class="code" href="sdl_8h.html#a62ecd70800687eb2d625af180c4210d7">TILE_SIZE</a>*GRID_SIDE)+(<a class="code" href="sdl_8h.html#ac243bfa96aa2c28014159ff098bd2324">EDGE</a>*(<a class="code" href="grid_8h.html#a11a5c4dfb9111e9a171cc4e8853f5663">GRID_SIDE</a>+1));                 <span class="comment">// on initialise la taille de la fenêtre avec</span>
+<a name="l00031"></a>00031         <span class="keywordtype">int</span> heigth = (<a class="code" href="sdl_8h.html#a62ecd70800687eb2d625af180c4210d7">TILE_SIZE</a>*(<a class="code" href="grid_8h.html#a11a5c4dfb9111e9a171cc4e8853f5663">GRID_SIDE</a>+1))+(<a class="code" href="sdl_8h.html#ac243bfa96aa2c28014159ff098bd2324">EDGE</a>*(<a class="code" href="grid_8h.html#a11a5c4dfb9111e9a171cc4e8853f5663">GRID_SIDE</a>+1));            <span class="comment">// la taille des tuiles et la taille des EDGE(bordure)</span>
+<a name="l00032"></a>00032                                                                                                                                         <span class="comment">// on se prevoit une marge en dessous pour le score</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034                                                                                         <span class="comment">// les valeurs soustraites à la fin sont arbitraires afin de bien trouver le milieu</span>
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036         SDL_Surface *screen = NULL;                             <span class="comment">// Le pointeur qui va pointer la fenêtre principale</span>
+<a name="l00037"></a>00037         SDL_Event event;                                                <span class="comment">// initialisation des évenements</span>
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040         SDL_Init(SDL_INIT_VIDEO);                               <span class="comment">// initialise sdl</span>
+<a name="l00041"></a>00041         TTF_Init();                                                             <span class="comment">// initialisation de sdl_ttf (qui permet d&#39;écrire sur l&#39;écran)</span>
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043         TTF_Font *character_Font = NULL;                                                                <span class="comment">// initialisation de la police de caractères</span>
+<a name="l00044"></a>00044         character_Font= TTF_OpenFont(<span class="stringliteral">&quot;angelina.ttf&quot;</span> , <a class="code" href="sdl_8h.html#a1b20dd63f1feec45defaf76a9e5654cf">CHARACTER_SIZE</a>);  
+<a name="l00045"></a>00045   
+<a name="l00046"></a>00046         <span class="keywordflow">if</span>(SDL_Init(SDL_INIT_VIDEO)==-1)                                                <span class="comment">// on vérifie si sdl s&#39;est bien lancé</span>
+<a name="l00047"></a>00047         {
+<a name="l00048"></a>00048                 fprintf(stderr, <span class="stringliteral">&quot;erreur initialisation SDL&quot;</span>);
+<a name="l00049"></a>00049                 exit(EXIT_FAILURE);
+<a name="l00050"></a>00050         }
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052         <span class="comment">// On entre les caractéristiques de l&#39;écran (longueur,largeur,couleur codée sur 32bit, options de fonctionnement)</span>
+<a name="l00053"></a>00053         <span class="comment">// (SDL_HWSURFACE stocke les valeurs en ram et SDL_DOUBLEBUF évite le scintillement d&#39;image)</span>
+<a name="l00054"></a>00054     screen = SDL_SetVideoMode(width,heigth, 32, SDL_HWSURFACE | SDL_DOUBLEBUF); 
+<a name="l00055"></a>00055         
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057         <span class="keywordflow">if</span>(screen == NULL)              <span class="comment">// on vérifie si l&#39;écran s&#39;est bien initialisé</span>
+<a name="l00058"></a>00058         {
+<a name="l00059"></a>00059                 fprintf(stderr, <span class="stringliteral">&quot;Impossible de charger mode vidéo : %s\n&quot;</span>, SDL_GetError());
+<a name="l00060"></a>00060                 exit(EXIT_FAILURE);
+<a name="l00061"></a>00061         }
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063         <a class="code" href="2048__sdl_8c.html#aaaccfe7d551151b0d00b91a5345379a1" title="Initialisation du tableau, place des couleurs dans le format des couleurs sdl et le format choisit po...">initTabColor</a>(screen);           <span class="comment">// on initialise le tableau de couleurs pour qu&#39;elles soient dans un format</span>
+<a name="l00064"></a>00064                                                                 <span class="comment">// utilisable par sdl</span>
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066                 strat = <a class="code" href="strategy__fast_8c.html#ad1694220c538e60e4283248293fafaa4" title="stratégie capable de jouer au 2048 en moins de 10 secondes">A2_bonnet_borde_pinero_fast</a>();
+<a name="l00067"></a>00067   
+<a name="l00068"></a>00068         <span class="comment">/* Début de la boucle des évenements de sdl*/</span>
+<a name="l00069"></a>00069         <span class="keywordflow">while</span>(game)
+<a name="l00070"></a>00070         {
+<a name="l00071"></a>00071                 g=<a class="code" href="grid_8c.html#ae372326b462fc49a3bce69369884670c" title="Initialise la structure de la grille.">new_grid</a>();                           <span class="comment">//initialisation de la grille</span>
+<a name="l00072"></a>00072                 <a class="code" href="grid_8c.html#a9939eca64d174ed621bee7e69afa88b0" title="Randomly add a tile in the grid in a free space when a movement is finished. With probability 9/10 th...">add_tile</a>(g);
+<a name="l00073"></a>00073                 <a class="code" href="grid_8c.html#a9939eca64d174ed621bee7e69afa88b0" title="Randomly add a tile in the grid in a free space when a movement is finished. With probability 9/10 th...">add_tile</a>(g);
+<a name="l00074"></a>00074                 
+<a name="l00075"></a>00075                 next_round=<span class="keyword">true</span>;
+<a name="l00076"></a>00076                 <span class="keywordflow">while</span>(next_round)                       <span class="comment">//boucle de la partie</span>
+<a name="l00077"></a>00077                 {       
+<a name="l00078"></a>00078                         <a class="code" href="2048__sdl_8c.html#a2bc107134b93e6a64bd863d3c79fdd67" title="fonction qui affiche la grille tout au long du jeux">display</a>(g,character_Font,screen,heigth,width);
+<a name="l00079"></a>00079                 
+<a name="l00080"></a>00080                         direction = strat-&gt;<a class="code" href="structstrategy__s.html#ac4ec2cfabdd3e4b516c4164f83008809">play_move</a>(strat, g);
+<a name="l00081"></a>00081                         <a class="code" href="grid_8c.html#ac0bc5106648c25c41fd8cb2198cdd48c" title="Play a direction in the grid.">play</a>(g,direction);                                              <span class="comment">// on joue dans la direction sélectionnée</span>
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083                         <span class="comment">/* Boucle du game over */</span>
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085                         <span class="keywordflow">if</span>(<a class="code" href="grid_8c.html#a7583a3f5a003d36f244a785ef1ce9980" title="Verify game&amp;#39;s status, if no more movement is possible the game is over.">game_over</a>(g))
+<a name="l00086"></a>00086                         {
+<a name="l00087"></a>00087                                 <a class="code" href="2048__sdl_8c.html#a2bc107134b93e6a64bd863d3c79fdd67" title="fonction qui affiche la grille tout au long du jeux">display</a>(g,character_Font,screen,heigth,width);
+<a name="l00088"></a>00088                                 <a class="code" href="2048__sdl_8c.html#afe346905dff37ced1efaf2b9a8fca9d0" title="Fonction qui affiche un game over en plein milieu de l&amp;#39;écran.">endGame</a>(screen,heigth,width);                                           <span class="comment">// on affiche le game over</span>
+<a name="l00089"></a>00089                                 <span class="keywordflow">while</span> (next_round)                              <span class="comment">// on entre dans la boucle des évenements liés au game over</span>
+<a name="l00090"></a>00090                                 {
+<a name="l00091"></a>00091                                         SDL_WaitEvent(&amp;event);
+<a name="l00092"></a>00092                                         <span class="keywordflow">switch</span>(event.type)
+<a name="l00093"></a>00093                                         {
+<a name="l00094"></a>00094                                         <span class="keywordflow">case</span> SDL_QUIT:                                  <span class="comment">// ce sont globalement les mêmes évenements</span>
+<a name="l00095"></a>00095                                                 game=0;
+<a name="l00096"></a>00096                                                 next_round=<span class="keyword">false</span>;
+<a name="l00097"></a>00097                                                 <span class="keywordflow">break</span>;
+<a name="l00098"></a>00098                                         <span class="keywordflow">case</span> SDL_KEYDOWN:
+<a name="l00099"></a>00099                                                 <span class="keywordflow">switch</span>(event.key.keysym.sym)
+<a name="l00100"></a>00100                                                 {
+<a name="l00101"></a>00101                                                 <span class="keywordflow">case</span> SDLK_ESCAPE:
+<a name="l00102"></a>00102                                                         game=0;
+<a name="l00103"></a>00103                                                         next_round=<span class="keyword">false</span>;
+<a name="l00104"></a>00104                                                         <span class="keywordflow">break</span>;
+<a name="l00105"></a>00105                                                 <span class="keywordflow">case</span> SDLK_r:
+<a name="l00106"></a>00106                                                         next_round=<span class="keyword">false</span>;
+<a name="l00107"></a>00107                                                         <span class="keywordflow">break</span>;
+<a name="l00108"></a>00108                                                 <span class="keywordflow">default</span>:
+<a name="l00109"></a>00109                                                         <span class="keywordflow">continue</span>;
+<a name="l00110"></a>00110                                                 }
+<a name="l00111"></a>00111                                         <span class="keywordflow">break</span>;
+<a name="l00112"></a>00112                                         }
+<a name="l00113"></a>00113                                 }<span class="comment">// fin while game_over</span>
+<a name="l00114"></a>00114                         }<span class="comment">//fin if game over</span>
+<a name="l00115"></a>00115                                         
+<a name="l00116"></a>00116                 
+<a name="l00117"></a>00117                 }<span class="comment">// fin while next_round</span>
+<a name="l00118"></a>00118                 <a class="code" href="grid_8c.html#afdaf914c5f299c3444682915369f32bd" title="Détruit la grille et libère la mémoire allouée.">delete_grid</a>(g);                                         <span class="comment">// on détruit la grille entre les deux whiles</span>
+<a name="l00119"></a>00119         }<span class="comment">// fin while game </span>
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121         TTF_CloseFont (character_Font);                 <span class="comment">// free de la police de caractères</span>
+<a name="l00122"></a>00122         SDL_FreeSurface(screen);                                <span class="comment">// free de la surface ecran</span>
+<a name="l00123"></a>00123         TTF_Quit();                                                             <span class="comment">// on ferme ttf</span>
+<a name="l00124"></a>00124         SDL_Quit();                                                     <span class="comment">// on ferme sdl</span>
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126         <span class="keywordflow">return</span> EXIT_SUCCESS;
+<a name="l00127"></a>00127 }
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129 
+<a name="l00130"></a>00130 <span class="comment">/* fonction affichant l&#39;écran de jeu */</span>
+<a name="l00131"></a>00131 <span class="keywordtype">void</span> <a class="code" href="2048__sdl_8c.html#a2bc107134b93e6a64bd863d3c79fdd67" title="fonction qui affiche la grille tout au long du jeux">display</a>(<a class="code" href="structgrid__s.html">grid</a> g, TTF_Font *character_Font, SDL_Surface *screen,<span class="keywordtype">int</span> heigth,<span class="keywordtype">int</span> width)
+<a name="l00132"></a>00132 {
+<a name="l00133"></a>00133         SDL_FillRect(screen,NULL,ColorsTab[<a class="code" href="sdl_8h.html#ab5405bef50d9d47930710114064b7e5a">NB_COLOR</a>-1]);                <span class="comment">//on réinitialise l&#39;écran pour ne pas reécrire par dessus    </span>
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135         SDL_Rect posTile;                                                                               <span class="comment">// Cette variable accueillera les positions où on collera les tuiles sur l&#39;écran</span>
+<a name="l00136"></a>00136         SDL_Rect posTexte;                                                                              <span class="comment">// Cette variable accueillera les positions où on collera les textes sur l&#39;écran</span>
+<a name="l00137"></a>00137         SDL_Surface *tile_Sdl = NULL;                                                   <span class="comment">// Surface correspondant aux tuiles</span>
+<a name="l00138"></a>00138         SDL_Surface *texte = NULL;                                                              <span class="comment">// Surface de texte</span>
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140         <span class="keywordtype">int</span> valTile;                                                                                    <span class="comment">// contiendra les valeurs des tuiles</span>
+<a name="l00141"></a>00141 
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143 <span class="comment">/*      Affichage des tiles */</span>
+<a name="l00144"></a>00144         <span class="keywordflow">for</span>(<span class="keywordtype">int</span> x=0;x&lt;GRID_SIDE;x++)                                                    <span class="comment">// Boucle de parcourt de la grille</span>
+<a name="l00145"></a>00145         {
+<a name="l00146"></a>00146                 <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y=0;y&lt;GRID_SIDE;y++)
+<a name="l00147"></a>00147                 {
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149                         tile_Sdl=SDL_CreateRGBSurface(SDL_HWSURFACE,<a class="code" href="sdl_8h.html#a62ecd70800687eb2d625af180c4210d7">TILE_SIZE</a>,<a class="code" href="sdl_8h.html#a62ecd70800687eb2d625af180c4210d7">TILE_SIZE</a>,32,0,0,0,0);    <span class="comment">// on créé la surface en mode 32bit et de taille tile_size</span>
+<a name="l00150"></a>00150                         valTile=<a class="code" href="grid_8c.html#afb1c4ccf103d16fb4af6bddf0c77f1e9" title="Obtient une tuile de la grille grâce aux coordonnées spécifiées.">get_tile</a>(g,x,y);                                                                                                                <span class="comment">// on recupère la valeur de la tuile</span>
+<a name="l00151"></a>00151                         SDL_FillRect(tile_Sdl,NULL,ColorsTab[valTile%(<a class="code" href="sdl_8h.html#ab5405bef50d9d47930710114064b7e5a">NB_COLOR</a>-1)]);                                    <span class="comment">// on colorie la surface de la couleur correspondante à sa valeur      </span>
+<a name="l00152"></a>00152                         sprintf(s,<span class="stringliteral">&quot;%ld&quot;</span>,pow_of_2(valTile));                                                                                             <span class="comment">// on transforme notre valeur de tuile en chaine de caractères</span>
+<a name="l00153"></a>00153                         posTile.y=(<a class="code" href="sdl_8h.html#ac243bfa96aa2c28014159ff098bd2324">EDGE</a>*(x+1))+<a class="code" href="sdl_8h.html#a62ecd70800687eb2d625af180c4210d7">TILE_SIZE</a>*x;                                                                                             <span class="comment">// on génère la position en fonction de EDGE(bordure) et tile_size</span>
+<a name="l00154"></a>00154                         posTile.x=(<a class="code" href="sdl_8h.html#ac243bfa96aa2c28014159ff098bd2324">EDGE</a>*(y+1))+<a class="code" href="sdl_8h.html#a62ecd70800687eb2d625af180c4210d7">TILE_SIZE</a>*y;
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156                         <span class="keywordflow">if</span>(valTile!=0)
+<a name="l00157"></a>00157                         {
+<a name="l00158"></a>00158                                 texte= TTF_RenderText_Blended(character_Font, s, blackColor);                           <span class="comment">// on génère la surface à partir de la chaine de caractères</span>
+<a name="l00159"></a>00159                                 posTexte.x=(<a class="code" href="sdl_8h.html#a62ecd70800687eb2d625af180c4210d7">TILE_SIZE</a>/2)-(texte-&gt;w/2);                                                                          <span class="comment">// on initialise la posTexte au milieu de la tuile et qui se redecale toute seule</span>
+<a name="l00160"></a>00160                                 posTexte.y=(<a class="code" href="sdl_8h.html#a62ecd70800687eb2d625af180c4210d7">TILE_SIZE</a>/2)-(texte-&gt;h/2);
+<a name="l00161"></a>00161                                 <a class="code" href="2048__sdl_8c.html#a5b81e43561c94735b5a5c6f5463225ab" title="Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factoris...">blitSurface</a>(tile_Sdl,texte,posTexte);                                                                           <span class="comment">// on libère la surface de texte</span>
+<a name="l00162"></a>00162                         }
+<a name="l00163"></a>00163                         <a class="code" href="2048__sdl_8c.html#a5b81e43561c94735b5a5c6f5463225ab" title="Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factoris...">blitSurface</a>(screen,tile_Sdl,posTile);
+<a name="l00164"></a>00164                 }
+<a name="l00165"></a>00165         }<span class="comment">//fin de boucle for</span>
+<a name="l00166"></a>00166 
+<a name="l00167"></a>00167         <span class="comment">/*Cette partie marche comme la précédente sauf que l&#39;on va déterminer les positions de manière plus arbitraire, à savoir:</span>
+<a name="l00168"></a>00168 <span class="comment">                le score : au milieu de la place qu&#39;il nous reste sous les tuiles</span>
+<a name="l00169"></a>00169 <span class="comment">                le restart : en bas à gauche de la place restante</span>
+<a name="l00170"></a>00170 <span class="comment">                le quit : en haut à gauche de la place restante </span>
+<a name="l00171"></a>00171 <span class="comment">        */</span>
+<a name="l00172"></a>00172 
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174         <span class="comment">/* Affichage du score */</span>
+<a name="l00175"></a>00175         sprintf(s,<span class="stringliteral">&quot;score : %lu&quot;</span>,<a class="code" href="grid_8c.html#a9ec3abff37c58e19fb31199e3777cfe6" title="Obtient le score de la grille.">grid_score</a>(g));
+<a name="l00176"></a>00176         texte= TTF_RenderText_Blended(character_Font, s, blackColor);
+<a name="l00177"></a>00177         posTexte.y=heigth-(<a class="code" href="sdl_8h.html#a62ecd70800687eb2d625af180c4210d7">TILE_SIZE</a>/2)-(texte-&gt;h/2);   
+<a name="l00178"></a>00178         posTexte.x=width/2-(texte-&gt;w/2);
+<a name="l00179"></a>00179         <a class="code" href="2048__sdl_8c.html#a5b81e43561c94735b5a5c6f5463225ab" title="Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factoris...">blitSurface</a>(screen,texte,posTexte);
+<a name="l00180"></a>00180 
+<a name="l00181"></a>00181         <span class="comment">/* Affichage du restart */</span>
+<a name="l00182"></a>00182         sprintf(s,<span class="stringliteral">&quot;press r to restart&quot;</span>);
+<a name="l00183"></a>00183         texte= TTF_RenderText_Blended(character_Font, s, blackColor);
+<a name="l00184"></a>00184         posTexte.y=heigth-(<a class="code" href="sdl_8h.html#a62ecd70800687eb2d625af180c4210d7">TILE_SIZE</a>/3);
+<a name="l00185"></a>00185         posTexte.x=EDGE;
+<a name="l00186"></a>00186         <a class="code" href="2048__sdl_8c.html#a5b81e43561c94735b5a5c6f5463225ab" title="Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factoris...">blitSurface</a>(screen,texte,posTexte);
+<a name="l00187"></a>00187 
+<a name="l00188"></a>00188         <span class="comment">/* Affichage du quit */</span>
+<a name="l00189"></a>00189         sprintf(s,<span class="stringliteral">&quot;press ESC to quit&quot;</span>);
+<a name="l00190"></a>00190         texte= TTF_RenderText_Blended(character_Font, s, blackColor);
+<a name="l00191"></a>00191         posTexte.y=heigth-(TILE_SIZE);
+<a name="l00192"></a>00192         posTexte.x=EDGE;
+<a name="l00193"></a>00193         <a class="code" href="2048__sdl_8c.html#a5b81e43561c94735b5a5c6f5463225ab" title="Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factoris...">blitSurface</a>(screen,texte,posTexte);
+<a name="l00194"></a>00194 
+<a name="l00195"></a>00195         SDL_Flip(screen); <span class="comment">//mise-à-jour de écran</span>
+<a name="l00196"></a>00196 }
+<a name="l00197"></a>00197 
+<a name="l00198"></a>00198 
+<a name="l00199"></a>00199 <span class="comment">/* Fonction qui affiche un game over en plein milieu de l&#39;écran */</span>
+<a name="l00200"></a>00200 <span class="keywordtype">void</span> <a class="code" href="2048__sdl_8c.html#afe346905dff37ced1efaf2b9a8fca9d0" title="Fonction qui affiche un game over en plein milieu de l&amp;#39;écran.">endGame</a>( SDL_Surface *screen,<span class="keywordtype">int</span> heigth,<span class="keywordtype">int</span> width)
+<a name="l00201"></a>00201 {
+<a name="l00202"></a>00202         TTF_Font *character_Font = NULL;
+<a name="l00203"></a>00203         character_Font= TTF_OpenFont(<span class="stringliteral">&quot;angelina.ttf&quot;</span> , <a class="code" href="sdl_8h.html#a1b20dd63f1feec45defaf76a9e5654cf">CHARACTER_SIZE</a>*3);        
+<a name="l00204"></a>00204         SDL_Rect posTexte;
+<a name="l00205"></a>00205         SDL_Surface *texte = NULL;
+<a name="l00206"></a>00206         sprintf(s,<span class="stringliteral">&quot;GAME OVER&quot;</span>);
+<a name="l00207"></a>00207         texte= TTF_RenderText_Blended(character_Font, s, blackColor);
+<a name="l00208"></a>00208         posTexte.y=heigth/2-(texte-&gt;h/2);
+<a name="l00209"></a>00209         posTexte.x=width/2-(texte-&gt;w/2);
+<a name="l00210"></a>00210         <a class="code" href="2048__sdl_8c.html#a5b81e43561c94735b5a5c6f5463225ab" title="Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factoris...">blitSurface</a>(screen,texte,posTexte);
+<a name="l00211"></a>00211         TTF_CloseFont (character_Font);
+<a name="l00212"></a>00212 
+<a name="l00213"></a>00213         SDL_Flip(screen);
+<a name="l00214"></a>00214 }
+<a name="l00215"></a>00215 
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217 
+<a name="l00218"></a>00218 <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span> pow_of_2(<a class="code" href="grid_8h.html#a9a1fe03e260de47d12663efab5b0eec0" title="Log_2-encoded tile : 0 is empty, i is 2**i.">tile</a> t)
+<a name="l00219"></a>00219 {
+<a name="l00220"></a>00220         <span class="keywordflow">if</span> (t == 0)     
+<a name="l00221"></a>00221                 <span class="keywordflow">return</span> t;
+<a name="l00222"></a>00222         <span class="keywordflow">return</span> pow(2, t);
+<a name="l00223"></a>00223 }
+<a name="l00224"></a>00224 
+<a name="l00225"></a>00225 <span class="comment">/*      Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre</span>
+<a name="l00226"></a>00226 <span class="comment">        Permet un peu de factorisation de code.*/</span>
+<a name="l00227"></a>00227 <span class="keywordtype">void</span> <a class="code" href="2048__sdl_8c.html#a5b81e43561c94735b5a5c6f5463225ab" title="Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre Permet un peu de factoris...">blitSurface</a>(SDL_Surface *surface1,SDL_Surface *surface2,SDL_Rect pos)
+<a name="l00228"></a>00228 {
+<a name="l00229"></a>00229 SDL_BlitSurface(surface2, NULL, surface1, &amp;pos);
+<a name="l00230"></a>00230 SDL_FreeSurface(surface2);
+<a name="l00231"></a>00231 }
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233 <span class="comment">/* Initialisation du tableau, place des couleurs dans le format des couleurs sdl et le format choisit pour l&#39;écran */</span>
+<a name="l00234"></a>00234 <span class="keywordtype">void</span> <a class="code" href="2048__sdl_8c.html#aaaccfe7d551151b0d00b91a5345379a1" title="Initialisation du tableau, place des couleurs dans le format des couleurs sdl et le format choisit po...">initTabColor</a>(SDL_Surface *screen)
+<a name="l00235"></a>00235 {
+<a name="l00236"></a>00236         ColorsTab[0]=SDL_MapRGB(screen-&gt;format, 206, 206, 206);         <span class="comment">//couleur des tuiles vides</span>
+<a name="l00237"></a>00237         ColorsTab[1]=SDL_MapRGB(screen-&gt;format, 254, 254, 226);         <span class="comment">// couleur des tuiles à 2      </span>
+<a name="l00238"></a>00238         ColorsTab[2]=SDL_MapRGB(screen-&gt;format, 253, 241, 184);         <span class="comment">// couleur des tuiles à 4</span>
+<a name="l00239"></a>00239         ColorsTab[3]=SDL_MapRGB(screen-&gt;format, 255, 203, 96);          <span class="comment">//etc...</span>
+<a name="l00240"></a>00240         ColorsTab[4]=SDL_MapRGB(screen-&gt;format, 254, 163, 71);
+<a name="l00241"></a>00241         ColorsTab[5]=SDL_MapRGB(screen-&gt;format, 231, 62, 1);
+<a name="l00242"></a>00242         ColorsTab[6]=SDL_MapRGB(screen-&gt;format, 255, 255, 107);
+<a name="l00243"></a>00243         ColorsTab[7]=SDL_MapRGB(screen-&gt;format, 255, 215, 0);
+<a name="l00244"></a>00244         ColorsTab[8]=SDL_MapRGB(screen-&gt;format, 255, 255, 0);
+<a name="l00245"></a>00245         ColorsTab[9]=SDL_MapRGB(screen-&gt;format, 255, 73, 1);
+<a name="l00246"></a>00246         ColorsTab[10]=SDL_MapRGB(screen-&gt;format, 247, 35, 12);
+<a name="l00247"></a>00247         ColorsTab[11]=SDL_MapRGB(screen-&gt;format, 255, 0, 0);
+<a name="l00248"></a>00248         ColorsTab[12]=SDL_MapRGB(screen-&gt;format, 186, 186, 186);                <span class="comment">// couleur de l&#39;écran</span>
+<a name="l00249"></a>00249 }
+</pre></div></div>
+</div>
+<hr class="footer"/><address class="footer"><small>Généré le Wed Apr 22 2015 06:41:11 pour EDD_project par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
+</body>
+</html>

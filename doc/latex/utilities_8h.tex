@@ -1,0 +1,129 @@
+\hypertarget{utilities_8h}{
+\section{Référence du fichier src/grid/utilities.h}
+\label{utilities_8h}\index{src/grid/utilities.h@{src/grid/utilities.h}}
+}
+
+
+contient les fonctions nécessaires pour compiler grid.o  
+
+
+{\ttfamily \#include \char`\"{}grid.h\char`\"{}}\par
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{utilities_8h_a2592643d8317d5236b2e7a4028c08cc2}{line\_\-can\_\-move} (\hyperlink{structgrid__s}{grid} g, int i, int start, int end, int factor)
+\begin{DoxyCompactList}\small\item\em Vérifie si la ligne peut bouger vers la direction. \item\end{DoxyCompactList}\item 
+bool \hyperlink{utilities_8h_af85caf2821e8c7fc0aba8195ef260bf3}{column\_\-can\_\-move} (\hyperlink{structgrid__s}{grid} g, int j, int start, int end, int factor)
+\begin{DoxyCompactList}\small\item\em Vérifie si la colonne peut bouger dvers la direction. \item\end{DoxyCompactList}\item 
+unsigned long int \hyperlink{utilities_8h_a94548fe53a06dbdedabef31a30dd08e4}{line\_\-do\_\-move} (\hyperlink{structgrid__s}{grid} g, int i, \hyperlink{grid_8h_a862c63b15eab5b0d2781cea356e5d935}{dir} d)
+\begin{DoxyCompactList}\small\item\em Fait le mouvement sur une ligne de la grille. \item\end{DoxyCompactList}\item 
+unsigned long int \hyperlink{utilities_8h_a25dd116e6f6faa3dbfa3ab8ef4705771}{column\_\-do\_\-move} (\hyperlink{structgrid__s}{grid} g, int i, \hyperlink{grid_8h_a862c63b15eab5b0d2781cea356e5d935}{dir} d)
+\begin{DoxyCompactList}\small\item\em Fait le mouvement sur une colonne de la grille. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+contient les fonctions nécessaires pour compiler grid.o 
+
+Définition dans le fichier \hyperlink{utilities_8h_source}{utilities.h}.
+
+
+
+\subsection{Documentation des fonctions}
+\hypertarget{utilities_8h_af85caf2821e8c7fc0aba8195ef260bf3}{
+\index{utilities.h@{utilities.h}!column\_\-can\_\-move@{column\_\-can\_\-move}}
+\index{column\_\-can\_\-move@{column\_\-can\_\-move}!utilities.h@{utilities.h}}
+\subsubsection[{column\_\-can\_\-move}]{\setlength{\rightskip}{0pt plus 5cm}bool column\_\-can\_\-move (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{int}]{ j, }
+\item[{int}]{ start, }
+\item[{int}]{ end, }
+\item[{int}]{ factor}
+\end{DoxyParamCaption}
+)}}
+\label{utilities_8h_af85caf2821e8c7fc0aba8195ef260bf3}
+
+
+Vérifie si la colonne peut bouger dvers la direction. 
+
+érifie si la colonne peut bouger dvers la direction 
+\begin{DoxyParams}{Paramètres}
+\item[{\em }]g, la grille \item[{\em }]j, la colonne en question \item[{\em }]start le premier indice, 0 si la direction est haut GRID\_\-SIZE -\/ 1 si la direction est bas \item[{\em }]end le dernier indice, 0 si la direction est bas GRID\_\-SIZE -\/ 1 si la direction est haut \item[{\em }]factor -\/1 si c'est un mouvement vers le haut, 1 si vers le bas  vrai si la colonne peut bouger, faux sinon\item[{\em g,la}]grille \item[{\em j,la}]colonne en question \item[{\em start}]le premier indice, 0 si la direction est haut GRID\_\-SIZE -\/ 1 si la direction est bas \item[{\em end}]le dernier indice, 0 si la direction est bas GRID\_\-SIZE -\/ 1 si la direction est haut \item[{\em factor}]-\/1 si c'est un mouvement vers le haut, 1 si vers le bas \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+vrai si la colonne peut bouger, faux sinon 
+\end{DoxyReturn}
+
+
+Définition à la ligne 197 du fichier utilities.c.
+
+\hypertarget{utilities_8h_a25dd116e6f6faa3dbfa3ab8ef4705771}{
+\index{utilities.h@{utilities.h}!column\_\-do\_\-move@{column\_\-do\_\-move}}
+\index{column\_\-do\_\-move@{column\_\-do\_\-move}!utilities.h@{utilities.h}}
+\subsubsection[{column\_\-do\_\-move}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long int column\_\-do\_\-move (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{int}]{ j, }
+\item[{{\bf dir}}]{ d}
+\end{DoxyParamCaption}
+)}}
+\label{utilities_8h_a25dd116e6f6faa3dbfa3ab8ef4705771}
+
+
+Fait le mouvement sur une colonne de la grille. 
+
+le mouvement sur une colonne de la grille 
+\begin{DoxyParams}{Paramètres}
+\item[{\em }]g, la grille \item[{\em }]j, la ligne en question \item[{\em }]d la direction\item[{\em g,la}]grille \item[{\em j,la}]ligne en question \item[{\em d,la}]direction \end{DoxyParams}
+
+
+Définition à la ligne 255 du fichier utilities.c.
+
+\hypertarget{utilities_8h_a2592643d8317d5236b2e7a4028c08cc2}{
+\index{utilities.h@{utilities.h}!line\_\-can\_\-move@{line\_\-can\_\-move}}
+\index{line\_\-can\_\-move@{line\_\-can\_\-move}!utilities.h@{utilities.h}}
+\subsubsection[{line\_\-can\_\-move}]{\setlength{\rightskip}{0pt plus 5cm}bool line\_\-can\_\-move (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{int}]{ i, }
+\item[{int}]{ start, }
+\item[{int}]{ end, }
+\item[{int}]{ factor}
+\end{DoxyParamCaption}
+)}}
+\label{utilities_8h_a2592643d8317d5236b2e7a4028c08cc2}
+
+
+Vérifie si la ligne peut bouger vers la direction. 
+
+érifie si la ligne peut bouger vers la direction 
+\begin{DoxyParams}{Paramètres}
+\item[{\em }]g, la grille \item[{\em }]i la ligne en question \item[{\em }]start, le premier indice 0 si la direction est gauche, GRID\_\-SIZE -\/ 1 si la direction est droite \item[{\em }]end, le dernier indice 0 si la direction est droite, GRID\_\-SIZE -\/ 1 si la direction est gauche \item[{\em }]factor -\/1 si c'est un mouvement vers la gauche, 1 si vers la droite  vrai si la ligne peut bouger, faux sinon\item[{\em g,la}]grille \item[{\em i}]la ligne en question \item[{\em start,le}]premier indice 0 si la direction est gauche, GRID\_\-SIZE -\/ 1 si la direction est droite \item[{\em end,le}]dernier indice 0 si la direction est droite, GRID\_\-SIZE -\/ 1 si la direction est gauche \item[{\em factor}]-\/1 si c'est un mouvement vers la gauche, 1 si vers la droite \end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+vrai si la ligne peut bouger, faux sinon 
+\end{DoxyReturn}
+
+
+Définition à la ligne 164 du fichier utilities.c.
+
+\hypertarget{utilities_8h_a94548fe53a06dbdedabef31a30dd08e4}{
+\index{utilities.h@{utilities.h}!line\_\-do\_\-move@{line\_\-do\_\-move}}
+\index{line\_\-do\_\-move@{line\_\-do\_\-move}!utilities.h@{utilities.h}}
+\subsubsection[{line\_\-do\_\-move}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long int line\_\-do\_\-move (
+\begin{DoxyParamCaption}
+\item[{{\bf grid}}]{ g, }
+\item[{int}]{ i, }
+\item[{{\bf dir}}]{ d}
+\end{DoxyParamCaption}
+)}}
+\label{utilities_8h_a94548fe53a06dbdedabef31a30dd08e4}
+
+
+Fait le mouvement sur une ligne de la grille. 
+
+le mouvement sur une ligne de la grille 
+\begin{DoxyParams}{Paramètres}
+\item[{\em }]g, la grille \item[{\em }]i, la ligne en question \item[{\em }]d la direction\item[{\em g,la}]grille \item[{\em i,la}]ligne en question \item[{\em d,la}]direction \end{DoxyParams}
+
+
+Définition à la ligne 228 du fichier utilities.c.
+

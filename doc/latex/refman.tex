@@ -1,0 +1,83 @@
+\documentclass[a4paper]{book}
+\usepackage{a4wide}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{alltt}
+\usepackage{times}
+\usepackage{ifpdf}
+\ifpdf
+\usepackage[pdftex,
+            pagebackref=true,
+            colorlinks=true,
+            linkcolor=blue,
+            unicode
+           ]{hyperref}
+\else
+\usepackage[ps2pdf,
+            pagebackref=true,
+            colorlinks=true,
+            linkcolor=blue,
+            unicode
+           ]{hyperref}
+\usepackage{pspicture}
+\fi
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+
+\usepackage{doxygen}
+\lstset{language=C++,inputencoding=utf8,basicstyle=\footnotesize,breaklines=true,breakatwhitespace=true,tabsize=8,numbers=left }
+\makeindex
+\setcounter{tocdepth}{3}
+\renewcommand{\footrulewidth}{0.4pt}
+\begin{document}
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\vspace*{7cm}
+\begin{center}
+{\Large EDD\_\-project \\[1ex]\large 1 }\\
+\vspace*{1cm}
+{\large Généré par Doxygen 1.7.1}\\
+\vspace*{0.5cm}
+{\small Wed Apr 22 2015 06:41:11}\\
+\end{center}
+\end{titlepage}
+\clearemptydoublepage
+\pagenumbering{roman}
+\tableofcontents
+\clearemptydoublepage
+\pagenumbering{arabic}
+\hypersetup{pageanchor=true}
+\chapter{Index des structures de données}
+\input{annotated}
+\chapter{Index des fichiers}
+\input{files}
+\chapter{Documentation des structures de données}
+\input{struct__box__border__struct}
+\input{struct___b_o_x__struct}
+\input{struct__memory}
+\input{structgrid__s}
+\input{structs__result}
+\input{structstrategy__s}
+\chapter{Documentation des fichiers}
+\input{2048__fast___i_a_8c}
+\input{2048__ncurses_8c}
+\input{2048__sdl_8c}
+\input{sdl_8h}
+\input{affichage_8c}
+\input{affichage_8h}
+\input{grid_8c}
+\input{grid_8h}
+\input{utilities_8c}
+\input{utilities_8h}
+\input{strategy_8h}
+\input{strategy__efficient_8c}
+\input{strategy__efficient_8h}
+\input{strategy__fast_8c}
+\input{strategy__fast_8h}
+\printindex
+\end{document}
