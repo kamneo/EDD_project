@@ -5,10 +5,10 @@
 
 #include "utilities.h"
 
-/*
- * \Calcule (valeur_tile)^2
- * \paramètre t, la tuile à calculer
- * \retourne la puissance de la tuile si t>0 ou retourne 0
+/**
+ * \brief Calcule (valeur_tile)^2
+ * \param t, la tuile à calculer
+ * \return la puissance de la tuile si t>0 ou retourne 0
  */
 static unsigned long int pow_of_2(tile t)
 {
@@ -17,13 +17,13 @@ static unsigned long int pow_of_2(tile t)
 	return pow(2, t);
 }
 
-/*
- * \Fait les additions entre les tuiles d'une ligne
- * \paramètre g, la grille
- * \paramètre i, la ligne de la grille où les additions vont s'effectuer
- * \paramètre start, 0 si c'est un mouvement vers la gauche, GRID_SIDE - 1 si c'est un mouvement vers la droite
- * \paramètre end GRID_SIDE - 1 si c'est un mouvement vers la gauche, 0  si c'est un mouvement vers la droite
- * \retoure la valeur à ajouter au score
+/**
+ * \brief Fait les additions entre les tuiles d'une ligne
+ * \param g, la grille
+ * \param i, la ligne de la grille où les additions vont s'effectuer
+ * \param start, 0 si c'est un mouvement vers la gauche, GRID_SIDE - 1 si c'est un mouvement vers la droite
+ * \param end GRID_SIDE - 1 si c'est un mouvement vers la gauche, 0  si c'est un mouvement vers la droite
+ * \return la valeur à ajouter au score
  */
 static unsigned long int add_line(grid g, int i, int start, int end, int factor) 
 {
@@ -57,14 +57,14 @@ static unsigned long int add_line(grid g, int i, int start, int end, int factor)
 	return to_add;
 }
 
-/*
- * \Fait les additions entre les tuiles d'une colonne
- * \paramètre g, la grille
- * \paramètre j, la colonne où les additions vont s'effectuer
- * \paramètre start 0 si c'est un mouvement vers le haut, GRID_SIDE - 1 si c'est un mouvement vers le bas
- * \paramètre end GRID_SIDE - 1 si c'est un mouvement vers le haut, 0 si c'est un mouvement vers le bas
- * \paramètre factor -1 si c'est un mouvement vers le haut, 1 si c'est un mouvement vers le bas
- * \retourne la valeur à ajouter au score
+/**
+ * \brief Fait les additions entre les tuiles d'une colonne
+ * \param g, la grille
+ * \param j, la colonne où les additions vont s'effectuer
+ * \param start 0 si c'est un mouvement vers le haut, GRID_SIDE - 1 si c'est un mouvement vers le bas
+ * \param end GRID_SIDE - 1 si c'est un mouvement vers le haut, 0 si c'est un mouvement vers le bas
+ * \param factor -1 si c'est un mouvement vers le haut, 1 si c'est un mouvement vers le bas
+ * \return la valeur à ajouter au score
  */
 static unsigned long int add_column(grid g, int j, int start, int end, int factor){
 	int pos = -1;					// position de la dernière tuile non nulle
@@ -97,13 +97,13 @@ static unsigned long int add_column(grid g, int j, int start, int end, int facto
 	return to_add;
 }
 
-/*
- * \Concatène chaque tuile non nulle sur la gauche de la grille pour un mouvement vers la gauche ou sur la droite pour un mouvement vers la droite
- * \paramètre g, la grille
- * \paramètre i la ligne où l'opération s'effectue
- * \paramètre start, 0 si c'est un mouvement vers la gauche, GRID_SIDE - 1 si c'est un mouvement vers la droite
- * \paramètre end GRID_SIDE - 1 si c'est un mouvement vers la gauche, 0  si c'est un mouvement vers la droite
- * \paramètre factor -1 si c'est un mouvement vers la gauche, 1 si vers la droite
+/**
+ * \brief Concatène chaque tuile non nulle sur la gauche de la grille pour un mouvement vers la gauche ou sur la droite pour un mouvement vers la droite
+ * \param g, la grille
+ * \param i la ligne où l'opération s'effectue
+ * \param start, 0 si c'est un mouvement vers la gauche, GRID_SIDE - 1 si c'est un mouvement vers la droite
+ * \param end GRID_SIDE - 1 si c'est un mouvement vers la gauche, 0  si c'est un mouvement vers la droite
+ * \param factor -1 si c'est un mouvement vers la gauche, 1 si vers la droite
  */
 static void concat_line(grid g, int i, int start, int end, int factor)
 {
@@ -122,13 +122,13 @@ static void concat_line(grid g, int i, int start, int end, int factor)
 	}
 }
 
-/*
- *Concatène chaque tuile non nulle sur le haut de la grille pour un mouvement vers le haut ou sur le bas pour un mouvement vers le bas
- * \paramètre g, la grille
- * \paramètre j, la colonne où les additions vont s'effectuer
- * \paramètre start 0 si c'est un mouvement vers le haut, GRID_SIDE - 1 si c'est un mouvement vers le bas
- * \paramètre end GRID_SIDE - 1 si c'est un mouvement vers le haut, 0 si c'est un mouvement vers le bas
- * \paramètre factor -1 si c'est un mouvement vers le haut, 1 si c'est un mouvement vers le bas
+/**
+ * \brief Concatène chaque tuile non nulle sur le haut de la grille pour un mouvement vers le haut ou sur le bas pour un mouvement vers le bas
+ * \param g, la grille
+ * \param j, la colonne où les additions vont s'effectuer
+ * \param start 0 si c'est un mouvement vers le haut, GRID_SIDE - 1 si c'est un mouvement vers le bas
+ * \param end GRID_SIDE - 1 si c'est un mouvement vers le haut, 0 si c'est un mouvement vers le bas
+ * \param factor -1 si c'est un mouvement vers le haut, 1 si c'est un mouvement vers le bas
  */
 void concat_column(grid g, int j, int start, int end, int factor)
 {
@@ -148,13 +148,13 @@ void concat_column(grid g, int j, int start, int end, int factor)
 }
 
 /**
- * \Vérifie si la ligne peut bouger vers la direction
- * \paramètre g, la grille
- * \paramètre i la ligne en question
- * \paramètre start, le premier indice 0 si la direction est gauche, GRID_SIZE - 1 si la direction est droite
- * \paramètre end, le dernier indice 0 si la direction est droite, GRID_SIZE - 1  si la direction est gauche
- * \paramètre factor -1 si c'est un mouvement vers la gauche, 1 si vers la droite
- * \retourne vrai si la ligne peut bouger, faux sinon
+ * \brief Vérifie si la ligne peut bouger vers la direction
+ * \param g, la grille
+ * \param i la ligne en question
+ * \param start, le premier indice 0 si la direction est gauche, GRID_SIZE - 1 si la direction est droite
+ * \param end, le dernier indice 0 si la direction est droite, GRID_SIZE - 1  si la direction est gauche
+ * \param factor -1 si c'est un mouvement vers la gauche, 1 si vers la droite
+ * \return vrai si la ligne peut bouger, faux sinon
  */
 bool line_can_move(grid g, int i, int start, int end, int factor){
 	tile pre = 0;
@@ -181,13 +181,13 @@ bool line_can_move(grid g, int i, int start, int end, int factor){
 }
 
 /**
- * \Vérifie si la colonne peut bouger dvers la direction
- * \paramètre g, la grille
- * \paramètre j, la colonne en question
- * \paramètre start le premier indice, 0 si la direction est haut GRID_SIZE - 1 si la direction est bas
- * \paramètre end le dernier indice, 0 si la direction est bas GRID_SIZE - 1 si la direction est haut
- * \paramètre factor -1 si c'est un mouvement vers le haut, 1 si vers le bas
- * \retourne vrai si la colonne peut bouger, faux sinon
+ * \brief Vérifie si la colonne peut bouger dvers la direction
+ * \param g, la grille
+ * \param j, la colonne en question
+ * \param start le premier indice, 0 si la direction est haut GRID_SIZE - 1 si la direction est bas
+ * \param end le dernier indice, 0 si la direction est bas GRID_SIZE - 1 si la direction est haut
+ * \param factor -1 si c'est un mouvement vers le haut, 1 si vers le bas
+ * \return vrai si la colonne peut bouger, faux sinon
  */
 bool column_can_move(grid g, int j, int start, int end, int factor){
 	tile pre = 0;
@@ -215,10 +215,10 @@ bool column_can_move(grid g, int j, int start, int end, int factor){
 }
 
 /**
- * \Fait le mouvement sur une ligne de la grille
- * \paramètre g, la grille
- * \paramètre i, la ligne en question
- * \paramètre d,  la direction
+ * \brief Fait le mouvement sur une ligne de la grille
+ * \param g, la grille
+ * \param i, la ligne en question
+ * \param d,  la direction
  */
 unsigned long int line_do_move(grid g, int i, dir d)
 {
@@ -242,10 +242,10 @@ unsigned long int line_do_move(grid g, int i, dir d)
 }
 
 /**
- * \Fait le mouvement sur une colonne de la grille
- * \paramètre g, la grille
- * \paramètre j, la ligne en question
- * \paramètre d,  la direction
+ * \brief Fait le mouvement sur une colonne de la grille
+ * \param g, la grille
+ * \param j, la ligne en question
+ * \param d,  la direction
  */
 unsigned long int column_do_move(grid g, int j, dir d)
 {

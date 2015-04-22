@@ -5,10 +5,10 @@
 
 #include "affichage.h"
 
-/*
- * \Calcule (valeur_tile)^2
- * \paramètre t, la tuile à calculer
- * \retourne la puissance de la tuile si t>0 ou retourne 0
+/**
+ * \brief Calcule (valeur_tile)^2
+ * \param t, la tuile à calculer
+ * \return la puissance de la tuile si t>0 ou retourne 0
  */
 static unsigned long int pow_of_2(tile t) {
 	if (t == 0)
@@ -17,7 +17,7 @@ static unsigned long int pow_of_2(tile t) {
 }
 
 /**
- * \Affiche en console la grille avec des couleurs et la puissance des valeurs contenues dans les tuiles
+ * \brief Affiche en console la grille avec des couleurs et la puissance des valeurs contenues dans les tuiles
  */
 void display_grid(grid g) {
 
@@ -48,7 +48,7 @@ void display_grid(grid g) {
 }
 
 /**
- * \Affiche en console la grille avec des couleurs et la valeur contenue dans les tuiles
+ * \brief Affiche en console la grille avec des couleurs et la valeur contenue dans les tuiles
  */
 void display_normal_grid(grid g) {
 
@@ -75,7 +75,7 @@ void display_normal_grid(grid g) {
 }
 
 /**
- * \Affiche en console la grille sans les cases, juste les valeurs des cases sur une ligne
+ * \brief Affiche en console la grille sans les cases, juste les valeurs des cases sur une ligne
  */
 void light_display_grid(grid g) {
 	for (int i = 0; i < GRID_SIDE; i++) {

@@ -14,18 +14,18 @@ struct grid_s {
 	unsigned long int score;
 };
 
-/*
- * \Calcule un int aléatoire entre 0 et n
- * \paramètre n , le max
- * \retourne un entier aléatoire entre 0 et n
+/**
+ * \brief Calcule un int aléatoire entre 0 et n
+ * \param n , le max
+ * \return un entier aléatoire entre 0 et n
  */
 static int random_rank(int n) {
 	return rand() % n;
 }
 
-/*
- * \Calcule une valeur qui a 9/10 de chances d'être 1 et 1/10 d'êtrre 2
- * \retourne un entier entre 1 et 2
+/**
+ * \brief Calcule une valeur qui a 9/10 de chances d'être 1 et 1/10 d'êtrre 2
+ * \return un entier entre 1 et 2
  */
 static int random_value() {
 	if (rand() % 10 < 9)
@@ -34,9 +34,9 @@ static int random_value() {
 		return 2;
 }
 
-/*
- * \Initialise la structure de la grille
- * \retourne une grille vide avec un score de 0
+/**
+ * \brief Initialise la structure de la grille
+ * \return une grille vide avec un score de 0
  */
 grid new_grid() {
 	// initialisation de la srand() qui gère la génération des nombres aléatoires
@@ -55,8 +55,8 @@ grid new_grid() {
 }
 
 /**
- * \Détruit la grille et libère la mémoire allouée
- * \paramètre g , la grille à détruire
+ * \brief Détruit la grille et libère la mémoire allouée
+ * \param g , la grille à détruire
  */
 void delete_grid(grid g) {
 	for (int i = 0; i < GRID_SIDE; i++)
@@ -66,9 +66,9 @@ void delete_grid(grid g) {
 }
 
 /**
- * \Clone la grille
- * \paramètre src la grille à copier (source)
- * \paramètre dst la grille copiée (destination)
+ * \brief Clone la grille
+ * \param src la grille à copier (source)
+ * \param dst la grille copiée (destination)
  */
 void copy_grid(grid src, grid dst) {
 	for (int i = 0; i < GRID_SIDE; i++)
@@ -79,19 +79,19 @@ void copy_grid(grid src, grid dst) {
 }
 
 /**
- * \Obtient le score de la grille
- * \paramètre g, la grille
- * \retourne le score calculé pendant le jeu
+ * \brief Obtient le score de la grille
+ * \param g, la grille
+ * \return le score calculé pendant le jeu
  */
 unsigned long int grid_score(grid g) {
 	return g->score;
 }
 
 /**
- * \Obtient une tuile de la grille grâce aux coordonnées spécifiées
- * \paramètre g, la grille
- * \paramètres x et y, les coordonnées de la tile
- * \retourne la tuile
+ * \brief Obtient une tuile de la grille grâce aux coordonnées spécifiées
+ * \param g, la grille
+ * \param x et y, les coordonnées de la tile
+ * \return la tuile
  */
 tile get_tile(grid g, int x, int y) {
 	return (g->tiles[x][y]);
@@ -100,7 +100,7 @@ tile get_tile(grid g, int x, int y) {
 /**
  * \Change la valeure de la tuile
  * \paramètre g, la grille
- * \paramètres x et y, les coordonnées de la tuile
+ * \param x et y, les coordonnées de la tuile
  * \paramètre t, la nouvelle valeur de la tuile
  */
 void set_tile(grid g, int x, int y, tile t) {
@@ -111,7 +111,7 @@ void set_tile(grid g, int x, int y, tile t) {
  * \Vérifie si un mouvement donné est possible
  * \paramètre g, la grille
  * \paramètre d, la direction
- * \retourne vrai si le mouvement est possible, faux sinon
+ * \return vrai si le mouvement est possible, faux sinon
  */
 bool can_move(grid g, dir d) {
 	switch (d) {
@@ -153,7 +153,7 @@ bool can_move(grid g, dir d) {
 /**
  * \Vérifie le statut du jeu, s'il n'y a plus de mouvement possible, le jeu est perdu
  * \paramètre g, la grille
- * \retourne vrai s'il n'y a plus de mouvement possible, faux sinon
+ * \return vrai s'il n'y a plus de mouvement possible, faux sinon
  */
 bool game_over(grid g) {
 	return !can_move(g, LEFT) && !can_move(g, RIGHT) && !can_move(g, UP)
