@@ -1,3 +1,9 @@
+/**
+ * \file	2048_fast_IA.c
+ * \versions	1.0
+ * \brief	Implemente lutilisation de l'IA
+ */
+
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,8 +13,19 @@
 #include "affichage.h"
 #include <unistd.h>
 
+/**
+ * variable pour la boucle infinie
+ */
 #define NEW_GAME 1
+
+/**
+ * Taille de tableau de résultat
+ */
 #define MAX_VALUE 12
+
+/**
+  * Nombre de partie
+  */
 #define ROUND 1
 
 long int top_chrono;
@@ -24,10 +41,11 @@ void stop_chrono() {
                 (float)(end_chrono - top_chrono) / CLOCKS_PER_SEC);
 }
 
-/*
- * MEMOIRE qui contient les scores cumulés des grilles jusqu'à ce que
+/**
+ *  MEMOIRE qui contient les scores cumulés des grilles jusqu'à ce que
  * l'utilisateur quitte le programme et le nombre de fois que la valeur max
  * est apparue
+ *
  */
 typedef struct _memory {
 	int* tab;
@@ -111,9 +129,9 @@ int main(int argc, char *argv[]) {
 	return end_game_stat(m, g);
 }
 
-/*
- * \ferme la fenêtre créée par ncurses & supprime la grille
- * \paramètre g, la grille
+/**
+ * \brief ferme la fenêtre créée par ncurses & supprime la grille
+ * \param g, la grille
  */
 int end_game(grid g) {
 	printf("Merci d'avoir joue.\n");
@@ -121,10 +139,10 @@ int end_game(grid g) {
 	return EXIT_SUCCESS;
 }
 
-/*
- * \ferme la fenêtre créée par ncurses & supprime la grille & affiche les statistiques
- * \paramètre g, la grille
- * \paramètre m mémoire
+/**
+ * \brief ferme la fenêtre créée par ncurses & supprime la grille & affiche les statistiques
+ * \param g, la grille
+ * \param m mémoire
  */
 int end_game_stat(MEMORY m, grid g) {
 	int total = 0;

@@ -1,3 +1,9 @@
+/**
+ * \file	sdl.h
+ * \versions	1.0
+ * \brief	Implemente l'interface graphique
+ */
+
 #ifndef _SDL_H_
 #define _SDL_H_
 

@@ -1,3 +1,9 @@
+/**
+ * \file	2048_sdl.c
+ * \versions	1.0
+ * \brief	Implemente l'interface graphique
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>

@@ -1,3 +1,10 @@
+/**
+ * \file	2048_ncurses.c
+ * \versions	1.0
+ * \brief	Implemente l'affichage en console
+ */
+
+
 #include <ncurses.h>
 #include <math.h>
 #include <stdlib.h>
