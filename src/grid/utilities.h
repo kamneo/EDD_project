@@ -1,8 +1,8 @@
 #ifndef _UTILITIES_H_
 #define _UTILITIES_H_
 /**
- * \fichier utilities.h
- * \contient les fonctions nécessaires pour compiler grid.o
+ * \file utilities.h
+ * \brief contient les fonctions nécessaires pour compiler grid.o
  **/
 
 #include "grid.h"

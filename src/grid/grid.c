@@ -6,6 +6,11 @@
 #include "grid.h"
 #include "utilities.h"
 
+/**
+ * \file grid.c
+ * \brief Contient les stuctures du jeu 2048.
+ **/
+
 #define NEGATIVE_DIR -1
 #define POSITIVE_DIR 1
 

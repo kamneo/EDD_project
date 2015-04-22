@@ -1,8 +1,8 @@
 #ifndef _AFFICHAGE_H_
 #define _AFFICHAGE_H_
 /**
- * \fichier affichage.h
- * \Contient les fonctions nécessaires pour afficher la grille
+ * \file affichage.h
+ * \brief Contient les fonctions nécessaires pour afficher la grille
  **/
 
 #include "grid.h"

@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "grid.h"
+/**
+ * \file affichage.c
+ * \brief Contient les fonctions d'affichage standard de la grille.
+ **/
 
 #include "affichage.h"
 

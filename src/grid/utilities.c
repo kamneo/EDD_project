@@ -3,6 +3,11 @@
 #include <time.h>
 #include <stdbool.h>
 
+/**
+ * \file utilities.c
+ * \brief contient les fonctions complementaires à grid.c.
+ **/
+
 #include "utilities.h"
 
 /**
