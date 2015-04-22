@@ -1,3 +1,5 @@
+add_custom_target(check COMMAND valgrind ${CMAKE_CTEST_COMMAND})
+
 #Ajoute l'executable pour chaque test
 add_executable(test-grid-1 test-grid-1.c)
 add_executable(test-grid-2 test-grid-2.c)
