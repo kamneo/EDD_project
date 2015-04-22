@@ -160,7 +160,14 @@ int main(int argc, char *argv[])
 }
 
 
-/* fonction affichant l'écran de jeu */
+/**
+ * \brief fonction qui affiche la grille tout au long du jeux
+ * \param g, la grille
+ * \param character_Font, la police de caractere
+ * \param screen, écrans principale
+ * \param heigth, longueur de la fenetre
+ * \param width, largeur de la fenetre 
+ */
 void display(grid g, TTF_Font *character_Font, SDL_Surface *screen,int heigth,int width)
 {
 	SDL_FillRect(screen,NULL,ColorsTab[NB_COLOR-1]);		//on réinitialise l'écran pour ne pas reécrire par dessus	
@@ -229,7 +236,12 @@ void display(grid g, TTF_Font *character_Font, SDL_Surface *screen,int heigth,in
 }
 
 
-/* Fonction qui affiche un game over en plein milieu de l'écran */
+/** 
+ * \brief Fonction qui affiche un game over en plein milieu de l'écran 
+ * \param screen, ecran principale
+ * \param heigth, hauteur de l'écrans prncipale
+ * \param width, largeur de l'ecrans principale
+ */
 void endGame( SDL_Surface *screen,int heigth,int width)
 {
 	TTF_Font *character_Font = NULL;
@@ -255,15 +267,23 @@ unsigned long int pow_of_2(tile t)
 	return pow(2, t);
 }
 
-/* 	Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre
-	Permet un peu de factorisation de code.*/
+/** 
+ * \brief Fonction qui colle la surface2 sur la surface1 a la pos passer en parametre
+ * Permet un peu de factorisation de code.
+ * \param surface1 , surface sdl
+ * \param surface2, surface sdl
+ * \param pos , position ou coller
+ */
 void blitSurface(SDL_Surface *surface1,SDL_Surface *surface2,SDL_Rect pos)
 {
 SDL_BlitSurface(surface2, NULL, surface1, &pos);
 SDL_FreeSurface(surface2);
 }
 
-/* Initialisation du tableau, place des couleurs dans le format des couleurs sdl et le format choisit pour l'écran */
+/** 
+ * \brief Initialisation du tableau, place des couleurs dans le format des couleurs sdl et le format choisit pour l'écran
+ * \param screen ecrans principale 
+ */
 void initTabColor(SDL_Surface *screen)
 {
 	ColorsTab[0]=SDL_MapRGB(screen->format, 206, 206, 206);		//couleur des tuiles vides
