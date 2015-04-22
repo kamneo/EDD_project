@@ -9,6 +9,12 @@ Pour compiler il faut se placer dans le dossier "EDD_project/build" (EDD_project
 	- $ cmake ..
 	- $ make
 	- $ make install
+	- $ make test
+	- $ make check
+	- $ make doc
+
+La commande "make check" permet de faire un valgrind sur les tests.
+La commande "make doc" permet de généré la documentation doxygen
 
 les fichiers suivants seront alors générés:
 	
