@@ -13,3 +13,5 @@ add_definitions(-std=c99)
 enable_testing()  
 
 add_subdirectory(src)
+
+add_custom_target(doc COMMAND doxygen ${2048_SOURCE_DIR}/doc/Doxyfile)
