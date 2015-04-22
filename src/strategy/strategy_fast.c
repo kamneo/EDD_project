@@ -1,3 +1,9 @@
+/**
+ * \file strategy_fast.c
+ * \brief contient la stratégie rapide
+ */
+
+
 #include "strategy_fast.h"
 #include <stdlib.h>
 #include <assert.h>
@@ -5,6 +11,9 @@
 #include <stdio.h>
 #include <math.h>
 
+/**
+ * brief la profondeur de calcul
+*/
 #define DEPTH 2
 
 
@@ -43,11 +52,11 @@ strategy A2_bonnet_borde_pinero_fast() {
 	return strat;
 }
 
-/*
- * première stratégie appelée stratégie du coin
- * paramètre s la structure stratégie
- * paramètre g, la grille
- * retourne la direction optimale à jouer qui a été calculée par cette stratégie
+/**
+ * \brief première stratégie appelée stratégie du coin
+ * \param s la structure stratégie
+ * \param g, la grille
+ * \return la direction optimale à jouer qui a été calculée par cette stratégie
  */
 dir corner_strategy_1(strategy s, grid g) {
 
@@ -64,12 +73,12 @@ dir corner_strategy_1(strategy s, grid g) {
 	return -1;
 }
 
-/*
- * deuxième stratégie qui reprend la stratégie du coin mais qui un tour sur deux
+/**
+ * \brief deuxième stratégie qui reprend la stratégie du coin mais qui un tour sur deux
  * changera l'ordre des mouvements favoris
- * paramètre s, la sutructure stratégie
- * paramètre g, la grille
- * retourne la direction optimale à jouer qui a été calculée par cette stratégie
+ * \param s, la sutructure stratégie
+ * \param g, la grille
+ * \return la direction optimale à jouer qui a été calculée par cette stratégie
  */
 dir corner_strategy_2(strategy s, grid g) {
 	int* val = s->mem;
@@ -97,11 +106,11 @@ dir corner_strategy_2(strategy s, grid g) {
 		return -1;
 }
 
-/*
- * stratégie basée sur expected max qui retourne la direction optimale à jouer
- * paramètre s, la sutructure stratégie
- * paramètre g, la grille
- * retourne la direction optimale à jouer qui a été calculée par cette stratégie
+/**
+ * \brief stratégie basée sur expected max qui retourne la direction optimale à jouer
+ * \param s, la sutructure stratégie
+ * \param g, la grille
+ * \return la direction optimale à jouer qui a été calculée par cette stratégie
  */
 dir strategy_fast(strategy strat, grid g) {
 	// initialisation de la structure résultat
@@ -127,13 +136,13 @@ result max(grid g, int depth)
 	return bestRes;
 }
 
-/*
- * fonction qui pour une direction calcule la valeur moyenne de toutes les grilles
+/**
+ * \brief fonction qui pour une direction calcule la valeur moyenne de toutes les grilles
  * possibles et si le résultat est plus grand que celui contenu dans la structure résultat
  * modifie les champs de la structure avec les nouvelles valeurs (direction, score)
- * paramètre g la grille
- * paramètre bestRes un pointeur sur la structure résultat
- * paramètre direction, la direction choisi
+ * \param g la grille
+ * \param bestRes un pointeur sur la structure résultat
+ * \param direction, la direction choisi
  */
 void do_expected(grid g, result* bestRes, dir direction, int depth)
 {
@@ -158,12 +167,12 @@ void do_expected(grid g, result* bestRes, dir direction, int depth)
 	delete_grid(ng);
 }
 
-/*
- * fonction qui calcule la valeur de chaque grille qui peuvent etre générées pour une direction
+/**
+ * \brief fonction qui calcule la valeur de chaque grille qui peuvent etre générées pour une direction
  * et retourne le score moyen de toutes ces grilles
- * paramètre g, la grille
- * paramètre direction, la direction choisi
- * retourne la valeur moyenne de chaque grille dans une direction
+ * \param g, la grille
+ * \param direction, la direction choisi
+ * \return la valeur moyenne de chaque grille dans une direction
  */
 double expected(grid g, int depth)
 {
@@ -202,10 +211,10 @@ double expected(grid g, int depth)
 	return score;
 }
 
-/*
- * fonction qui évalue le poids de la grille
- * paramètre g qui est la grille à évaluer
- * retourne la valeur de la grille
+/**
+ * \brief fonction qui évalue le poids de la grille
+ * \param g qui est la grille à évaluer
+ * \return la valeur de la grille
  */
 double eval(grid g) {
 	// emptyCells qui compte le nombre de tuiles vides
