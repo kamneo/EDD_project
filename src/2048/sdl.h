@@ -37,12 +37,31 @@ void display(grid g, TTF_Font *character_Font,SDL_Surface *screen,int heigth,int
 
 void endGame(SDL_Surface *screen,int heigth,int width);
 
+/**
+ * nombre de couleurs disponibles
+ */
+#define NB_COLOR 13	
 
-#define NB_COLOR 13			// nombre de couleurs disponibles
-#define TILE_SIZE 130		// taille en pixels d'un côté d'une tuile
-#define EDGE 10				// nombre de pixels entre les tuiles
-#define MAX_CARACTERE 50	// taille de la chaine de caractères des messages à afficher
-#define CHARACTER_SIZE 40	// taille de la police de caractere
+ /**
+ * taille en pixels d'un côté d'une tuile
+ */
+#define TILE_SIZE 130
+
+/**
+ * nombre de pixels entre les tuiles
+ */
+#define EDGE 10	
+
+/**
+ * taille de la chaine de caractères des messages à afficher
+ */
+#define MAX_CARACTERE 50
+
+/**
+ * taille de la police de caractere
+ */
+#define CHARACTER_SIZE 40
+
 
 
 
