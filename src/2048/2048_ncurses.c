@@ -104,8 +104,8 @@ int main(int argc, char *argv[]) {
 	return end_game(g);
 }
 
-/*
- * initialise la fenêtre ncurses
+/**
+ * \brief initialise la fenêtre ncurses
  */
 void init_win()
 {
@@ -121,8 +121,8 @@ void init_win()
 	attroff(COLOR_PAIR(1));
 }
 
-/*
- * initialise les propriétés des box
+/**
+ * \brief initialise les propriétés des box
  */
 void init_box_params(BOX *p_box)
 {
@@ -142,9 +142,9 @@ void init_box_params(BOX *p_box)
 
 }
 
-/*
- * \Créé la grille dans la fenêtre et tous les utilitaires d'arrière-plan
- * \paramètre p_box les propriétés des box de ncurses
+/**
+ * \brief Créé la grille dans la fenêtre et tous les utilitaires d'arrière-plan
+ * \param p_box les propriétés des box de ncurses
  */
 void create_boxes(BOX *p_box)
 {
@@ -179,10 +179,10 @@ void create_boxes(BOX *p_box)
 }
 
 
-/*
- * \Met à jour le contenu de la grille affiché dans la fenêtre et supprime l'aide pour les utilisateurs
- * \paramètre p_box les porpriétés des box de ncurses
- * \param g the grid
+/**
+ * \brief Met à jour le contenu de la grille affiché dans la fenêtre et supprime l'aide pour les utilisateurs
+ * \param p_box les porpriétés des box de ncurses
+ * \param g, la grille
  */
 void update_boxes(BOX *p_box, grid g)
 {
@@ -222,9 +222,9 @@ void update_boxes(BOX *p_box, grid g)
 	refresh();
 }
 
-/*
- * \ferme la fenêtre créée par ncurses & supprimes la grille
- * \paramètre g, la grille
+/**
+ * \brief ferme la fenêtre créée par ncurses & supprimes la grille
+ * \param g, la grille
  */
 int end_game(grid g)
 {
